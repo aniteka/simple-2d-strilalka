@@ -14,10 +14,14 @@ private: /*Constants*/
 	const unsigned WINDOW_HEIGHT = 500;
 	const unsigned FRAME_LIMIT = 560;
 
-	const std::string TEST_PNG_FILENAME = "ResFiles\\COLOR_TEST_PNG.png";
-	const std::string WINDOW_TITLE = "Strilalka";
+	const std::string TEST_PNG_FILENAME
+		= "ResFiles\\COLOR_TEST_PNG.png";
+	const std::string WINDOW_TITLE
+		= "Strilalka";
 	
-	const sf::Color BACKGROUND_COLOR = sf::Color::White;
+	const sf::Color BACKGROUND_COLOR
+		= sf::Color::White;
+
 
 private: /*Vars*/
 	sf::RenderWindow window;
@@ -45,11 +49,12 @@ private /*Functions*/:
 #ifndef TESTING
 int main(int a, char** b)
 {
+	#ifdef DEBUG
 	main_test(a, b);
-	DLOG("TESTING END\n")
-
-	MainProgram main;
+	DLOG("TESTING END\n");
+	#endif
 	
+	MainProgram main;
 	return main.run();
 }
 #else

@@ -10,7 +10,7 @@ Hero::Hero()
 	category = "Hero";
 	status.is_drawable = true;
 
-	DLOG("Hero status: CREATED")
+	DLOG("Hero status: CREATED");
 }
 
 Hero::~Hero()
@@ -18,7 +18,7 @@ Hero::~Hero()
 	for(auto i : collisions)
 		delete i;
 	delete texture_rect.getTexture();
-	DLOG("Hero status: DESTROY")
+	DLOG("Hero status: DESTROY");
 }
 
 
@@ -84,7 +84,7 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if(!status.is_drawable)
 	{
-		DLOG("HERO WITH CATEGORY \"%s\" ISN'T DRAWABLE", category.c_str())
+		DLOG("HERO WITH CATEGORY \"%s\" ISN'T DRAWABLE", category.c_str());
 		throw "ISN'T DRAWABLE";
 	}
 		

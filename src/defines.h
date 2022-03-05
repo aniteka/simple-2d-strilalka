@@ -55,7 +55,7 @@ inline std::string DLOGFILENAME___;
 	fprintf( DLOGFILE___, to_output.c_str(), __VA_ARGS__ );		\
 	fclose( DLOGFILE___ );										\
 	fopen_s( &DLOGFILE___, DLOGFILENAME___.c_str(), "a" );		\
-}				
+}(void)(0)
 
 #else
 #define DPIRIN(...)

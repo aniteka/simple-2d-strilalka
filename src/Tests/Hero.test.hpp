@@ -11,13 +11,13 @@ struct HeroTest
 
 	~HeroTest()
 	{
-		DLOG("HeroTest: END")
+		DLOG("HeroTest: END");
 	}
 };
 
 TEST_F(HeroTest, HeroMoveTest)
 {
-	DLOG("HERO MOVE TEST START")
+	DLOG("HERO MOVE TEST START");
 	// Change warp point position
 	hero.setPoint( P(20,30) );
 	ASSERT_EQ(hero.getPoint(), P(20, 30));
@@ -32,12 +32,12 @@ TEST_F(HeroTest, HeroMoveTest)
 	hero.addCollisionObject(shape);
 	hero.move(P(10, 10));
 	ASSERT_EQ(hero.getCollisionObject()[0]->getPosition(), sf::Vector2f(210, 210));
-	DLOG("HERO MOVE TEST END")
+	DLOG("HERO MOVE TEST END");
 }
 
 TEST_F(HeroTest, HeroDrawTest)
 {
-	DLOG("HERO DRAW TEST START")
+	DLOG("HERO DRAW TEST START");
 	sf::RenderWindow window(
 		sf::VideoMode(100, 100),
 		" "
@@ -61,5 +61,84 @@ TEST_F(HeroTest, HeroDrawTest)
 	ASSERT_ANY_THROW(window.draw(hero));
 	
 	window.close();
-	DLOG("HERO DRAW TEST END")
+	DLOG("HERO DRAW TEST END");
+}
+
+TEST_F(HeroTest, HeroTextureTest)
+{
+	auto tx = new sf::Texture;
+	if (!tx->loadFromFile("ResFiles\\COLOR_TEST_PNG.png"))
+		DLOG("FAIL TO LOAD COLOR_TEST_PNG.png, WHILE UNIT TESTING");
+	hero.setTexture(tx);
+	hero.setSize(VF(100, 100));
+
+	sf::RenderWindow rw(
+		sf::VideoMode(100, 100),
+		"", 
+		sf::Style::None
+	);
+
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+
+	auto i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),		sf::Color(0xFE,0XFE,0XFE,0XFF));
+	ASSERT_EQ(i.getPixel(12, 0),	sf::Color(0xFE,0xFE,0x00,0xFF));
+	ASSERT_EQ(i.getPixel(25, 0),	sf::Color(0x00,0xFE,0xFE,0xFF));
+	ASSERT_EQ(i.getPixel(38, 0),	sf::Color(0x00,0xFE,0x00,0xFF));
+	ASSERT_EQ(i.getPixel(52, 0),	sf::Color(0xFE,0x00,0xFE,0xFF));
+	ASSERT_EQ(i.getPixel(68, 0),	sf::Color(0xFE,0x00,0x00,0xFF));
+	ASSERT_EQ(i.getPixel(84, 0),	sf::Color(0x00,0x00,0xFE,0xFF));
+	ASSERT_EQ(i.getPixel(98, 0),	sf::Color(0x00,0x00,0x00,0xFF));
+
+	hero.setSize(VF(100, 100));
+	
+	hero.setTextureRect(sf::IntRect(0, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),		sf::Color(0xFE,0XFE,0XFE,0XFF));
+
+	hero.setTextureRect(sf::IntRect(80, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),	sf::Color(0xFE,0xFE,0x00,0xFF));
+
+	hero.setTextureRect(sf::IntRect(160, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0), sf::Color(0x00, 0xFE, 0xFE, 0xFF));
+	
+	hero.setTextureRect(sf::IntRect(240, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0), sf::Color(0x00, 0xFE, 0x00, 0xFF));
+
+	hero.setTextureRect(sf::IntRect(320, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),	sf::Color(0xFE,0x00,0xFE,0xFF));
+
+	hero.setTextureRect(sf::IntRect(400, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),	sf::Color(0xFE,0x00,0x00,0xFF));
+
+	hero.setTextureRect(sf::IntRect(480, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),	sf::Color(0x00,0x00,0xFE,0xFF));
+
+	hero.setTextureRect(sf::IntRect(560, 0, 1, 1));
+	rw.clear(sf::Color::White);
+	rw.draw(hero);
+	i = rw.capture();
+	ASSERT_EQ(i.getPixel(0, 0),	sf::Color(0x00,0x00,0x00,0xFF));
+
 }

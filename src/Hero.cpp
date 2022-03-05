@@ -1,5 +1,25 @@
 #include "Hero.hpp"
 
+Hero::Hero()
+	: Unit()
+	, collisions{}
+	, texture_rect(sf::Vector2f(10, 10))
+	, warp_point{ 0,0 }
+{
+	texture_rect.setFillColor(sf::Color(0, 0, 0, 255));
+	category = "Hero";
+	status.is_drawable = true;
+
+	DLOG("Hero status: CREATED");
+}
+
+Hero::~Hero()
+{
+	for(auto i : collisions)
+		delete i;
+	delete texture_rect.getTexture();
+	DLOG("Hero status: DESTROY")
+}
 
 
 
@@ -42,6 +62,8 @@ const std::vector<sf::RectangleShape*>& Hero::getCollisionObject() const
 	return collisions;
 }
 
+
+
 sf::Point Hero::getPoint() const
 {
 	return warp_point;
@@ -52,12 +74,13 @@ sf::IntRect Hero::getTextureRect() const
 	return texture_rect.getTextureRect();
 }
 
-Hero::~Hero()
+void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	for(auto i : collisions)
+	if(!status.is_drawable)
 	{
-		delete i;
+		DLOG("HERO WITH CATEGORY \"%s\" ISN'T DRAWABLE", category.c_str())
+		throw "ISN'T DRAWABLE";
 	}
-	DLOG("Hero status: DESTROY")
+	target.draw(texture_rect, states);
 }
 

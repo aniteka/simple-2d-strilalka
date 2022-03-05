@@ -4,14 +4,22 @@
 
 #include "Tests/main.test.hpp"
 
+
+
 #ifndef TESTING
-int main()
+int main(int a, char** b)
 {
+	main_test(a, b);
+	DLOG("TESTING END\n")
+	
 	sf::RenderWindow window(
 		sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
 		"Strilalka"
 	);
 
+	Hero main_hero;
+	sf::Texture tx;
+	
 	while (window.isOpen())
 	{
 		sf::Event e;
@@ -22,7 +30,7 @@ int main()
 		}
 
 		window.clear(sf::Color(255, 255, 255));
-
+		window.draw(main_hero);
 		window.display();
 	}
 	

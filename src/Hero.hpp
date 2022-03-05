@@ -5,19 +5,18 @@
 
 class Hero
 	: public Unit
+	, public sf::Drawable
 {
 	std::vector<sf::RectangleShape*> collisions;
 	sf::RectangleShape texture_rect;
 	sf::Point warp_point;
 
 public:
-	Hero()
-		: Unit()
-		, texture_rect(sf::Vector2f(10,10))
-		, warp_point{0,0} 
-	{}
+	Hero();
 	~Hero() override;
 
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	
 	void addCollisionObject(sf::RectangleShape* sh) override;
 	void move(const sf::Point& p) override;
 	void setPoint(const sf::Point& p) override;

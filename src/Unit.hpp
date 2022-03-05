@@ -4,6 +4,7 @@
 
 class Unit  
 {
+protected:
 	struct Status
 	{
 		bool is_physics;

@@ -1,5 +1,5 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-project ("Mehanika_")
+project (Strelalka)
 
 add_subdirectory ("src")

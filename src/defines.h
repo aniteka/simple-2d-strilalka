@@ -3,7 +3,10 @@
 #include <cassert>
 #include <string>
 #include <vector>
+
+#include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>
+
 
 
 using namespace std::string_literals;
@@ -61,5 +64,14 @@ FILE* DLOGFILE___ = NULL;
 // /\/\//\LOGGER/\/\/\)
 
 
+namespace sf
+{
+	struct Point
+	{
+		float_t x;
+		float_t y;
+		auto operator<=>(const Point&) const = default;
+	};
+};
 
-
+using P = sf::Point;

@@ -21,10 +21,30 @@ public:
 		, interrupt_this					{}
 		, block_this						{}
 	{}
+	virtual ~Unit() = 0;
+	
+	void setPhysicsStatus(bool stat)
+		{ status.is_physics = stat; }
+	void setInterruptStatus(bool stat)
+		{ status.is_interrupted = stat; }
+	void setDrawStatus(bool stat)
+		{ status.is_drawable = stat; }
+	void setCategory(const std::string& ctg)
+		{ category = ctg; }
+	
+	Status getStatus() const
+		{ return status; }
+	std::string getCategory() const
+		{ return category; }
 
-	void setPhysicsStatus(bool stat)	{ status.is_physics = stat; }
-	void setInterruptStatus(bool stat)	{ status.is_interrupted = stat; }
-	void setDrawStatus(bool stat)		{ status.is_drawable = stat; }
 
-	Status getStatus() const			{ return status; }
+	
+	virtual void addCollisionObject(sf::Shape* sh) = 0;
+	virtual void move(const sf::Point& p) = 0;
+	virtual void setPoint(const sf::Point& p) = 0;
+	virtual void setTextureRect(const sf::IntRect& ir) = 0;
+	virtual void setTexture(sf::Texture& tx) = 0;
+
+	virtual sf::Point getPoint() const = 0;
+	virtual sf::IntRect getTextureRect() const = 0;
 };

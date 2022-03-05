@@ -37,6 +37,26 @@
    "True"
   ],
   [
+   "gtest:build_gmock",
+   "True"
+  ],
+  [
+   "gtest:debug_postfix",
+   "d"
+  ],
+  [
+   "gtest:hide_symbols",
+   "False"
+  ],
+  [
+   "gtest:no_main",
+   "False"
+  ],
+  [
+   "gtest:shared",
+   "False"
+  ],
+  [
    "libpng:api_prefix",
    ""
   ],

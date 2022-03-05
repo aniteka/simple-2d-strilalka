@@ -1,5 +1,6 @@
 [includedirs]
 C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/include
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/include
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include/freetype2
 C:/Users/tk/.conan/data/stb/cci.20210713/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
@@ -16,6 +17,7 @@ C:/Users/tk/.conan/data/zlib/1.2.11/_/_/package/d057732059ea44a47760900cb5e4855d
 
 [libdirs]
 C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/lib
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/lib
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib
 C:/Users/tk/.conan/data/flac/1.3.3/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/lib
 C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib
@@ -36,6 +38,7 @@ C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32a
 
 [builddirs]
 C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/
 C:/Users/tk/.conan/data/opengl/system/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib/cmake
@@ -57,6 +60,10 @@ sfml-window-s-d
 sfml-network-s-d
 sfml-audio-s-d
 sfml-system-s-d
+gtest_maind
+gmock_maind
+gmockd
+gtestd
 freetyped
 FLAC++
 FLAC
@@ -182,6 +189,74 @@ cmake_find_package_multi=SFML
 pkgconfig=sfml-all
 
 [generatorfilenames_sfml]
+
+
+
+[includedirs_gtest]
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/include
+
+[libdirs_gtest]
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/lib
+
+[bindirs_gtest]
+
+
+[resdirs_gtest]
+
+
+[builddirs_gtest]
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/
+
+[libs_gtest]
+gtest_maind
+gmock_maind
+gmockd
+gtestd
+
+[system_libs_gtest]
+
+
+[defines_gtest]
+
+
+[cppflags_gtest]
+
+
+[cxxflags_gtest]
+
+
+[cflags_gtest]
+
+
+[sharedlinkflags_gtest]
+
+
+[exelinkflags_gtest]
+
+
+[sysroot_gtest]
+
+
+[frameworks_gtest]
+
+
+[frameworkdirs_gtest]
+
+
+[rootpath_gtest]
+C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d
+
+[name_gtest]
+gtest
+
+[version_gtest]
+cci.20210126
+
+[generatornames_gtest]
+cmake_find_package=GTest
+cmake_find_package_multi=GTest
+
+[generatorfilenames_gtest]
 
 
 
@@ -922,6 +997,7 @@ cmake_find_package_multi=ZLIB
 [USER_flac]
 [USER_freetype]
 LIBTOOL_VERSION=24.1.18
+[USER_gtest]
 [USER_libpng]
 [USER_ogg]
 [USER_openal]
@@ -931,6 +1007,7 @@ LIBTOOL_VERSION=24.1.18
 [USER_vorbis]
 [USER_zlib]
 [ENV_sfml]
+[ENV_gtest]
 [ENV_opengl]
 [ENV_freetype]
 FT2_CONFIG=C:\Users\tk\.conan\data\freetype\2.11.1\_\_\package\c69bad48274e7fc45c887cddc32aa0459f0a81e0\bin\freetype-config

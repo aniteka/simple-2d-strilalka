@@ -2,9 +2,10 @@
  "graph_lock": {
   "nodes": {
    "0": {
-    "options": "brotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nsfml:audio=True\nsfml:graphics=True\nsfml:network=True\nsfml:shared=False\nsfml:window=True\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:minizip=deprecated\nzlib:shared=False",
+    "options": "brotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\ngtest:build_gmock=True\ngtest:debug_postfix=d\ngtest:hide_symbols=False\ngtest:no_main=False\ngtest:shared=False\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nsfml:audio=True\nsfml:graphics=True\nsfml:network=True\nsfml:shared=False\nsfml:window=True\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:minizip=deprecated\nzlib:shared=False",
     "requires": [
-     "1"
+     "1",
+     "13"
     ],
     "path": "..\\conanfile.txt",
     "context": "host"
@@ -114,6 +115,13 @@
     "requires": [
      "10"
     ],
+    "context": "host"
+   },
+   "13": {
+    "ref": "gtest/cci.20210126#544d5f889a7b0c7b733e3b85d114f4ef",
+    "options": "build_gmock=True\ndebug_postfix=d\nhide_symbols=False\nno_main=False\nshared=False",
+    "package_id": "875c67f4d8a79bdd002908b75efce119eb82836d",
+    "prev": "26aee87c20a397b7af8b3d26110d7786",
     "context": "host"
    }
   },

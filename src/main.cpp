@@ -1,7 +1,11 @@
 ﻿#define DEBUG
+#define TESTING
 #include "defines.h"
 #include "Unit.hpp"
 
+#include "Tests/main.test.hpp"
+
+#ifndef TESTING
 int main()
 {
 	sf::RenderWindow window(
@@ -25,3 +29,9 @@ int main()
 	
 	return 0;
 }
+#else
+int main(int argc, char** argv)
+{
+	return main_test(argc, argv);
+}
+#endif

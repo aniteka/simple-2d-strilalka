@@ -7,6 +7,7 @@
     os=Windows
 
 [requires]
+    gtest/cci.20210126
     sfml/2.Y.Z
 
 [options]
@@ -27,6 +28,7 @@
     bzip2/1.0.8:589a23dff5fdb23a7fb851223eb766480ead0a9a
     flac/1.3.3:b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47
     freetype/2.11.1:c69bad48274e7fc45c887cddc32aa0459f0a81e0
+    gtest/cci.20210126:875c67f4d8a79bdd002908b75efce119eb82836d
     libpng/1.6.37:8b1ef0ec9599374db4689199730c00a0d5f4de36
     ogg/1.3.4:d057732059ea44a47760900cb5e4855d2bea8714
     openal/1.21.1:d057732059ea44a47760900cb5e4855d2bea8714
@@ -46,6 +48,11 @@
     freetype:with_bzip2=True
     freetype:with_png=True
     freetype:with_zlib=True
+    gtest:build_gmock=True
+    gtest:debug_postfix=d
+    gtest:hide_symbols=False
+    gtest:no_main=False
+    gtest:shared=False
     libpng:api_prefix=
     libpng:shared=False
     libpng:sse=True

@@ -74,6 +74,44 @@ set(CONAN_LIBS_SFML ${CONAN_PKG_LIBS_SFML} ${CONAN_SYSTEM_LIBS_SFML} ${CONAN_FRA
 
 
 #################
+###  GTEST
+#################
+set(CONAN_GTEST_ROOT "C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d")
+set(CONAN_INCLUDE_DIRS_GTEST "C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/include")
+set(CONAN_LIB_DIRS_GTEST "C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/lib")
+set(CONAN_BIN_DIRS_GTEST )
+set(CONAN_RES_DIRS_GTEST )
+set(CONAN_SRC_DIRS_GTEST )
+set(CONAN_BUILD_DIRS_GTEST "C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/")
+set(CONAN_FRAMEWORK_DIRS_GTEST )
+set(CONAN_LIBS_GTEST gtest_maind gmock_maind gmockd gtestd)
+set(CONAN_PKG_LIBS_GTEST gtest_maind gmock_maind gmockd gtestd)
+set(CONAN_SYSTEM_LIBS_GTEST )
+set(CONAN_FRAMEWORKS_GTEST )
+set(CONAN_FRAMEWORKS_FOUND_GTEST "")  # Will be filled later
+set(CONAN_DEFINES_GTEST )
+set(CONAN_BUILD_MODULES_PATHS_GTEST )
+# COMPILE_DEFINITIONS are equal to CONAN_DEFINES without -D, for targets
+set(CONAN_COMPILE_DEFINITIONS_GTEST )
+
+set(CONAN_C_FLAGS_GTEST "")
+set(CONAN_CXX_FLAGS_GTEST "")
+set(CONAN_SHARED_LINKER_FLAGS_GTEST "")
+set(CONAN_EXE_LINKER_FLAGS_GTEST "")
+
+# For modern cmake targets we use the list variables (separated with ;)
+set(CONAN_C_FLAGS_GTEST_LIST "")
+set(CONAN_CXX_FLAGS_GTEST_LIST "")
+set(CONAN_SHARED_LINKER_FLAGS_GTEST_LIST "")
+set(CONAN_EXE_LINKER_FLAGS_GTEST_LIST "")
+
+# Apple Frameworks
+conan_find_apple_frameworks(CONAN_FRAMEWORKS_FOUND_GTEST "${CONAN_FRAMEWORKS_GTEST}" "_GTEST" "")
+# Append to aggregated values variable
+set(CONAN_LIBS_GTEST ${CONAN_PKG_LIBS_GTEST} ${CONAN_SYSTEM_LIBS_GTEST} ${CONAN_FRAMEWORKS_FOUND_GTEST})
+
+
+#################
 ###  OPENGL
 #################
 set(CONAN_OPENGL_ROOT "C:/Users/tk/.conan/data/opengl/system/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9")
@@ -510,7 +548,7 @@ set(CONAN_SETTINGS_COMPILER_VERSION "16")
 set(CONAN_SETTINGS_OS "Windows")
 set(CONAN_SETTINGS_OS_BUILD "Windows")
 
-set(CONAN_DEPENDENCIES sfml opengl freetype stb flac openal vorbis libpng bzip2 brotli ogg zlib)
+set(CONAN_DEPENDENCIES sfml gtest opengl freetype stb flac openal vorbis libpng bzip2 brotli ogg zlib)
 # Storing original command line args (CMake helper) flags
 set(CONAN_CMD_CXX_FLAGS ${CONAN_CXX_FLAGS})
 
@@ -519,6 +557,7 @@ set(CONAN_CMD_C_FLAGS ${CONAN_C_FLAGS})
 # Defining accumulated conan variables for all deps
 
 set(CONAN_INCLUDE_DIRS "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/include"
+			"C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/include"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include/freetype2"
 			"C:/Users/tk/.conan/data/stb/cci.20210713/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include"
@@ -533,6 +572,7 @@ set(CONAN_INCLUDE_DIRS "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8
 			"C:/Users/tk/.conan/data/ogg/1.3.4/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include"
 			"C:/Users/tk/.conan/data/zlib/1.2.11/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include" ${CONAN_INCLUDE_DIRS})
 set(CONAN_LIB_DIRS "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/lib"
+			"C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/lib"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib"
 			"C:/Users/tk/.conan/data/flac/1.3.3/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/lib"
 			"C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib"
@@ -547,8 +587,8 @@ set(CONAN_BIN_DIRS "C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48
 			"C:/Users/tk/.conan/data/bzip2/1.0.8/_/_/package/589a23dff5fdb23a7fb851223eb766480ead0a9a/bin" ${CONAN_BIN_DIRS})
 set(CONAN_RES_DIRS "C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/res" ${CONAN_RES_DIRS})
 set(CONAN_FRAMEWORK_DIRS  ${CONAN_FRAMEWORK_DIRS})
-set(CONAN_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_LIBS})
-set(CONAN_PKG_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_PKG_LIBS})
+set(CONAN_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d gtest_maind gmock_maind gmockd gtestd freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_LIBS})
+set(CONAN_PKG_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d gtest_maind gmock_maind gmockd gtestd freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_PKG_LIBS})
 set(CONAN_SYSTEM_LIBS gdi32 ws2_32 opengl32 winmm ole32 shell32 User32 ${CONAN_SYSTEM_LIBS})
 set(CONAN_FRAMEWORKS  ${CONAN_FRAMEWORKS})
 set(CONAN_FRAMEWORKS_FOUND "")  # Will be filled later
@@ -558,6 +598,7 @@ set(CONAN_DEFINES "-DAL_LIBTYPE_STATIC"
 			"-DSFML_STATIC" ${CONAN_DEFINES})
 set(CONAN_BUILD_MODULES_PATHS  ${CONAN_BUILD_MODULES_PATHS})
 set(CONAN_CMAKE_MODULE_PATH "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/"
+			"C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/"
 			"C:/Users/tk/.conan/data/opengl/system/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib/cmake"
@@ -662,6 +703,76 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_SFML_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_SFML_RELWITHDEBINFO_LIST}>
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_SFML_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_SFML_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_SFML_DEBUG_LIST}  ${CONAN_CXX_FLAGS_SFML_DEBUG_LIST}>)
+
+
+    set(_CONAN_PKG_LIBS_GTEST_DEPENDENCIES "${CONAN_SYSTEM_LIBS_GTEST} ${CONAN_FRAMEWORKS_FOUND_GTEST} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_GTEST_DEPENDENCIES "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_GTEST}" "${CONAN_LIB_DIRS_GTEST}"
+                                  CONAN_PACKAGE_TARGETS_GTEST "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES}"
+                                  "" gtest)
+    set(_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_GTEST_DEBUG} ${CONAN_FRAMEWORKS_FOUND_GTEST_DEBUG} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_GTEST_DEPENDENCIES_DEBUG "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_DEBUG}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_GTEST_DEBUG}" "${CONAN_LIB_DIRS_GTEST_DEBUG}"
+                                  CONAN_PACKAGE_TARGETS_GTEST_DEBUG "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_DEBUG}"
+                                  "debug" gtest)
+    set(_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_GTEST_RELEASE} ${CONAN_FRAMEWORKS_FOUND_GTEST_RELEASE} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELEASE "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELEASE}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_GTEST_RELEASE}" "${CONAN_LIB_DIRS_GTEST_RELEASE}"
+                                  CONAN_PACKAGE_TARGETS_GTEST_RELEASE "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELEASE}"
+                                  "release" gtest)
+    set(_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_GTEST_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_GTEST_RELWITHDEBINFO} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELWITHDEBINFO "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELWITHDEBINFO}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_GTEST_RELWITHDEBINFO}" "${CONAN_LIB_DIRS_GTEST_RELWITHDEBINFO}"
+                                  CONAN_PACKAGE_TARGETS_GTEST_RELWITHDEBINFO "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELWITHDEBINFO}"
+                                  "relwithdebinfo" gtest)
+    set(_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_GTEST_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_GTEST_MINSIZEREL} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_GTEST_DEPENDENCIES_MINSIZEREL "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_MINSIZEREL}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_GTEST_MINSIZEREL}" "${CONAN_LIB_DIRS_GTEST_MINSIZEREL}"
+                                  CONAN_PACKAGE_TARGETS_GTEST_MINSIZEREL "${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_MINSIZEREL}"
+                                  "minsizerel" gtest)
+
+    add_library(CONAN_PKG::gtest INTERFACE IMPORTED)
+
+    # Property INTERFACE_LINK_FLAGS do not work, necessary to add to INTERFACE_LINK_LIBRARIES
+    set_property(TARGET CONAN_PKG::gtest PROPERTY INTERFACE_LINK_LIBRARIES ${CONAN_PACKAGE_TARGETS_GTEST} ${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_GTEST_LIST}>
+
+                                                                 $<$<CONFIG:Release>:${CONAN_PACKAGE_TARGETS_GTEST_RELEASE} ${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELEASE}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_GTEST_RELEASE_LIST}>>
+
+                                                                 $<$<CONFIG:RelWithDebInfo>:${CONAN_PACKAGE_TARGETS_GTEST_RELWITHDEBINFO} ${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_RELWITHDEBINFO}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_GTEST_RELWITHDEBINFO_LIST}>>
+
+                                                                 $<$<CONFIG:MinSizeRel>:${CONAN_PACKAGE_TARGETS_GTEST_MINSIZEREL} ${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_MINSIZEREL}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_GTEST_MINSIZEREL_LIST}>>
+
+                                                                 $<$<CONFIG:Debug>:${CONAN_PACKAGE_TARGETS_GTEST_DEBUG} ${_CONAN_PKG_LIBS_GTEST_DEPENDENCIES_DEBUG}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_GTEST_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_GTEST_DEBUG_LIST}>>)
+    set_property(TARGET CONAN_PKG::gtest PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CONAN_INCLUDE_DIRS_GTEST}
+                                                                      $<$<CONFIG:Release>:${CONAN_INCLUDE_DIRS_GTEST_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_INCLUDE_DIRS_GTEST_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_INCLUDE_DIRS_GTEST_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_INCLUDE_DIRS_GTEST_DEBUG}>)
+    set_property(TARGET CONAN_PKG::gtest PROPERTY INTERFACE_COMPILE_DEFINITIONS ${CONAN_COMPILE_DEFINITIONS_GTEST}
+                                                                      $<$<CONFIG:Release>:${CONAN_COMPILE_DEFINITIONS_GTEST_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_COMPILE_DEFINITIONS_GTEST_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_COMPILE_DEFINITIONS_GTEST_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_COMPILE_DEFINITIONS_GTEST_DEBUG}>)
+    set_property(TARGET CONAN_PKG::gtest PROPERTY INTERFACE_COMPILE_OPTIONS ${CONAN_C_FLAGS_GTEST_LIST} ${CONAN_CXX_FLAGS_GTEST_LIST}
+                                                                  $<$<CONFIG:Release>:${CONAN_C_FLAGS_GTEST_RELEASE_LIST} ${CONAN_CXX_FLAGS_GTEST_RELEASE_LIST}>
+                                                                  $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_GTEST_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_GTEST_RELWITHDEBINFO_LIST}>
+                                                                  $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_GTEST_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_GTEST_MINSIZEREL_LIST}>
+                                                                  $<$<CONFIG:Debug>:${CONAN_C_FLAGS_GTEST_DEBUG_LIST}  ${CONAN_CXX_FLAGS_GTEST_DEBUG_LIST}>)
 
 
     set(_CONAN_PKG_LIBS_OPENGL_DEPENDENCIES "${CONAN_SYSTEM_LIBS_OPENGL} ${CONAN_FRAMEWORKS_FOUND_OPENGL} ")
@@ -1433,7 +1544,7 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_ZLIB_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_ZLIB_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_ZLIB_DEBUG_LIST}  ${CONAN_CXX_FLAGS_ZLIB_DEBUG_LIST}>)
 
-    set(CONAN_TARGETS CONAN_PKG::sfml CONAN_PKG::opengl CONAN_PKG::freetype CONAN_PKG::stb CONAN_PKG::flac CONAN_PKG::openal CONAN_PKG::vorbis CONAN_PKG::libpng CONAN_PKG::bzip2 CONAN_PKG::brotli CONAN_PKG::ogg CONAN_PKG::zlib)
+    set(CONAN_TARGETS CONAN_PKG::sfml CONAN_PKG::gtest CONAN_PKG::opengl CONAN_PKG::freetype CONAN_PKG::stb CONAN_PKG::flac CONAN_PKG::openal CONAN_PKG::vorbis CONAN_PKG::libpng CONAN_PKG::bzip2 CONAN_PKG::brotli CONAN_PKG::ogg CONAN_PKG::zlib)
 
 endmacro()
 

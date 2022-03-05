@@ -21,7 +21,8 @@ public:
 	void move(const sf::Point& p) override;
 	void setPoint(const sf::Point& p) override;
 	void setTextureRect(const sf::IntRect& ir) override;
-	void setTexture(sf::Texture& tx) override;
+	void setTexture(sf::Texture* tx) override;
+	void setSize(const sf::Vector2f&) override;
 
 	const std::vector<sf::RectangleShape*>& getCollisionObject() const override;
 	sf::Point getPoint() const override;

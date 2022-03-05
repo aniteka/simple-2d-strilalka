@@ -44,7 +44,8 @@ public:
 	virtual void move(const sf::Point& p) = 0;
 	virtual void setPoint(const sf::Point& p) = 0;
 	virtual void setTextureRect(const sf::IntRect& ir) = 0;
-	virtual void setTexture(sf::Texture& tx) = 0;
+	virtual void setSize(const sf::Vector2f&) = 0;
+	virtual void setTexture(sf::Texture* tx) = 0;
 
 	virtual const std::vector<sf::RectangleShape*>& getCollisionObject() const = 0;
 	virtual sf::Point getPoint() const = 0;

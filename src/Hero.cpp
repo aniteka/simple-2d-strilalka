@@ -10,7 +10,7 @@ Hero::Hero()
 	category = "Hero";
 	status.is_drawable = true;
 
-	DLOG("Hero status: CREATED");
+	DLOG("Hero status: CREATED")
 }
 
 Hero::~Hero()
@@ -50,10 +50,16 @@ void Hero::setTextureRect(const sf::IntRect& ir)
 	texture_rect.setTextureRect(ir);
 }
 
-
-void Hero::setTexture(sf::Texture& tx)
+void Hero::setSize(const sf::Vector2f& size)
 {
-	texture_rect.setTexture(&tx);
+	texture_rect.setSize(size);
+}
+
+
+void Hero::setTexture(sf::Texture* tx)
+{
+	texture_rect.setFillColor(sf::Color::White);
+	texture_rect.setTexture(tx, true);
 }
 
 
@@ -81,6 +87,7 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		DLOG("HERO WITH CATEGORY \"%s\" ISN'T DRAWABLE", category.c_str())
 		throw "ISN'T DRAWABLE";
 	}
+		
 	target.draw(texture_rect, states);
 }
 

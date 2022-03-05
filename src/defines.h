@@ -19,13 +19,6 @@ using namespace std::chrono_literals;
 
 
 
-// \/\/\/MAIN VAR'S\/\/\/
-constexpr size_t WINDOW_WIDTH = 500;
-constexpr size_t WINDOW_HEIGHT = 500;
-// /\/\/\MAIN VAR'S/\/\/\)
-
-
-
 // \/\/\/LOGGER\/\/\/
 
 
@@ -85,6 +78,7 @@ namespace sf
 };
 
 using P = sf::Point;
-
+using VF = sf::Vector2f;
+using VI = sf::Vector2i;
 
 #endif

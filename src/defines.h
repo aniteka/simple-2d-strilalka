@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿#ifndef DEFINES_H
+#define DEFINES_H
+
+#define DEBUG
+#define TESTING
 #include <iostream>
 #include <cassert>
 #include <string>
@@ -24,8 +28,7 @@ constexpr size_t WINDOW_HEIGHT = 500;
 
 
 #ifdef DEBUG
-
-FILE* DLOGFILE___ = NULL;
+inline FILE* DLOGFILE___ = NULL;
 
 #define DPRINT(str,...)	printf( (""s + std::string(str)).c_str() , __VA_ARGS__)
 
@@ -55,9 +58,9 @@ FILE* DLOGFILE___ = NULL;
 }				
 
 #else
-#define DPIRIN		(...)
-#define DASSERT		(...)
-#define DLOG		(...)
+#define DPIRIN(...)
+#define DASSERT(...)
+#define DLOG(...)	
 #endif
 
 
@@ -75,3 +78,6 @@ namespace sf
 };
 
 using P = sf::Point;
+
+
+#endif

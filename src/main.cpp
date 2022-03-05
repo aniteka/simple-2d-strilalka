@@ -1,7 +1,6 @@
-﻿#define DEBUG
-#define TESTING
-#include "defines.h"
+﻿#include "defines.h"
 #include "Unit.hpp"
+#include "Hero.hpp"
 
 #include "Tests/main.test.hpp"
 

@@ -21,7 +21,7 @@ public:
 		, interrupt_this					{}
 		, block_this						{}
 	{}
-	virtual ~Unit() = 0;
+	virtual ~Unit(){}
 	
 	void setPhysicsStatus(bool stat)
 		{ status.is_physics = stat; }
@@ -39,12 +39,13 @@ public:
 
 
 	
-	virtual void addCollisionObject(sf::Shape* sh) = 0;
+	virtual void addCollisionObject(sf::RectangleShape* sh) = 0;
 	virtual void move(const sf::Point& p) = 0;
 	virtual void setPoint(const sf::Point& p) = 0;
 	virtual void setTextureRect(const sf::IntRect& ir) = 0;
 	virtual void setTexture(sf::Texture& tx) = 0;
 
+	virtual const std::vector<sf::RectangleShape*>& getCollisionObject() const = 0;
 	virtual sf::Point getPoint() const = 0;
 	virtual sf::IntRect getTextureRect() const = 0;
 };

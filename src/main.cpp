@@ -91,6 +91,8 @@ int MainProgram::run()
 	{
 		events();
 
+		main_hero.update();
+		
 		window.clear(BACKGROUND_COLOR);
 		draw();
 		window.display();

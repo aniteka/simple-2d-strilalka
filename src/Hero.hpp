@@ -11,11 +11,35 @@ class Hero
 	sf::RectangleShape texture_rect;
 	sf::Point warp_point;
 
+	std::mutex texture_upd_mtx;
+	using lock_unlock = std::lock_guard<std::mutex>;
+
+	float cof_move;
+	float cof_jump;
+
+	int speed;
+	int gravity_force;
+	
+	sf::Texture idle_texture;
+	sf::Texture move_texture;
+	sf::Texture jump_texture;
+	bool is_texture_updating;
+
+	std::thread texture_updating;
+
 public:
 	Hero();
 	~Hero() override;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	void update();
+
+	void setSpeed(int speed);
+	int getSpeed() const;
+
+	void setGravityForce(int gf);
+	int getGravityForce() const;
 	
 	void addCollisionObject(sf::RectangleShape* sh) override;
 	void move(const sf::Point& p) override;
@@ -27,4 +51,9 @@ public:
 	const std::vector<sf::RectangleShape*>& getCollisionObject() const override;
 	sf::Point getPoint() const override;
 	sf::IntRect getTextureRect() const override;
+
+private:
+	void moveKeyboardUpdate();
+	void jumpKeyboardUpdate();
+	void textureUpdating();
 };

@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 #include <thread>
+#include <mutex>
+#include <atomic>
 
 #include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>

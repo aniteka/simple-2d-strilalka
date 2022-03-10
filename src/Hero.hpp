@@ -3,9 +3,8 @@
 #include "Unit.hpp"
 
 
-class Hero
+class Hero 
 	: public Unit
-	, public sf::Drawable
 {
 	std::vector<sf::RectangleShape*> collisions;
 	sf::RectangleShape texture_rect;
@@ -30,17 +29,19 @@ class Hero
 public:
 	Hero();
 	~Hero() override;
+	Hero(const Hero&) = delete;
+	Hero(Hero&&) = delete;
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	void update();
 
 	void setSpeed(int speed);
 	int getSpeed() const;
 
 	void setGravityForce(int gf);
 	int getGravityForce() const;
-	
+
+	void collisision(sf::RectangleShape* to, sf::RectangleShape* from) override;
+	void update() override;
 	void addCollisionObject(sf::RectangleShape* sh) override;
 	void move(const sf::Point& p) override;
 	void setPoint(const sf::Point& p) override;

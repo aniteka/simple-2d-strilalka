@@ -112,6 +112,44 @@ set(CONAN_LIBS_GTEST ${CONAN_PKG_LIBS_GTEST} ${CONAN_SYSTEM_LIBS_GTEST} ${CONAN_
 
 
 #################
+###  SOL2
+#################
+set(CONAN_SOL2_ROOT "C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9")
+set(CONAN_INCLUDE_DIRS_SOL2 "C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include")
+set(CONAN_LIB_DIRS_SOL2 )
+set(CONAN_BIN_DIRS_SOL2 )
+set(CONAN_RES_DIRS_SOL2 )
+set(CONAN_SRC_DIRS_SOL2 )
+set(CONAN_BUILD_DIRS_SOL2 "C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/")
+set(CONAN_FRAMEWORK_DIRS_SOL2 )
+set(CONAN_LIBS_SOL2 )
+set(CONAN_PKG_LIBS_SOL2 )
+set(CONAN_SYSTEM_LIBS_SOL2 )
+set(CONAN_FRAMEWORKS_SOL2 )
+set(CONAN_FRAMEWORKS_FOUND_SOL2 "")  # Will be filled later
+set(CONAN_DEFINES_SOL2 )
+set(CONAN_BUILD_MODULES_PATHS_SOL2 )
+# COMPILE_DEFINITIONS are equal to CONAN_DEFINES without -D, for targets
+set(CONAN_COMPILE_DEFINITIONS_SOL2 )
+
+set(CONAN_C_FLAGS_SOL2 "")
+set(CONAN_CXX_FLAGS_SOL2 "")
+set(CONAN_SHARED_LINKER_FLAGS_SOL2 "")
+set(CONAN_EXE_LINKER_FLAGS_SOL2 "")
+
+# For modern cmake targets we use the list variables (separated with ;)
+set(CONAN_C_FLAGS_SOL2_LIST "")
+set(CONAN_CXX_FLAGS_SOL2_LIST "")
+set(CONAN_SHARED_LINKER_FLAGS_SOL2_LIST "")
+set(CONAN_EXE_LINKER_FLAGS_SOL2_LIST "")
+
+# Apple Frameworks
+conan_find_apple_frameworks(CONAN_FRAMEWORKS_FOUND_SOL2 "${CONAN_FRAMEWORKS_SOL2}" "_SOL2" "")
+# Append to aggregated values variable
+set(CONAN_LIBS_SOL2 ${CONAN_PKG_LIBS_SOL2} ${CONAN_SYSTEM_LIBS_SOL2} ${CONAN_FRAMEWORKS_FOUND_SOL2})
+
+
+#################
 ###  OPENGL
 #################
 set(CONAN_OPENGL_ROOT "C:/Users/tk/.conan/data/opengl/system/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9")
@@ -343,6 +381,44 @@ set(CONAN_LIBS_VORBIS ${CONAN_PKG_LIBS_VORBIS} ${CONAN_SYSTEM_LIBS_VORBIS} ${CON
 
 
 #################
+###  LUA
+#################
+set(CONAN_LUA_ROOT "C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714")
+set(CONAN_INCLUDE_DIRS_LUA "C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include")
+set(CONAN_LIB_DIRS_LUA "C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib")
+set(CONAN_BIN_DIRS_LUA )
+set(CONAN_RES_DIRS_LUA )
+set(CONAN_SRC_DIRS_LUA )
+set(CONAN_BUILD_DIRS_LUA "C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/")
+set(CONAN_FRAMEWORK_DIRS_LUA )
+set(CONAN_LIBS_LUA lua)
+set(CONAN_PKG_LIBS_LUA lua)
+set(CONAN_SYSTEM_LIBS_LUA )
+set(CONAN_FRAMEWORKS_LUA )
+set(CONAN_FRAMEWORKS_FOUND_LUA "")  # Will be filled later
+set(CONAN_DEFINES_LUA )
+set(CONAN_BUILD_MODULES_PATHS_LUA )
+# COMPILE_DEFINITIONS are equal to CONAN_DEFINES without -D, for targets
+set(CONAN_COMPILE_DEFINITIONS_LUA )
+
+set(CONAN_C_FLAGS_LUA "")
+set(CONAN_CXX_FLAGS_LUA "")
+set(CONAN_SHARED_LINKER_FLAGS_LUA "")
+set(CONAN_EXE_LINKER_FLAGS_LUA "")
+
+# For modern cmake targets we use the list variables (separated with ;)
+set(CONAN_C_FLAGS_LUA_LIST "")
+set(CONAN_CXX_FLAGS_LUA_LIST "")
+set(CONAN_SHARED_LINKER_FLAGS_LUA_LIST "")
+set(CONAN_EXE_LINKER_FLAGS_LUA_LIST "")
+
+# Apple Frameworks
+conan_find_apple_frameworks(CONAN_FRAMEWORKS_FOUND_LUA "${CONAN_FRAMEWORKS_LUA}" "_LUA" "")
+# Append to aggregated values variable
+set(CONAN_LIBS_LUA ${CONAN_PKG_LIBS_LUA} ${CONAN_SYSTEM_LIBS_LUA} ${CONAN_FRAMEWORKS_FOUND_LUA})
+
+
+#################
 ###  LIBPNG
 #################
 set(CONAN_LIBPNG_ROOT "C:/Users/tk/.conan/data/libpng/1.6.37/_/_/package/8b1ef0ec9599374db4689199730c00a0d5f4de36")
@@ -548,7 +624,7 @@ set(CONAN_SETTINGS_COMPILER_VERSION "16")
 set(CONAN_SETTINGS_OS "Windows")
 set(CONAN_SETTINGS_OS_BUILD "Windows")
 
-set(CONAN_DEPENDENCIES sfml gtest opengl freetype stb flac openal vorbis libpng bzip2 brotli ogg zlib)
+set(CONAN_DEPENDENCIES sfml gtest sol2 opengl freetype stb flac openal vorbis lua libpng bzip2 brotli ogg zlib)
 # Storing original command line args (CMake helper) flags
 set(CONAN_CMD_CXX_FLAGS ${CONAN_CXX_FLAGS})
 
@@ -558,6 +634,7 @@ set(CONAN_CMD_C_FLAGS ${CONAN_C_FLAGS})
 
 set(CONAN_INCLUDE_DIRS "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/include"
 			"C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/include"
+			"C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include/freetype2"
 			"C:/Users/tk/.conan/data/stb/cci.20210713/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include"
@@ -565,6 +642,7 @@ set(CONAN_INCLUDE_DIRS "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8
 			"C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include"
 			"C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include/AL"
 			"C:/Users/tk/.conan/data/vorbis/1.3.7/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/include"
+			"C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include"
 			"C:/Users/tk/.conan/data/libpng/1.6.37/_/_/package/8b1ef0ec9599374db4689199730c00a0d5f4de36/include"
 			"C:/Users/tk/.conan/data/bzip2/1.0.8/_/_/package/589a23dff5fdb23a7fb851223eb766480ead0a9a/include"
 			"C:/Users/tk/.conan/data/brotli/1.0.9/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include"
@@ -577,6 +655,7 @@ set(CONAN_LIB_DIRS "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac38
 			"C:/Users/tk/.conan/data/flac/1.3.3/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/lib"
 			"C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib"
 			"C:/Users/tk/.conan/data/vorbis/1.3.7/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/lib"
+			"C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib"
 			"C:/Users/tk/.conan/data/libpng/1.6.37/_/_/package/8b1ef0ec9599374db4689199730c00a0d5f4de36/lib"
 			"C:/Users/tk/.conan/data/bzip2/1.0.8/_/_/package/589a23dff5fdb23a7fb851223eb766480ead0a9a/lib"
 			"C:/Users/tk/.conan/data/brotli/1.0.9/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib"
@@ -587,8 +666,8 @@ set(CONAN_BIN_DIRS "C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48
 			"C:/Users/tk/.conan/data/bzip2/1.0.8/_/_/package/589a23dff5fdb23a7fb851223eb766480ead0a9a/bin" ${CONAN_BIN_DIRS})
 set(CONAN_RES_DIRS "C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/res" ${CONAN_RES_DIRS})
 set(CONAN_FRAMEWORK_DIRS  ${CONAN_FRAMEWORK_DIRS})
-set(CONAN_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d gtest_maind gmock_maind gmockd gtestd freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_LIBS})
-set(CONAN_PKG_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d gtest_maind gmock_maind gmockd gtestd freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_PKG_LIBS})
+set(CONAN_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d gtest_maind gmock_maind gmockd gtestd freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis lua libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_LIBS})
+set(CONAN_PKG_LIBS sfml-main-d sfml-graphics-s-d sfml-window-s-d sfml-network-s-d sfml-audio-s-d sfml-system-s-d gtest_maind gmock_maind gmockd gtestd freetyped FLAC++ FLAC OpenAL32 vorbisenc vorbisfile vorbis lua libpng16d bz2 brotlidec-static brotlienc-static brotlicommon-static ogg zlib ${CONAN_PKG_LIBS})
 set(CONAN_SYSTEM_LIBS gdi32 ws2_32 opengl32 winmm ole32 shell32 User32 ${CONAN_SYSTEM_LIBS})
 set(CONAN_FRAMEWORKS  ${CONAN_FRAMEWORKS})
 set(CONAN_FRAMEWORKS_FOUND "")  # Will be filled later
@@ -599,6 +678,7 @@ set(CONAN_DEFINES "-DAL_LIBTYPE_STATIC"
 set(CONAN_BUILD_MODULES_PATHS  ${CONAN_BUILD_MODULES_PATHS})
 set(CONAN_CMAKE_MODULE_PATH "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/"
 			"C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/"
+			"C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/"
 			"C:/Users/tk/.conan/data/opengl/system/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/"
 			"C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib/cmake"
@@ -606,6 +686,7 @@ set(CONAN_CMAKE_MODULE_PATH "C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d027
 			"C:/Users/tk/.conan/data/flac/1.3.3/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/"
 			"C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/"
 			"C:/Users/tk/.conan/data/vorbis/1.3.7/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/"
+			"C:/Users/tk/.conan/data/lua/5.3.5/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/"
 			"C:/Users/tk/.conan/data/libpng/1.6.37/_/_/package/8b1ef0ec9599374db4689199730c00a0d5f4de36/"
 			"C:/Users/tk/.conan/data/bzip2/1.0.8/_/_/package/589a23dff5fdb23a7fb851223eb766480ead0a9a/"
 			"C:/Users/tk/.conan/data/bzip2/1.0.8/_/_/package/589a23dff5fdb23a7fb851223eb766480ead0a9a/lib/cmake"
@@ -773,6 +854,76 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_GTEST_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_GTEST_RELWITHDEBINFO_LIST}>
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_GTEST_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_GTEST_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_GTEST_DEBUG_LIST}  ${CONAN_CXX_FLAGS_GTEST_DEBUG_LIST}>)
+
+
+    set(_CONAN_PKG_LIBS_SOL2_DEPENDENCIES "${CONAN_SYSTEM_LIBS_SOL2} ${CONAN_FRAMEWORKS_FOUND_SOL2} CONAN_PKG::lua")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_SOL2_DEPENDENCIES "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_SOL2}" "${CONAN_LIB_DIRS_SOL2}"
+                                  CONAN_PACKAGE_TARGETS_SOL2 "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES}"
+                                  "" sol2)
+    set(_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_SOL2_DEBUG} ${CONAN_FRAMEWORKS_FOUND_SOL2_DEBUG} CONAN_PKG::lua")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_SOL2_DEPENDENCIES_DEBUG "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_DEBUG}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_SOL2_DEBUG}" "${CONAN_LIB_DIRS_SOL2_DEBUG}"
+                                  CONAN_PACKAGE_TARGETS_SOL2_DEBUG "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_DEBUG}"
+                                  "debug" sol2)
+    set(_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_SOL2_RELEASE} ${CONAN_FRAMEWORKS_FOUND_SOL2_RELEASE} CONAN_PKG::lua")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELEASE "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELEASE}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_SOL2_RELEASE}" "${CONAN_LIB_DIRS_SOL2_RELEASE}"
+                                  CONAN_PACKAGE_TARGETS_SOL2_RELEASE "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELEASE}"
+                                  "release" sol2)
+    set(_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_SOL2_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_SOL2_RELWITHDEBINFO} CONAN_PKG::lua")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELWITHDEBINFO "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELWITHDEBINFO}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_SOL2_RELWITHDEBINFO}" "${CONAN_LIB_DIRS_SOL2_RELWITHDEBINFO}"
+                                  CONAN_PACKAGE_TARGETS_SOL2_RELWITHDEBINFO "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELWITHDEBINFO}"
+                                  "relwithdebinfo" sol2)
+    set(_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_SOL2_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_SOL2_MINSIZEREL} CONAN_PKG::lua")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_SOL2_DEPENDENCIES_MINSIZEREL "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_MINSIZEREL}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_SOL2_MINSIZEREL}" "${CONAN_LIB_DIRS_SOL2_MINSIZEREL}"
+                                  CONAN_PACKAGE_TARGETS_SOL2_MINSIZEREL "${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_MINSIZEREL}"
+                                  "minsizerel" sol2)
+
+    add_library(CONAN_PKG::sol2 INTERFACE IMPORTED)
+
+    # Property INTERFACE_LINK_FLAGS do not work, necessary to add to INTERFACE_LINK_LIBRARIES
+    set_property(TARGET CONAN_PKG::sol2 PROPERTY INTERFACE_LINK_LIBRARIES ${CONAN_PACKAGE_TARGETS_SOL2} ${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_SOL2_LIST}>
+
+                                                                 $<$<CONFIG:Release>:${CONAN_PACKAGE_TARGETS_SOL2_RELEASE} ${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELEASE}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_SOL2_RELEASE_LIST}>>
+
+                                                                 $<$<CONFIG:RelWithDebInfo>:${CONAN_PACKAGE_TARGETS_SOL2_RELWITHDEBINFO} ${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_RELWITHDEBINFO}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_SOL2_RELWITHDEBINFO_LIST}>>
+
+                                                                 $<$<CONFIG:MinSizeRel>:${CONAN_PACKAGE_TARGETS_SOL2_MINSIZEREL} ${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_MINSIZEREL}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_SOL2_MINSIZEREL_LIST}>>
+
+                                                                 $<$<CONFIG:Debug>:${CONAN_PACKAGE_TARGETS_SOL2_DEBUG} ${_CONAN_PKG_LIBS_SOL2_DEPENDENCIES_DEBUG}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_SOL2_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_SOL2_DEBUG_LIST}>>)
+    set_property(TARGET CONAN_PKG::sol2 PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CONAN_INCLUDE_DIRS_SOL2}
+                                                                      $<$<CONFIG:Release>:${CONAN_INCLUDE_DIRS_SOL2_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_INCLUDE_DIRS_SOL2_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_INCLUDE_DIRS_SOL2_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_INCLUDE_DIRS_SOL2_DEBUG}>)
+    set_property(TARGET CONAN_PKG::sol2 PROPERTY INTERFACE_COMPILE_DEFINITIONS ${CONAN_COMPILE_DEFINITIONS_SOL2}
+                                                                      $<$<CONFIG:Release>:${CONAN_COMPILE_DEFINITIONS_SOL2_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_COMPILE_DEFINITIONS_SOL2_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_COMPILE_DEFINITIONS_SOL2_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_COMPILE_DEFINITIONS_SOL2_DEBUG}>)
+    set_property(TARGET CONAN_PKG::sol2 PROPERTY INTERFACE_COMPILE_OPTIONS ${CONAN_C_FLAGS_SOL2_LIST} ${CONAN_CXX_FLAGS_SOL2_LIST}
+                                                                  $<$<CONFIG:Release>:${CONAN_C_FLAGS_SOL2_RELEASE_LIST} ${CONAN_CXX_FLAGS_SOL2_RELEASE_LIST}>
+                                                                  $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_SOL2_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_SOL2_RELWITHDEBINFO_LIST}>
+                                                                  $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_SOL2_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_SOL2_MINSIZEREL_LIST}>
+                                                                  $<$<CONFIG:Debug>:${CONAN_C_FLAGS_SOL2_DEBUG_LIST}  ${CONAN_CXX_FLAGS_SOL2_DEBUG_LIST}>)
 
 
     set(_CONAN_PKG_LIBS_OPENGL_DEPENDENCIES "${CONAN_SYSTEM_LIBS_OPENGL} ${CONAN_FRAMEWORKS_FOUND_OPENGL} ")
@@ -1195,6 +1346,76 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_VORBIS_DEBUG_LIST}  ${CONAN_CXX_FLAGS_VORBIS_DEBUG_LIST}>)
 
 
+    set(_CONAN_PKG_LIBS_LUA_DEPENDENCIES "${CONAN_SYSTEM_LIBS_LUA} ${CONAN_FRAMEWORKS_FOUND_LUA} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_LUA_DEPENDENCIES "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_LUA}" "${CONAN_LIB_DIRS_LUA}"
+                                  CONAN_PACKAGE_TARGETS_LUA "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES}"
+                                  "" lua)
+    set(_CONAN_PKG_LIBS_LUA_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_LUA_DEBUG} ${CONAN_FRAMEWORKS_FOUND_LUA_DEBUG} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_LUA_DEPENDENCIES_DEBUG "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_DEBUG}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_LUA_DEBUG}" "${CONAN_LIB_DIRS_LUA_DEBUG}"
+                                  CONAN_PACKAGE_TARGETS_LUA_DEBUG "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_DEBUG}"
+                                  "debug" lua)
+    set(_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_LUA_RELEASE} ${CONAN_FRAMEWORKS_FOUND_LUA_RELEASE} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELEASE "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELEASE}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_LUA_RELEASE}" "${CONAN_LIB_DIRS_LUA_RELEASE}"
+                                  CONAN_PACKAGE_TARGETS_LUA_RELEASE "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELEASE}"
+                                  "release" lua)
+    set(_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_LUA_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_LUA_RELWITHDEBINFO} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELWITHDEBINFO "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELWITHDEBINFO}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_LUA_RELWITHDEBINFO}" "${CONAN_LIB_DIRS_LUA_RELWITHDEBINFO}"
+                                  CONAN_PACKAGE_TARGETS_LUA_RELWITHDEBINFO "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELWITHDEBINFO}"
+                                  "relwithdebinfo" lua)
+    set(_CONAN_PKG_LIBS_LUA_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_LUA_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_LUA_MINSIZEREL} ")
+    string(REPLACE " " ";" _CONAN_PKG_LIBS_LUA_DEPENDENCIES_MINSIZEREL "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_MINSIZEREL}")
+    conan_package_library_targets("${CONAN_PKG_LIBS_LUA_MINSIZEREL}" "${CONAN_LIB_DIRS_LUA_MINSIZEREL}"
+                                  CONAN_PACKAGE_TARGETS_LUA_MINSIZEREL "${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_MINSIZEREL}"
+                                  "minsizerel" lua)
+
+    add_library(CONAN_PKG::lua INTERFACE IMPORTED)
+
+    # Property INTERFACE_LINK_FLAGS do not work, necessary to add to INTERFACE_LINK_LIBRARIES
+    set_property(TARGET CONAN_PKG::lua PROPERTY INTERFACE_LINK_LIBRARIES ${CONAN_PACKAGE_TARGETS_LUA} ${_CONAN_PKG_LIBS_LUA_DEPENDENCIES}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LUA_LIST}>
+
+                                                                 $<$<CONFIG:Release>:${CONAN_PACKAGE_TARGETS_LUA_RELEASE} ${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELEASE}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_RELEASE_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LUA_RELEASE_LIST}>>
+
+                                                                 $<$<CONFIG:RelWithDebInfo>:${CONAN_PACKAGE_TARGETS_LUA_RELWITHDEBINFO} ${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_RELWITHDEBINFO}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_RELWITHDEBINFO_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LUA_RELWITHDEBINFO_LIST}>>
+
+                                                                 $<$<CONFIG:MinSizeRel>:${CONAN_PACKAGE_TARGETS_LUA_MINSIZEREL} ${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_MINSIZEREL}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_MINSIZEREL_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LUA_MINSIZEREL_LIST}>>
+
+                                                                 $<$<CONFIG:Debug>:${CONAN_PACKAGE_TARGETS_LUA_DEBUG} ${_CONAN_PKG_LIBS_LUA_DEPENDENCIES_DEBUG}
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LUA_DEBUG_LIST}>
+                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LUA_DEBUG_LIST}>>)
+    set_property(TARGET CONAN_PKG::lua PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CONAN_INCLUDE_DIRS_LUA}
+                                                                      $<$<CONFIG:Release>:${CONAN_INCLUDE_DIRS_LUA_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_INCLUDE_DIRS_LUA_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_INCLUDE_DIRS_LUA_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_INCLUDE_DIRS_LUA_DEBUG}>)
+    set_property(TARGET CONAN_PKG::lua PROPERTY INTERFACE_COMPILE_DEFINITIONS ${CONAN_COMPILE_DEFINITIONS_LUA}
+                                                                      $<$<CONFIG:Release>:${CONAN_COMPILE_DEFINITIONS_LUA_RELEASE}>
+                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_COMPILE_DEFINITIONS_LUA_RELWITHDEBINFO}>
+                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_COMPILE_DEFINITIONS_LUA_MINSIZEREL}>
+                                                                      $<$<CONFIG:Debug>:${CONAN_COMPILE_DEFINITIONS_LUA_DEBUG}>)
+    set_property(TARGET CONAN_PKG::lua PROPERTY INTERFACE_COMPILE_OPTIONS ${CONAN_C_FLAGS_LUA_LIST} ${CONAN_CXX_FLAGS_LUA_LIST}
+                                                                  $<$<CONFIG:Release>:${CONAN_C_FLAGS_LUA_RELEASE_LIST} ${CONAN_CXX_FLAGS_LUA_RELEASE_LIST}>
+                                                                  $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_LUA_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_LUA_RELWITHDEBINFO_LIST}>
+                                                                  $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_LUA_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_LUA_MINSIZEREL_LIST}>
+                                                                  $<$<CONFIG:Debug>:${CONAN_C_FLAGS_LUA_DEBUG_LIST}  ${CONAN_CXX_FLAGS_LUA_DEBUG_LIST}>)
+
+
     set(_CONAN_PKG_LIBS_LIBPNG_DEPENDENCIES "${CONAN_SYSTEM_LIBS_LIBPNG} ${CONAN_FRAMEWORKS_FOUND_LIBPNG} CONAN_PKG::zlib")
     string(REPLACE " " ";" _CONAN_PKG_LIBS_LIBPNG_DEPENDENCIES "${_CONAN_PKG_LIBS_LIBPNG_DEPENDENCIES}")
     conan_package_library_targets("${CONAN_PKG_LIBS_LIBPNG}" "${CONAN_LIB_DIRS_LIBPNG}"
@@ -1544,7 +1765,7 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_ZLIB_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_ZLIB_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_ZLIB_DEBUG_LIST}  ${CONAN_CXX_FLAGS_ZLIB_DEBUG_LIST}>)
 
-    set(CONAN_TARGETS CONAN_PKG::sfml CONAN_PKG::gtest CONAN_PKG::opengl CONAN_PKG::freetype CONAN_PKG::stb CONAN_PKG::flac CONAN_PKG::openal CONAN_PKG::vorbis CONAN_PKG::libpng CONAN_PKG::bzip2 CONAN_PKG::brotli CONAN_PKG::ogg CONAN_PKG::zlib)
+    set(CONAN_TARGETS CONAN_PKG::sfml CONAN_PKG::gtest CONAN_PKG::sol2 CONAN_PKG::opengl CONAN_PKG::freetype CONAN_PKG::stb CONAN_PKG::flac CONAN_PKG::openal CONAN_PKG::vorbis CONAN_PKG::lua CONAN_PKG::libpng CONAN_PKG::bzip2 CONAN_PKG::brotli CONAN_PKG::ogg CONAN_PKG::zlib)
 
 endmacro()
 

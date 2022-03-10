@@ -7,6 +7,7 @@
 #include <cassert>
 #include <string>
 #include <vector>
+#include <array>
 #include <thread>
 #include <mutex>
 #include <atomic>

@@ -5,7 +5,8 @@
     "options": "brotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\ngtest:build_gmock=True\ngtest:debug_postfix=d\ngtest:hide_symbols=False\ngtest:no_main=False\ngtest:shared=False\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nsfml:audio=True\nsfml:graphics=True\nsfml:network=True\nsfml:shared=False\nsfml:window=True\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:minizip=deprecated\nzlib:shared=False",
     "requires": [
      "1",
-     "13"
+     "13",
+     "14"
     ],
     "path": "..\\conanfile.txt",
     "context": "host"
@@ -122,6 +123,23 @@
     "options": "build_gmock=True\ndebug_postfix=d\nhide_symbols=False\nno_main=False\nshared=False",
     "package_id": "875c67f4d8a79bdd002908b75efce119eb82836d",
     "prev": "26aee87c20a397b7af8b3d26110d7786",
+    "context": "host"
+   },
+   "14": {
+    "ref": "sol2/3.2.3#2be40fc472f1a973dae729f23099ce3b",
+    "options": "lua:compile_as_cpp=False\nlua:shared=False",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "39ebc0efd74f1b113f518e5370b011fc",
+    "requires": [
+     "15"
+    ],
+    "context": "host"
+   },
+   "15": {
+    "ref": "lua/5.3.5#0c942f2706bbf039c8fa9ec811bbbaca",
+    "options": "compile_as_cpp=False\nshared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "2047db650a049a104538497c8071974d",
     "context": "host"
    }
   },

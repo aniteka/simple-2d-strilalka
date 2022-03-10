@@ -1,6 +1,7 @@
 [requires]
 sfml/2.5.1
 gtest/cci.20210126
+sol2/3.2.3
 
 [generators]
 cmake

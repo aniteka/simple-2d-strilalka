@@ -1,6 +1,8 @@
 ﻿#include "defines.h"
 #include "Unit.hpp"
 #include "Hero.hpp"
+#include "Scene.hpp"
+#include "TailMap.hpp"
 
 #include "Tests/main.test.hpp"
 
@@ -26,7 +28,8 @@ private: /*Constants*/
 private: /*Vars*/
 	sf::RenderWindow window;
 	Hero main_hero;
-
+	TailMap main_tail_map;
+	Scene main_scene;
 
 public: /*To use*/
 	MainProgram();
@@ -38,9 +41,8 @@ public: /*To use*/
 
 
 private /*Functions*/:
-	void events();
 	void loadTextures();
-	void draw();
+	void initTailMap();
 };
 
 
@@ -53,7 +55,7 @@ int main(int a, char** b)
 	main_test(a, b);
 	DLOG("TESTING END\n");
 	#endif
-	
+
 	MainProgram main;
 	return main.run();
 }
@@ -76,41 +78,32 @@ MainProgram::MainProgram()
 		(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
 		WINDOW_TITLE)
 	, main_hero()
+	, main_scene(window)
+	, main_tail_map()
 {
 	window.setFramerateLimit(FRAME_LIMIT);
 
 	main_hero.setSize(VF(30, 100));
+
+	main_scene.addUnit(
+		&main_hero,
+		&main_tail_map
+	);
+	
 	loadTextures();
+	initTailMap();
 }
 
 
 
 int MainProgram::run()
 {
-	while (window.isOpen())
-	{
-		events();
-
-		main_hero.update();
-		
-		window.clear(BACKGROUND_COLOR);
-		draw();
-		window.display();
-	}
-
+	main_scene.run();
 	return 0;
 }
 
 
-void MainProgram::events()
-{
-	sf::Event e;
-	while(window.pollEvent(e))
-	{
-		if (e.type == sf::Event::Closed)
-			window.close();
-	}
-}
+
 
 void MainProgram::loadTextures()
 {
@@ -120,9 +113,19 @@ void MainProgram::loadTextures()
 	main_hero.setTexture(texture_hero);
 }
 
-
-void MainProgram::draw()
+void MainProgram::initTailMap()
 {
-	window.draw(main_hero);
+	auto texture_hero = new sf::Texture;
+	if (!texture_hero->loadFromFile(TEST_PNG_FILENAME))
+		DLOG("ERROR TO LOAD TEXTURE");
+	/*
+	main_tail_map = TailMap(
+		{}
+		, 10, 10
+	);*/
+	main_tail_map = TailMap(
+		"ResFiles\\tailMap.lua"
+	);
+	main_tail_map.setRectHW(50.f, 50.f);
 }
 

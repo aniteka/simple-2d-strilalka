@@ -7,13 +7,14 @@ Hero::Hero()
 	, warp_point{ 0,0 }
 	, cof_move(0)
 	, cof_jump(0)
-	, speed(5)
-	, gravity_force(10)
+	, speed(1)
+	, gravity_force(1)
 	, is_texture_updating(false)
 {
 	texture_rect.setFillColor(sf::Color(0, 0, 0, 255));
 	category = "Hero";
 	status.is_drawable = true;
+	status.is_physics = true;
 
 	texture_updating = std::thread(
 		[this]() { this->textureUpdating(); }
@@ -21,6 +22,21 @@ Hero::Hero()
 
 	DLOG("Hero status: CREATED");
 }
+
+void Hero::collisision(sf::RectangleShape* to, sf::RectangleShape* from)
+{
+	auto pto = to->getPosition();
+	auto sto = to->getSize();
+	auto pfrom = to->getPosition();
+	auto sfrom = to->getSize();
+	// Left
+	if (pfrom.x < pto.x + sto.x)
+		if (cof_move > 0) cof_move = 0;
+	// Right
+	if (pfrom.x + sfrom.x > pto.x)
+		if (cof_move < 0) cof_move = 0;
+}
+
 
 Hero::~Hero()
 {
@@ -66,12 +82,6 @@ void Hero::setSize(const sf::Vector2f& size)
 }
 
 
-void Hero::setTexture(sf::Texture* tx)
-{
-	texture_rect.setFillColor(sf::Color::White);
-	texture_rect.setTexture(tx, true);
-}
-
 
 const std::vector<sf::RectangleShape*>& Hero::getCollisionObject() const 
 {
@@ -79,16 +89,22 @@ const std::vector<sf::RectangleShape*>& Hero::getCollisionObject() const
 }
 
 
-
 sf::Point Hero::getPoint() const
 {
 	return warp_point;
 }
 
+
 sf::IntRect Hero::getTextureRect() const
 {
 	return texture_rect.getTextureRect();
 }
+void Hero::setTexture(sf::Texture* tx)
+{
+	texture_rect.setFillColor(sf::Color::White);
+	texture_rect.setTexture(tx, true);
+}
+
 
 void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
@@ -101,15 +117,24 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(texture_rect, states);
 }
 
+
 void Hero::setSpeed(int speed)
 {
 	this->speed = speed;
 }
-
 int Hero::getSpeed() const
 {
 	return speed;
 }
+void Hero::setGravityForce(int gf)
+{
+	gravity_force = gf;
+}
+int Hero::getGravityForce() const
+{
+	return gravity_force;
+}
+
 
 void Hero::moveKeyboardUpdate()
 {
@@ -130,7 +155,6 @@ void Hero::moveKeyboardUpdate()
 	if (cof_move > 1) cof_move = 1;
 	if (cof_move < -1) cof_move = -1;
 }
-
 void Hero::jumpKeyboardUpdate()
 {
 	static sf::Clock cl;
@@ -146,11 +170,13 @@ void Hero::jumpKeyboardUpdate()
 
 void Hero::update()
 {
-	moveKeyboardUpdate();
-	jumpKeyboardUpdate();
-	move(P(speed * cof_move, gravity_force * cof_jump));
+	if (status.is_physics)
+	{
+		moveKeyboardUpdate();
+		jumpKeyboardUpdate();
+		move(P(speed * cof_move, gravity_force * cof_jump));
+	}
 }
-
 
 void Hero::textureUpdating()
 {
@@ -158,7 +184,6 @@ void Hero::textureUpdating()
 	{
 		std::this_thread::sleep_for(1s);
 
-		lock_unlock _(texture_upd_mtx);
 	}
 }
 

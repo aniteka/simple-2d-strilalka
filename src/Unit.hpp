@@ -11,6 +11,7 @@ protected:
 		bool is_physics;
 		bool is_interrupted;
 		bool is_drawable;
+		bool is_nstatic;
 	} status;
 
 	std::string category;
@@ -32,11 +33,15 @@ public:
 	{
 		status.is_drawable = stat;
 	}
+	void setNoStaticStatus(bool stat)
+	{
+		status.is_nstatic = stat;
+	}
 	void setCategory(const std::string& ctg)
 	{
 		category = ctg;
 	}
-
+	
 	Status getStatus() const
 	{
 		return status;

@@ -7,6 +7,7 @@ class Scene
 {
 	std::vector<class Unit*> units;
 	sf::RenderWindow& main_window;
+	std::function<sf::View()> view_control_callback;
 public:
 	Scene(sf::RenderWindow&);
 	~Scene();
@@ -19,10 +20,18 @@ public:
 		(units.push_back(_refs_to_static_members), ...);
 	}
 
+	void setViewCallback(const decltype(view_control_callback)&);
+	const decltype(view_control_callback)& getViewCallback() const;
+	
+	sf::View getView();
+	void setView(sf::View);
+	void setView(sf::FloatRect);
+	
 	void run();
 
 private:
 	void events();
 	void draw();
 	void update();
+	void collisionUpdate();
 };

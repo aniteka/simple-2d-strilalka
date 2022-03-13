@@ -2,7 +2,7 @@
 
 Hero::Hero()
 	: Unit()
-	, collisions{}
+	, collisions()
 	, texture_rect(sf::Vector2f(10, 10))
 	, warp_point{ 0,0 }
 	, cof_move(0)
@@ -15,6 +15,7 @@ Hero::Hero()
 	category = "Hero";
 	status.is_drawable = true;
 	status.is_physics = true;
+	status.is_nstatic = true;
 
 	texture_updating = std::thread(
 		[this]() { this->textureUpdating(); }
@@ -27,14 +28,24 @@ void Hero::collisision(sf::RectangleShape* to, sf::RectangleShape* from)
 {
 	auto pto = to->getPosition();
 	auto sto = to->getSize();
-	auto pfrom = to->getPosition();
-	auto sfrom = to->getSize();
+	auto pfrom = from->getPosition();
+	auto sfrom = from->getSize();
 	// Left
 	if (pfrom.x < pto.x + sto.x)
-		if (cof_move > 0) cof_move = 0;
+		if (cof_move > 0)
+			cof_move = 0;
 	// Right
 	if (pfrom.x + sfrom.x > pto.x)
-		if (cof_move < 0) cof_move = 0;
+		if (cof_move < 0)
+			cof_move = 0;
+	// Up
+	if (pfrom.y < pto.y + sto.y)
+		if (cof_jump < 0)
+			cof_jump = 0;
+	// Down
+	if (pfrom.y + sfrom.x > sto.y)
+		if (cof_jump > 0)
+			cof_jump = 0;
 }
 
 
@@ -106,18 +117,6 @@ void Hero::setTexture(sf::Texture* tx)
 }
 
 
-void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	if(!status.is_drawable)
-	{
-		DLOG("HERO WITH CATEGORY \"%s\" ISN'T DRAWABLE", category.c_str());
-		throw "ISN'T DRAWABLE";
-	}
-		
-	target.draw(texture_rect, states);
-}
-
-
 void Hero::setSpeed(int speed)
 {
 	this->speed = speed;
@@ -126,6 +125,8 @@ int Hero::getSpeed() const
 {
 	return speed;
 }
+
+
 void Hero::setGravityForce(int gf)
 {
 	gravity_force = gf;
@@ -135,6 +136,8 @@ int Hero::getGravityForce() const
 	return gravity_force;
 }
 
+
+// Update zone:
 
 void Hero::moveKeyboardUpdate()
 {
@@ -187,3 +190,13 @@ void Hero::textureUpdating()
 	}
 }
 
+void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	if (!status.is_drawable)
+	{
+		DLOG("HERO WITH CATEGORY \"%s\" ISN'T DRAWABLE", category.c_str());
+		throw "ISN'T DRAWABLE";
+	}
+
+	target.draw(texture_rect, states);
+}

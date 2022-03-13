@@ -11,6 +11,7 @@
 #include <thread>
 #include <mutex>
 #include <atomic>
+#include <functional>
 
 #include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>
@@ -74,8 +75,8 @@ namespace sf
 {
 	struct Point
 	{
-		float_t x;
-		float_t y;
+		double x;
+		double y;
 		auto operator<=>(const Point&) const = default;
 	};
 };

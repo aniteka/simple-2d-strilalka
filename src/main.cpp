@@ -12,14 +12,20 @@
 class MainProgram
 {
 private: /*Constants*/
-	const unsigned WINDOW_WIDTH = 500;
-	const unsigned WINDOW_HEIGHT = 500;
+	const unsigned WINDOW_WIDTH = 600;
+	const unsigned WINDOW_HEIGHT = 600;
 	const unsigned FRAME_LIMIT = 560;
 
 	const std::string TEST_PNG_FILENAME
 		= "ResFiles\\COLOR_TEST_PNG.png";
 	const std::string WINDOW_TITLE
 		= "Strilalka";
+
+	const sf::Vector2f SIZE_OF_ONE_TILE_SET
+		{ 50.f, 50.f };
+
+	const std::string LUA_FILE
+		= "ResFiles\\REALTESTMAP2.lua";
 	
 	const sf::Color BACKGROUND_COLOR
 		= sf::Color::White;
@@ -43,6 +49,7 @@ public: /*To use*/
 private /*Functions*/:
 	void loadTextures();
 	void initTailMap();
+	sf::View viewUpdate();
 };
 
 
@@ -85,10 +92,16 @@ MainProgram::MainProgram()
 
 	main_hero.setSize(VF(30, 100));
 
+	main_hero.addCollisionObject(
+		new sf::RectangleShape(sf::Vector2f(30, 100))
+	);
+	
 	main_scene.addUnit(
 		&main_hero,
 		&main_tail_map
 	);
+
+	main_scene.setViewCallback([this](){return viewUpdate();});
 	
 	loadTextures();
 	initTailMap();
@@ -115,17 +128,19 @@ void MainProgram::loadTextures()
 
 void MainProgram::initTailMap()
 {
-	auto texture_hero = new sf::Texture;
-	if (!texture_hero->loadFromFile(TEST_PNG_FILENAME))
-		DLOG("ERROR TO LOAD TEXTURE");
-	/*
 	main_tail_map = TailMap(
-		{}
-		, 10, 10
-	);*/
-	main_tail_map = TailMap(
-		"ResFiles\\tailMap.lua"
+		LUA_FILE
 	);
-	main_tail_map.setRectHW(50.f, 50.f);
+	main_tail_map.setRectHW(
+		SIZE_OF_ONE_TILE_SET.x,
+		SIZE_OF_ONE_TILE_SET.y
+	);
+	main_tail_map.setPhysicsStatus(true);
 }
+
+sf::View MainProgram::viewUpdate()
+{
+	return window.getView();
+}
+
 

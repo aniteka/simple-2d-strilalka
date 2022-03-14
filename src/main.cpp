@@ -90,17 +90,17 @@ MainProgram::MainProgram()
 {
 	window.setFramerateLimit(FRAME_LIMIT);
 
-	main_hero.setSize(VF(30, 100));
-
+	// Main hero init
+	main_hero.setSize(VF(30, 90));
 	main_hero.addCollisionObject(
-		new sf::RectangleShape(sf::Vector2f(30, 100))
+		new sf::RectangleShape(sf::Vector2f(30, 90))
 	);
+	main_hero.setPoint(P(50, 60));
 	
 	main_scene.addUnit(
-		&main_hero,
-		&main_tail_map
+		&main_tail_map,
+		&main_hero
 	);
-
 	main_scene.setViewCallback([this](){return viewUpdate();});
 	
 	loadTextures();

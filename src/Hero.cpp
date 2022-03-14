@@ -24,28 +24,48 @@ Hero::Hero()
 	DLOG("Hero status: CREATED");
 }
 
-void Hero::collisision(sf::RectangleShape* to, sf::RectangleShape* from)
+void Hero::collisision(sf::RectangleShape* my, sf::RectangleShape* thear)
 {
-	auto pto = to->getPosition();
-	auto sto = to->getSize();
-	auto pfrom = from->getPosition();
-	auto sfrom = from->getSize();
-	// Left
-	if (pfrom.x < pto.x + sto.x)
-		if (cof_move > 0)
-			cof_move = 0;
-	// Right
-	if (pfrom.x + sfrom.x > pto.x)
-		if (cof_move < 0)
-			cof_move = 0;
-	// Up
-	if (pfrom.y < pto.y + sto.y)
-		if (cof_jump < 0)
-			cof_jump = 0;
+	auto pmy = my->getPosition();
+	auto smy = my->getSize();
+	auto pthear = thear->getPosition();
+	auto sthear = thear->getSize();
+	const auto buffer_zone = 5;
+	bool ifUp = false;
 	// Down
-	if (pfrom.y + sfrom.x > sto.y)
-		if (cof_jump > 0)
+	if (pmy.y > pthear.y + sthear.y - buffer_zone)
+		if (cof_jump < 0)
+		{
 			cof_jump = 0;
+			this->move(P(0,0.1));
+			ifUp = true;
+		}
+	// Up
+	if (pmy.y + smy.y < pthear.y + buffer_zone)
+	{
+		if (cof_jump > 0)
+		{
+			cof_jump = 0;
+			this->move(P(0, -0.1));
+			ifUp = true;
+		}
+	}
+	if(!ifUp)
+	{
+		if(pmy.x + smy.x < pthear.x + buffer_zone)
+			if(cof_move > 0)
+			{
+				cof_move = 0;
+				this->move(P(-0.1, 0));
+			}
+		if (pmy.x > pthear.x + sthear.x - buffer_zone)
+			if (cof_move < 0)
+			{
+				cof_move = 0;
+				this->move(P(0.1, 0));
+			}
+	}
+
 }
 
 
@@ -78,6 +98,9 @@ void Hero::move(const sf::Point& p)
 
 void Hero::setPoint(const sf::Point& p)
 {
+	for (auto& i : collisions)
+		i->setPosition(p.x, p.y);
+	texture_rect.setPosition(p.x, p.y);
 	warp_point = p;
 }
 
@@ -91,7 +114,6 @@ void Hero::setSize(const sf::Vector2f& size)
 {
 	texture_rect.setSize(size);
 }
-
 
 
 const std::vector<sf::RectangleShape*>& Hero::getCollisionObject() const 
@@ -165,7 +187,7 @@ void Hero::jumpKeyboardUpdate()
 		return;
 	cl.restart();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cof_jump < 0.1f && cof_jump > -0.1f)
-		cof_jump -= 1.f;
+		cof_jump -= 0.1f;
 	else
 		cof_jump += 0.01f;
 	if (cof_jump < -2) cof_jump = -2;

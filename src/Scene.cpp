@@ -82,24 +82,36 @@ void Scene::update()
 	collisionUpdate();
 }
 
-
-bool ifTheBoxesIntersect(sf::RectangleShape* a, sf::RectangleShape* b)
+bool valueInRange(float value, float min, float max)
 {
-	if (
-		(
-		(a->getPosition().x + a->getSize().x) > b->getPosition().x &&
-		(a->getPosition().x + a->getSize().x) < (b->getPosition().x + b->getSize().x) &&
-		(a->getPosition().y + a->getSize().y) > b->getPosition().y &&
-		(a->getPosition().y + a->getSize().y) < (b->getPosition().y + b->getSize().y)
-		) || (
-		(b->getPosition().x + b->getSize().x) > a->getPosition().x &&
-		(b->getPosition().x + b->getSize().x) < (a->getPosition().x + a->getSize().x) &&
-		(b->getPosition().y + b->getSize().y) > a->getPosition().y &&
-		(b->getPosition().y + b->getSize().y) < (a->getPosition().y + a->getSize().y)
-		)
-	)
-	return true;
-	return false;
+	return (value >= min) && (value <= max);
+}
+bool ifTheBoxesIntersect(sf::RectangleShape* A, sf::RectangleShape* B)
+{
+	bool xOverlap = 
+		valueInRange(
+			A->getPosition().x, 
+			B->getPosition().x, 
+			B->getPosition().x + B->getSize().x
+		) ||
+		valueInRange(
+			B->getPosition().x, 
+			A->getPosition().x, 
+			A->getPosition().x + A->getSize().x
+		);
+
+	bool yOverlap = 
+		valueInRange(
+			A->getPosition().y,
+			B->getPosition().y,
+			B->getPosition().y + B->getSize().y
+		) ||
+		valueInRange(
+			B->getPosition().y,
+			A->getPosition().y,
+			A->getPosition().y + A->getSize().y
+		);
+	return xOverlap && yOverlap;
 }
 void Scene::collisionUpdate()
 {

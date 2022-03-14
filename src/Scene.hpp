@@ -18,6 +18,14 @@ public:
 	void addUnit(_Units... _refs_to_static_members)
 	{
 		(units.push_back(_refs_to_static_members), ...);
+		std::sort(units.begin(), units.end(),
+			[](Unit* a, Unit* b)
+			{
+				return
+					a->getStatus().is_nstatic >
+					b->getStatus().is_nstatic;
+			}
+		);
 	}
 
 	void setViewCallback(const decltype(view_control_callback)&);

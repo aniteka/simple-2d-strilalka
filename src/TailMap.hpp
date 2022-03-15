@@ -47,11 +47,16 @@ public:
 class TailMap
 	: public Unit
 {
+public:
 	using Matrix_texture = Matrix<sf::Texture*>;
+
+private:
 	std::vector<sf::RectangleShape*> collision_vector;
 	Matrix_texture* mtx;
+	
 	sf::Vector2f rect;
 	sf::Point warp_point;
+
 public:
 	TailMap();
 	TailMap(Matrix_texture::init_list init_list, size_t h_size, size_t v_size);

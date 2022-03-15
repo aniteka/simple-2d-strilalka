@@ -1,5 +1,10 @@
 #include "Hero.hpp"
 
+
+
+
+// Construct distruct zone
+
 Hero::Hero()
 	: Unit()
 	, collisions()
@@ -24,51 +29,6 @@ Hero::Hero()
 	DLOG("Hero status: CREATED");
 }
 
-void Hero::collisision(sf::RectangleShape* my, sf::RectangleShape* thear)
-{
-	auto pmy = my->getPosition();
-	auto smy = my->getSize();
-	auto pthear = thear->getPosition();
-	auto sthear = thear->getSize();
-	const auto buffer_zone = 5;
-	bool ifUp = false;
-	// Down
-	if (pmy.y > pthear.y + sthear.y - buffer_zone)
-		if (cof_jump < 0)
-		{
-			cof_jump = 0;
-			this->move(P(0,0.1));
-			ifUp = true;
-		}
-	// Up
-	if (pmy.y + smy.y < pthear.y + buffer_zone)
-	{
-		if (cof_jump > 0)
-		{
-			cof_jump = 0;
-			this->move(P(0, -0.1));
-			ifUp = true;
-		}
-	}
-	if(!ifUp)
-	{
-		if(pmy.x + smy.x < pthear.x + buffer_zone)
-			if(cof_move > 0)
-			{
-				cof_move = 0;
-				this->move(P(-0.1, 0));
-			}
-		if (pmy.x > pthear.x + sthear.x - buffer_zone)
-			if (cof_move < 0)
-			{
-				cof_move = 0;
-				this->move(P(0.1, 0));
-			}
-	}
-
-}
-
-
 Hero::~Hero()
 {
 	for(auto i : collisions)
@@ -80,10 +40,8 @@ Hero::~Hero()
 
 
 
-void Hero::addCollisionObject(sf::RectangleShape* sh)
-{
-	collisions.push_back(sh);
-}
+
+// Setters getters zone: 
 
 void Hero::move(const sf::Point& p)
 {
@@ -96,19 +54,16 @@ void Hero::move(const sf::Point& p)
 	};
 }
 
-void Hero::setPoint(const sf::Point& p)
-{
-	for (auto& i : collisions)
-		i->setPosition(p.x, p.y);
-	texture_rect.setPosition(p.x, p.y);
-	warp_point = p;
-}
-
 
 void Hero::setTextureRect(const sf::IntRect& ir)
 {
 	texture_rect.setTextureRect(ir);
 }
+sf::IntRect Hero::getTextureRect() const
+{
+	return texture_rect.getTextureRect();
+}
+
 
 void Hero::setSize(const sf::Vector2f& size)
 {
@@ -116,22 +71,37 @@ void Hero::setSize(const sf::Vector2f& size)
 }
 
 
+void Hero::addCollisionObject(sf::RectangleShape* sh)
+{
+	collisions.push_back(sh);
+}
 const std::vector<sf::RectangleShape*>& Hero::getCollisionObject() const 
 {
 	return collisions;
 }
 
 
+void Hero::setPoint(const sf::Point& p)
+{
+	for (auto& i : collisions)
+		//i->setPosition(p.x, p.y);
+		i->setPosition(
+			static_cast<float>((i->getPosition().x - warp_point.x) + p.x),
+			static_cast<float>((i->getPosition().y - warp_point.y) + p.y)
+		);
+	//texture_rect.setPosition(p.x, p.y);
+	texture_rect.setPosition(
+		static_cast<float>((texture_rect.getPosition().x - warp_point.x) + p.x),
+		static_cast<float>((texture_rect.getPosition().y - warp_point.y) + p.y)
+	);
+	warp_point = p;
+}
 sf::Point Hero::getPoint() const
 {
 	return warp_point;
 }
 
 
-sf::IntRect Hero::getTextureRect() const
-{
-	return texture_rect.getTextureRect();
-}
 void Hero::setTexture(sf::Texture* tx)
 {
 	texture_rect.setFillColor(sf::Color::White);
@@ -157,6 +127,8 @@ int Hero::getGravityForce() const
 {
 	return gravity_force;
 }
+
+
 
 
 // Update zone:
@@ -195,7 +167,7 @@ void Hero::jumpKeyboardUpdate()
 
 void Hero::update()
 {
-	if (status.is_physics)
+	if (status.is_physics && status.is_nstatic)
 	{
 		moveKeyboardUpdate();
 		jumpKeyboardUpdate();
@@ -221,4 +193,48 @@ void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	}
 
 	target.draw(texture_rect, states);
+}
+
+void Hero::collisision(sf::RectangleShape* my, sf::RectangleShape* thear)
+{
+	auto pmy = my->getPosition();
+	auto smy = my->getSize();
+	auto pthear = thear->getPosition();
+	auto sthear = thear->getSize();
+	const auto buffer_zone = 5;
+	bool ifUp = false;
+	// Down
+	if (pmy.y > pthear.y + sthear.y - buffer_zone)
+		if (cof_jump < 0)
+		{
+			cof_jump = 0;
+			this->move(P(0, 0.1));
+			ifUp = true;
+		}
+	// Up
+	if (pmy.y + smy.y < pthear.y + buffer_zone)
+	{
+		if (cof_jump > 0)
+		{
+			cof_jump = 0;
+			this->move(P(0, -0.1));
+			ifUp = true;
+		}
+	}
+	if (!ifUp)
+	{
+		if (pmy.x + smy.x < pthear.x + buffer_zone)
+			if (cof_move > 0)
+			{
+				cof_move = 0;
+				this->move(P(-0.1, 0));
+			}
+		if (pmy.x > pthear.x + sthear.x - buffer_zone)
+			if (cof_move < 0)
+			{
+				cof_move = 0;
+				this->move(P(0.1, 0));
+			}
+	}
+
 }

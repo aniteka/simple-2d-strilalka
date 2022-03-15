@@ -1,4 +1,10 @@
 #include "Scene.hpp"
+#include "Unit.hpp"
+
+
+
+
+// Construct distruct zone: 
 
 Scene::Scene(sf::RenderWindow& mw)
 	: main_window(mw)
@@ -15,10 +21,9 @@ Scene::~Scene()
 
 
 
-sf::View Scene::getView()
-{
-	return main_window.getView();
-}
+
+// Setter and getter zone: 
+
 void Scene::setView(sf::View view)
 {
 	main_window.setView(view);
@@ -28,6 +33,11 @@ void Scene::setView(sf::FloatRect fr)
 	sf::View v(fr);
 	main_window.setView(v);
 }
+sf::View Scene::getView()
+{
+	return main_window.getView();
+}
+
 
 void Scene::setViewCallback(const decltype(view_control_callback)& vcc)
 {
@@ -39,6 +49,8 @@ const decltype(Scene::view_control_callback)& Scene::getViewCallback() const
 }
 
 
+
+// Update:
 
 void Scene::run()
 {
@@ -57,7 +69,6 @@ void Scene::run()
 
 }
 
-
 void Scene::events()
 {
 	sf::Event e;
@@ -73,7 +84,6 @@ void Scene::draw()
 	for (auto& i : units)
 		main_window.draw(*i);
 }
-
 
 void Scene::update()
 {

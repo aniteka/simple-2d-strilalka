@@ -1,6 +1,11 @@
 #include "TailMap.hpp"
 #include <sol/sol.hpp>
 
+
+
+
+// Construct destruct zone:
+
 TailMap::TailMap(Matrix_texture::init_list init_list, size_t h_size, size_t v_size)
 	: mtx(new Matrix(init_list, h_size, v_size))
 	, rect(10,10)
@@ -10,7 +15,6 @@ TailMap::TailMap(Matrix_texture::init_list init_list, size_t h_size, size_t v_si
 }
 
 
-
 TailMap::TailMap()
 	: mtx(nullptr)
 	, rect(10,10)
@@ -18,9 +22,6 @@ TailMap::TailMap()
 {
 	initCollisionVector();
 }
-
-
-
 
 
 struct AllInfoAboutTailMap
@@ -158,7 +159,6 @@ TailMap::TailMap(std::string lua_file)
 }
 
 
-
 TailMap& TailMap::operator=(const TailMap& tm)
 {
 	delete mtx;
@@ -171,20 +171,23 @@ TailMap& TailMap::operator=(const TailMap& tm)
 
 
 
-//////////////////////////////////////////////////////////////////////
 
-
+// Setters getters zone:
 
 void TailMap::setTail(sf::Texture* rect, size_t x, size_t y) const
 {
 	mtx[0][y][x] = rect;
 }
-
-const TailMap::Matrix_texture& TailMap::getMatrix() const 
+const TailMap::Matrix_texture& TailMap::getMatrix() const
 {
 	return *mtx;
 }
 
+
+void TailMap::setSize(const sf::Vector2f& vec)
+{
+	setRectHW(vec.x, vec.y);
+}
 void TailMap::setRectHW(float h, float w)
 {
 	rect = { w,h };
@@ -193,81 +196,70 @@ void TailMap::setRectHW(float h, float w)
 	collision_vector.clear();
 	initCollisionVector();
 }
-
-
 sf::Vector2f TailMap::getRectHW() const
 {
 	return rect;
 }
 
 
-void TailMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-	sf::RectangleShape shape;
-	shape.setSize(rect);
-	shape.setPosition(warp_point.x, warp_point.y);
-	shape.setOutlineColor(sf::Color::Black);
-	
-	for (size_t i = 0; i < mtx->getVerticalSize(); ++i)
-	{
-		for (size_t j = 0; j < mtx->getHorizontalSize(); ++j)
-		{
-			if (mtx[0][i][j] == nullptr)
-			{
-				shape.move(rect.x, 0);
-				continue;
-			}
-			shape.setFillColor(sf::Color::White);
-			shape.setTexture(mtx[0][i][j]);
-			target.draw(shape, states);
-			shape.move(rect.x, 0);
-		}
-		shape.move(0, rect.y);
-		shape.setPosition(warp_point.x, shape.getPosition().y);
-	}
-}
-
-void TailMap::addCollisionObject(sf::RectangleShape* sh)
-{
-}
-
-void TailMap::move(const sf::Point& p)
-{
-}
-
 void TailMap::setPoint(const sf::Point& p)
-{}
+{
 
-void TailMap::setSize(const sf::Vector2f&)
-{}
-
-void TailMap::setTextureRect(const sf::IntRect& ir)
-{}
-
-void TailMap::update()
-{}
-
-void TailMap::collisision(sf::RectangleShape* to, sf::RectangleShape* from)
-{}
-
-void TailMap::setTexture(sf::Texture* tx)
-{}
+}
+sf::Point TailMap::getPoint() const
+{
+	return warp_point;
+}
 
 const std::vector<sf::RectangleShape*>& TailMap::getCollisionObject() const
 {
 	return collision_vector;
 }
 
-sf::Point TailMap::getPoint() const
+void TailMap::move(const sf::Point& p)
 {
-	return warp_point;
+
+}
+
+
+
+
+// Unused zone: 
+
+void TailMap::setTexture(sf::Texture* tx)
+{
+	// Unused
+	DLOG("Function setTexture is unused with TailMap object");
+}
+
+void TailMap::addCollisionObject(sf::RectangleShape* sh)
+{
+	// Unused
+	DLOG("Function addCollisionObject is unused with TailMap object");
+}
+
+void TailMap::setTextureRect(const sf::IntRect& ir)
+{
+	// Unused
+	DLOG("Function setTextureRect is unused with TailMap object");
+}
+
+void TailMap::collisision(sf::RectangleShape* to, sf::RectangleShape* from)
+{
+	// Unused	
 }
 
 sf::IntRect TailMap::getTextureRect() const
 {
+	// Unused
 	DLOG("Function getTextureRect is unused with TailMap object");
 	return sf::IntRect(0, 0, 0, 0);
 }
+
+
+
+
+// Init
 
 void TailMap::initCollisionVector()
 {
@@ -289,3 +281,36 @@ void TailMap::initCollisionVector()
 	}
 }
 
+
+
+
+// Update zone:
+
+void TailMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	sf::RectangleShape shape;
+	shape.setSize(rect);
+	shape.setPosition(warp_point.x, warp_point.y);
+	shape.setOutlineColor(sf::Color::Black);
+
+	for (size_t i = 0; i < mtx->getVerticalSize(); ++i)
+	{
+		for (size_t j = 0; j < mtx->getHorizontalSize(); ++j)
+		{
+			if (mtx[0][i][j] == nullptr)
+			{
+				shape.move(rect.x, 0);
+				continue;
+			}
+			shape.setFillColor(sf::Color::White);
+			shape.setTexture(mtx[0][i][j]);
+			target.draw(shape, states);
+			shape.move(rect.x, 0);
+		}
+		shape.move(0, rect.y);
+		shape.setPosition(warp_point.x, shape.getPosition().y);
+	}
+}
+
+void TailMap::update()
+{}

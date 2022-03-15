@@ -91,10 +91,11 @@ MainProgram::MainProgram()
 	window.setFramerateLimit(FRAME_LIMIT);
 
 	// Main hero init
-	main_hero.setSize(VF(30, 90));
+	main_hero.setSize(VF(30, 100));
 	main_hero.addCollisionObject(
-		new sf::RectangleShape(sf::Vector2f(30, 90))
+		new sf::RectangleShape(sf::Vector2f(30, 98))
 	);
+	main_hero.getCollisionObject()[0]->move(0, 2);
 	main_hero.setPoint(P(50, 60));
 	
 	main_scene.addUnit(

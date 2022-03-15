@@ -52,6 +52,7 @@ public:
 	const std::vector<sf::RectangleShape*>& getCollisionObject() const override;
 	sf::Point getPoint() const override;
 	sf::IntRect getTextureRect() const override;
+	
 
 private:
 	void moveKeyboardUpdate();

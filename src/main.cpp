@@ -14,7 +14,7 @@ class MainProgram
 private: /*Constants*/
 	const unsigned WINDOW_WIDTH = 600;
 	const unsigned WINDOW_HEIGHT = 600;
-	const unsigned FRAME_LIMIT = 560;
+	const unsigned FRAME_LIMIT = 660;
 
 	const std::string TEST_PNG_FILENAME
 		= "ResFiles\\COLOR_TEST_PNG.png";
@@ -41,7 +41,7 @@ public: /*To use*/
 	MainProgram();
 	MainProgram(const MainProgram&) = delete;
 	MainProgram(MainProgram&&) = delete;
-	~MainProgram() = default;
+	~MainProgram();
 
 	int run();
 
@@ -110,12 +110,18 @@ MainProgram::MainProgram()
 
 
 
+MainProgram::~MainProgram()
+{
+	program_running = false;
+}
+
+
+
 int MainProgram::run()
 {
 	main_scene.run();
 	return 0;
 }
-
 
 
 
@@ -126,6 +132,8 @@ void MainProgram::loadTextures()
 		DLOG("ERROR TO LOAD TEXTURE");
 	main_hero.setTexture(texture_hero);
 }
+
+
 
 void MainProgram::initTailMap()
 {
@@ -138,6 +146,8 @@ void MainProgram::initTailMap()
 	);
 	main_tail_map.setPhysicsStatus(true);
 }
+
+
 
 sf::View MainProgram::viewUpdate()
 {

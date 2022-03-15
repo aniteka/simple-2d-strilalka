@@ -14,7 +14,11 @@ Hero::Hero()
 	, cof_jump(0)
 	, speed(1)
 	, gravity_force(1)
-	, is_texture_updating(false)
+	, is_texture_updating(true)
+	, texture_updating([]()
+	{
+	}
+	)
 {
 	texture_rect.setFillColor(sf::Color(0, 0, 0, 255));
 	category = "Hero";
@@ -22,10 +26,8 @@ Hero::Hero()
 	status.is_physics = true;
 	status.is_nstatic = true;
 
-	texture_updating = std::thread(
-		[this]() { this->textureUpdating(); }
-	);
-
+	texture_updating.detach();
+	
 	DLOG("Hero status: CREATED");
 }
 
@@ -34,7 +36,7 @@ Hero::~Hero()
 	for(auto i : collisions)
 		delete i;
 	delete texture_rect.getTexture();
-	texture_updating.join();
+	//texture_updating.join();
 	DLOG("Hero status: DESTROY");
 }
 
@@ -140,13 +142,13 @@ void Hero::moveKeyboardUpdate()
 		return;
 	cl.restart();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		cof_move += 0.1f;
+		cof_move += COF_LEFT_RIGHT_MOVE_SPEED;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		cof_move -= 0.1f;
+		cof_move -= COF_LEFT_RIGHT_MOVE_SPEED;
 	else
 	{
-		if (cof_move > 0.1f) cof_move -= 0.1f;
-		else if (cof_move < -0.1f) cof_move += 0.1f;
+		if (cof_move > 0.1f) cof_move -= COF_LEFT_RIGHT_STOP_SPEED;
+		else if (cof_move < -0.1f) cof_move += COF_LEFT_RIGHT_STOP_SPEED;
 		else cof_move = .0f;
 	}
 	if (cof_move > 1) cof_move = 1;
@@ -159,10 +161,10 @@ void Hero::jumpKeyboardUpdate()
 		return;
 	cl.restart();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && cof_jump < 0.1f && cof_jump > -0.1f)
-		cof_jump -= 0.1f;
+		cof_jump -= COF_JUMP_FORCE;
 	else
-		cof_jump += 0.01f;
-	if (cof_jump < -2) cof_jump = -2;
+		cof_jump += COF_DOWN_SPEED;
+	if (cof_jump > COF_MAX_DOWN_SPEED) cof_jump = COF_MAX_DOWN_SPEED;
 }
 
 void Hero::update()
@@ -177,11 +179,6 @@ void Hero::update()
 
 void Hero::textureUpdating()
 {
-	while(is_texture_updating)
-	{
-		std::this_thread::sleep_for(1s);
-
-	}
 }
 
 void Hero::draw(sf::RenderTarget& target, sf::RenderStates states) const

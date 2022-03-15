@@ -6,6 +6,12 @@
 class Hero 
 	: public Unit
 {
+	const float COF_LEFT_RIGHT_MOVE_SPEED = 0.1f;
+	const float COF_LEFT_RIGHT_STOP_SPEED = 0.1f;
+	const float COF_DOWN_SPEED = 0.01f;
+	const float COF_MAX_DOWN_SPEED = 2.f;
+	const float COF_JUMP_FORCE = 0.1f;
+protected:
 	std::vector<sf::RectangleShape*> collisions;
 	sf::RectangleShape texture_rect;
 	sf::Point warp_point;

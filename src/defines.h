@@ -22,6 +22,8 @@ using namespace std::string_literals;
 using namespace std::chrono_literals;
 
 
+static bool program_running = true;
+
 
 // \/\/\/LOGGER\/\/\/
 

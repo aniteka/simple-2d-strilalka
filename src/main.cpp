@@ -79,6 +79,7 @@ int main(int argc, char** argv)
 
 	b2PolygonShape shape;
 	shape.SetAsBox(500, 10);
+	
 	b2FixtureDef fixture;
 	fixture.density = 0.f;
 	fixture.shape = &shape;
@@ -94,8 +95,8 @@ int main(int argc, char** argv)
 	fixture.density = 1;
 	fixture.friction = 0.7f;
 	fixture.shape = &shape2;
-	box->CreateFixture(&fixture);
-
+	auto fixture__ = box->CreateFixture(&fixture);
+	
 	sf::RenderWindow window(sf::VideoMode(500, 500), "name");
 	sf::RectangleShape rect_shape(VF(500, 10));
 	rect_shape.setPosition(0, 400);

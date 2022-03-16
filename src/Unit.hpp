@@ -14,13 +14,25 @@ protected:
 		bool is_nstatic;
 	} status;
 
-	std::string category;
-	std::vector<std::string> interrupt_this;
-	std::vector<std::string> block_this;
-public:
-	Unit();
-	virtual ~Unit() {}
+	b2Body* main_body;
 
+	sf::Texture* main_texture;
+	sf::FloatRect main_rect_texture;
+
+	std::vector<b2Fixture*> main_collisions;
+
+	sf::Vector2f main_size_body;
+
+public:
+	Unit(b2Body*& body);
+	virtual ~Unit()
+	{
+		delete main_texture;
+	}
+
+	//TODO
+	// Немає опису робот функцій, стан фізики і статики не робочий
+	// Невистачає функцій роботи з фізикою
 	void setPhysicsStatus(bool stat)
 	{
 		status.is_physics = stat;
@@ -37,32 +49,76 @@ public:
 	{
 		status.is_nstatic = stat;
 	}
-	void setCategory(const std::string& ctg)
-	{
-		category = ctg;
-	}
-	
 	Status getStatus() const
 	{
 		return status;
 	}
-	std::string getCategory() const
+
+	void setPhysicsBodyUserData(const std::string& str)
 	{
-		return category;
+		main_body->SetUserData((void*)str.c_str());
+	}
+	const std::string& setPhysicsBodyUserData()
+	{
+		return std::string((char*)main_body->GetUserData().pointer);
+	}
+	
+	void addCollisionObject(const b2FixtureDef* b2fd)
+	{
+		main_collisions.push_back(
+			main_body->CreateFixture(b2fd)
+		);
+	}
+	const std::vector<b2Fixture*>& getCollisionObject() const
+	{
+		return main_collisions;
 	}
 
-	virtual void collisision(sf::RectangleShape* to, sf::RectangleShape* from) = 0;
+	void setTexture( sf::Texture* texture )
+	{
+		main_texture = texture;
+	}
+	const sf::Texture* getTexture() const
+	{
+		return main_texture;
+	}
 
-	virtual void addCollisionObject(sf::RectangleShape* sh) = 0;
-	virtual void move(const sf::Point& p) = 0;
-	virtual void setPoint(const sf::Point& p) = 0;
-	virtual void setTextureRect(const sf::IntRect& ir) = 0;
-	virtual void setSize(const sf::Vector2f&) = 0;
-	virtual void setTexture(sf::Texture* tx) = 0;
-	virtual void update() = 0;
+	void setRectTexture( const sf::FloatRect& rect )
+	{
+		main_rect_texture = rect;
+	}
+	const sf::FloatRect& getRectTexture()
+	{
+		return main_rect_texture;
+	}
 
-	virtual const std::vector<sf::RectangleShape*>& getCollisionObject() const = 0;
-	virtual sf::Point getPoint() const = 0;
-	virtual sf::IntRect getTextureRect() const = 0;
+	void setMainSizeBody( const sf::Vector2f& size )
+	{
+		main_size_body = size;
+	}
+	const sf::Vector2f& getMainSizeBody()
+	{
+		return main_size_body;
+	}
+	
+	b2Body* getMainBody() const
+	{
+		return main_body;
+	}
+
+	virtual void updateEveryFrame() = 0;
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override
+	{
+		if (!this->status.is_drawable)
+			return;
+		sf::RectangleShape draw_rect(main_size_body);
+		draw_rect.setPosition
+		(
+			main_body->GetPosition().x,
+			main_body->GetPosition().y
+		);
+		target.draw(draw_rect, states);
+	}
 };
 

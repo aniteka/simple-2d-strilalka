@@ -14,7 +14,7 @@ class MainProgram
 private: /*Constants*/
 	const unsigned WINDOW_WIDTH = 600;
 	const unsigned WINDOW_HEIGHT = 600;
-	const unsigned FRAME_LIMIT = 660;
+	const unsigned FRAME_LIMIT = 60;
 
 	const std::string TEST_PNG_FILENAME
 		= "ResFiles\\COLOR_TEST_PNG.png";
@@ -69,7 +69,64 @@ int main(int a, char** b)
 #else
 int main(int argc, char** argv)
 {
-	return main_test(argc, argv);
+	b2Vec2 gravity(0.f, 9.8f);
+	b2World world(gravity);
+
+	b2BodyDef body_Constructor;
+	body_Constructor.position = b2Vec2(0, 400);
+	body_Constructor.type = b2_staticBody;
+	b2Body* body = world.CreateBody(&body_Constructor);
+
+	b2PolygonShape shape;
+	shape.SetAsBox(500, 10);
+	b2FixtureDef fixture;
+	fixture.density = 0.f;
+	fixture.shape = &shape;
+	body->CreateFixture(&fixture);
+
+
+	body_Constructor.position = b2Vec2(10, 10);
+	body_Constructor.type = b2_dynamicBody;
+	b2Body* box = world.CreateBody(&body_Constructor);
+
+	b2PolygonShape shape2;
+	shape2.SetAsBox(10, 10);
+	fixture.density = 1;
+	fixture.friction = 0.7f;
+	fixture.shape = &shape2;
+	box->CreateFixture(&fixture);
+
+	sf::RenderWindow window(sf::VideoMode(500, 500), "name");
+	sf::RectangleShape rect_shape(VF(500, 10));
+	rect_shape.setPosition(0, 400);
+	rect_shape.setFillColor(sf::Color::Red);
+
+	sf::RectangleShape box_shape(VF(10 * 2 , 10 * 2));
+	box_shape.setPosition(10, 10);
+	box_shape.setFillColor(sf::Color::Black);
+	
+	while(window.isOpen())
+	{
+		sf::Event e;
+		while(window.pollEvent(e))
+		{
+			if (e.type == sf::Event::Closed)
+				window.close();
+		}
+
+		box_shape.setPosition(
+			box->GetPosition().x,
+			box->GetPosition().y
+		);
+		
+		window.clear(sf::Color::White);
+		window.draw(rect_shape);
+		window.draw(box_shape);
+		window.display();
+		world.Step(1 / 60.f, 8, 3);
+	}
+	return 0;
+	//return main_test(argc, argv);
 }
 #endif
 

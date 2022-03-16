@@ -2,6 +2,7 @@
 C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/include
 C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/include
 C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/include/freetype2
 C:/Users/tk/.conan/data/stb/cci.20210713/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/include
@@ -20,6 +21,7 @@ C:/Users/tk/.conan/data/zlib/1.2.11/_/_/package/d057732059ea44a47760900cb5e4855d
 [libdirs]
 C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/lib
 C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/lib
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib
 C:/Users/tk/.conan/data/flac/1.3.3/_/_/package/b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47/lib
 C:/Users/tk/.conan/data/openal/1.21.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib
@@ -43,6 +45,7 @@ C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32a
 C:/Users/tk/.conan/data/sfml/2.5.1/_/_/package/d02765dd8ac3899f2886509787e30924520dd723/
 C:/Users/tk/.conan/data/gtest/cci.20210126/_/_/package/875c67f4d8a79bdd002908b75efce119eb82836d/
 C:/Users/tk/.conan/data/sol2/3.2.3/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/
 C:/Users/tk/.conan/data/opengl/system/_/_/package/5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9/
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/
 C:/Users/tk/.conan/data/freetype/2.11.1/_/_/package/c69bad48274e7fc45c887cddc32aa0459f0a81e0/lib/cmake
@@ -69,6 +72,7 @@ gtest_maind
 gmock_maind
 gmockd
 gtestd
+box2d
 freetyped
 FLAC++
 FLAC
@@ -327,6 +331,71 @@ sol2
 
 
 [generatorfilenames_sol2]
+
+
+
+[includedirs_box2d]
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/include
+
+[libdirs_box2d]
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/lib
+
+[bindirs_box2d]
+
+
+[resdirs_box2d]
+
+
+[builddirs_box2d]
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714/
+
+[libs_box2d]
+box2d
+
+[system_libs_box2d]
+
+
+[defines_box2d]
+
+
+[cppflags_box2d]
+
+
+[cxxflags_box2d]
+
+
+[cflags_box2d]
+
+
+[sharedlinkflags_box2d]
+
+
+[exelinkflags_box2d]
+
+
+[sysroot_box2d]
+
+
+[frameworks_box2d]
+
+
+[frameworkdirs_box2d]
+
+
+[rootpath_box2d]
+C:/Users/tk/.conan/data/box2d/2.4.1/_/_/package/d057732059ea44a47760900cb5e4855d2bea8714
+
+[name_box2d]
+box2d
+
+[version_box2d]
+2.4.1
+
+[generatornames_box2d]
+cmake_find_package=box2d
+cmake_find_package_multi=box2d
+
+[generatorfilenames_box2d]
 
 
 
@@ -1126,6 +1195,7 @@ cmake_find_package_multi=ZLIB
 
 
 
+[USER_box2d]
 [USER_brotli]
 [USER_bzip2]
 [USER_flac]
@@ -1145,6 +1215,7 @@ LIBTOOL_VERSION=24.1.18
 [ENV_sfml]
 [ENV_gtest]
 [ENV_sol2]
+[ENV_box2d]
 [ENV_opengl]
 [ENV_freetype]
 FT2_CONFIG=C:\Users\tk\.conan\data\freetype\2.11.1\_\_\package\c69bad48274e7fc45c887cddc32aa0459f0a81e0\bin\freetype-config

@@ -2,7 +2,7 @@
 #define DEFINES_H
 
 #define DEBUG
-//#define TESTING
+#define TESTING
 #include <iostream>
 #include <cassert>
 #include <string>
@@ -15,6 +15,7 @@
 
 #include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>
+#include <box2d/box2d.h>
 
 
 

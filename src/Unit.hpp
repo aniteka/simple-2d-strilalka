@@ -1,6 +1,11 @@
 #pragma once
 #include "defines.h"
 
+struct MassData
+{
+	float mass;
+	sf::Vector2f center;
+};
 
 class Unit
 	: public sf::Drawable
@@ -11,7 +16,7 @@ protected:
 		bool is_physics;
 		bool is_interrupted;
 		bool is_drawable;
-		bool is_nstatic;
+		bool is_static;
 	} status;
 
 	b2Body* main_body;
@@ -25,100 +30,47 @@ protected:
 
 public:
 	Unit(b2Body*& body);
-	virtual ~Unit()
-	{
-		delete main_texture;
-	}
+	virtual ~Unit();
 
-	//TODO
-	// Немає опису робот функцій, стан фізики і статики не робочий
-	// Невистачає функцій роботи з фізикою
-	void setPhysicsStatus(bool stat)
-	{
-		status.is_physics = stat;
-	}
-	void setInterruptStatus(bool stat)
-	{
-		status.is_interrupted = stat;
-	}
-	void setDrawStatus(bool stat)
-	{
-		status.is_drawable = stat;
-	}
-	void setNoStaticStatus(bool stat)
-	{
-		status.is_nstatic = stat;
-	}
-	Status getStatus() const
-	{
-		return status;
-	}
+	void setPhysicsStatus(bool stat);
+	void setInterruptStatus(bool stat);
+	void setDrawStatus(bool stat);
+	void setStaticStatus(bool stat);
+	Status getStatus() const;
 
-	void setPhysicsBodyUserData(const std::string& str)
-	{
-		main_body->SetUserData((void*)str.c_str());
-	}
-	const std::string& setPhysicsBodyUserData()
-	{
-		return std::string((char*)main_body->GetUserData().pointer);
-	}
+	void setPhysicsBodyUserData(const std::string& str);
+	const std::string& setPhysicsBodyUserData();
 	
-	void addCollisionObject(const b2FixtureDef* b2fd)
-	{
-		main_collisions.push_back(
-			main_body->CreateFixture(b2fd)
-		);
-	}
-	const std::vector<b2Fixture*>& getCollisionObject() const
-	{
-		return main_collisions;
-	}
+	void addCollisionObject(const b2FixtureDef* b2fd);
+	const std::vector<b2Fixture*>& getCollisionObject() const;
 
-	void setTexture( sf::Texture* texture )
-	{
-		main_texture = texture;
-	}
-	const sf::Texture* getTexture() const
-	{
-		return main_texture;
-	}
+	void setTexture( sf::Texture* texture );
+	const sf::Texture* getTexture() const;
 
-	void setRectTexture( const sf::FloatRect& rect )
-	{
-		main_rect_texture = rect;
-	}
-	const sf::FloatRect& getRectTexture()
-	{
-		return main_rect_texture;
-	}
+	void setRectTexture( const sf::FloatRect& rect );
+	const sf::FloatRect& getRectTexture();
 
-	void setMainSizeBody( const sf::Vector2f& size )
-	{
-		main_size_body = size;
-	}
-	const sf::Vector2f& getMainSizeBody()
-	{
-		return main_size_body;
-	}
+	sf::Vector2f getPosition();
+
+	float getRotation();
+
+	void setMass(float mass, const sf::Vector2f& point);
+	void setMassToCenter(float mass);
+	float getMass();
+	MassData getMassData();
+
+	void addImpulse(sf::Vector2f impulse, sf::Vector2f point);
+	void addImpulseToCenter(sf::Vector2f impulse);
+	void addForce(sf::Vector2f force, sf::Vector2f point);
+	void addForceToCenter(sf::Vector2f force);
 	
-	b2Body* getMainBody() const
-	{
-		return main_body;
-	}
+	void setMainSizeBody( const sf::Vector2f& size );
+	const sf::Vector2f& getMainSizeBody();
+	
+	b2Body* getMainBody() const;
 
 	virtual void updateEveryFrame() = 0;
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override
-	{
-		if (!this->status.is_drawable)
-			return;
-		sf::RectangleShape draw_rect(main_size_body);
-		draw_rect.setPosition
-		(
-			main_body->GetPosition().x,
-			main_body->GetPosition().y
-		);
-		target.draw(draw_rect, states);
-	}
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
 

@@ -1,16 +1,15 @@
 #pragma once
 #include "defines.h"
 
-struct MassData
-{
-	float mass;
-	sf::Vector2f center;
-};
+#include "Components/mass_data.hpp"
+
 
 class Unit
 	: public sf::Drawable
 {
 protected:
+	using StatesAndRectsOfTexture
+		= std::map<std::string, sf::FloatRect>;
 	struct Status
 	{
 		bool is_physics;
@@ -22,7 +21,7 @@ protected:
 	b2Body* main_body;
 
 	sf::Texture* main_texture;
-	sf::FloatRect main_rect_texture;
+	StatesAndRectsOfTexture main_states_and_rects_of_texture;
 
 	std::vector<b2Fixture*> main_collisions;
 
@@ -30,7 +29,7 @@ protected:
 
 public:
 	Unit(b2Body*& body);
-	virtual ~Unit();
+	virtual ~Unit() override;
 
 	void setPhysicsStatus(bool stat);
 	void setInterruptStatus(bool stat);
@@ -38,6 +37,7 @@ public:
 	void setStaticStatus(bool stat);
 	Status getStatus() const;
 
+	// Don't working. WTFFFFFFFFFFFFF
 	void setPhysicsBodyUserData(const std::string& str);
 	const std::string& setPhysicsBodyUserData();
 	
@@ -47,9 +47,12 @@ public:
 	void setTexture( sf::Texture* texture );
 	const sf::Texture* getTexture() const;
 
-	void setRectTexture( const sf::FloatRect& rect );
-	const sf::FloatRect& getRectTexture();
-
+	void addStateAndRectOfTexture(std::string state, sf::FloatRect rect);
+	void delStateAndRectOfTexture(std::string state);
+	const StatesAndRectsOfTexture&
+		getStatesAndRectsOfTexture() const;
+	sf::FloatRect getRectOfTexture(std::string state);
+	
 	sf::Vector2f getPosition();
 
 	float getRotation();

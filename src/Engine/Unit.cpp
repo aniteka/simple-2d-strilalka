@@ -9,7 +9,6 @@ Unit::Unit(b2Body*& body)
 	}
 	, main_body(body)
 	, main_texture(nullptr)
-	, main_rect_texture(0,0,0,0)
 	, main_size_body(0,0)
 {
 	if (main_body->IsEnabled())
@@ -61,11 +60,12 @@ Unit::Status Unit::getStatus() const
 
 void Unit::setPhysicsBodyUserData(const std::string& str)
 {
-	main_body->SetUserData((void*)str.c_str());
+	//main_body->SetUserData((void*)str.c_str());
 }
 const std::string& Unit::setPhysicsBodyUserData()
 {
-	return std::string((char*)main_body->GetUserData().pointer);
+	//return std::string((char*)main_body->GetUserData().pointer);
+	return "";
 }
 
 
@@ -94,13 +94,23 @@ const sf::Texture* Unit::getTexture() const
 
 
 
-void Unit::setRectTexture(const sf::FloatRect& rect)
+void Unit::addStateAndRectOfTexture(std::string state, sf::FloatRect rect)
 {
-	main_rect_texture = rect;
+	main_states_and_rects_of_texture
+		.emplace(state, rect);
 }
-const sf::FloatRect& Unit::getRectTexture()
+void Unit::delStateAndRectOfTexture(std::string state)
 {
-	return main_rect_texture;
+	main_states_and_rects_of_texture
+		.erase(main_states_and_rects_of_texture.find(state));
+}
+const Unit::StatesAndRectsOfTexture& Unit::getStatesAndRectsOfTexture() const
+{
+	return main_states_and_rects_of_texture;
+}
+sf::FloatRect Unit::getRectOfTexture(std::string state)
+{
+	return main_states_and_rects_of_texture.at(state);
 }
 
 

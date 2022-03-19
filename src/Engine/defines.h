@@ -12,6 +12,7 @@
 #include <mutex>
 #include <atomic>
 #include <functional>
+#include <map>
 
 #include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>

@@ -9,9 +9,9 @@ class Hero
 	: public Unit
 {
 protected:
-	float jump_height;
+	float jump_impulse;
 
 public:
-	Hero(sf::Vector2f collision_oval, b2Body* body);
+	Hero(sf::Vector2f collision_oval, b2Body*& body);
 	
 };

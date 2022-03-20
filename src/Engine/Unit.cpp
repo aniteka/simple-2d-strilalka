@@ -1,28 +1,69 @@
 #include "Unit.hpp"
 
 Unit::Unit(b2Body*& body)
-	: status{
+	: status({
 		.is_physics = false,
 		.is_interrupted = false,
 		.is_drawable = false,
-		.is_static = true
-	}
+		.is_static = false
+	})
 	, main_body(body)
 	, main_texture(nullptr)
-	, main_size_body(0,0)
+	, main_state_of_texture("")
+	, main_size_body(10,10)
 {
 	if (main_body->IsEnabled())
 		status.is_physics = true;
 	
 	if (main_body->GetType() == b2_staticBody)
 		status.is_static = true;
+	else 
 
 	for (auto i = main_body->GetFixtureList(); i != NULL; i = i->GetNext())
 		main_collisions.push_back(i);
 }
+Unit::Unit(const Unit& unit)
+	: status(unit.status)
+	, main_body( new b2Body(*unit.getMainBody()) )
+	, main_texture( new sf::Texture( *unit.getTexture() ) )
+	, main_states_and_rects_of_texture(unit.getStatesAndRectsOfTexture())
+	, main_state_of_texture(unit.getStateOfTexture())
+	, main_size_body(unit.getMainSizeBody())
+{}
+Unit::Unit(Unit&& unit)
+	: status( std::move(unit.status) )
+	, main_body( unit.main_body )
+	, main_texture( unit.main_texture )
+	, main_states_and_rects_of_texture( std::move(unit.main_states_and_rects_of_texture) )
+	, main_state_of_texture( std::move(unit.main_state_of_texture))
+	, main_size_body( std::move(unit.main_size_body) )
+{
+	unit.status = {
+		.is_physics = false,
+		.is_interrupted = false,
+		.is_drawable = false,
+		.is_static = false
+	};
+	unit.main_body = nullptr;
+	unit.main_texture = nullptr;
+	unit.main_states_and_rects_of_texture.clear();
+	unit.main_state_of_texture.clear();
+	unit.main_size_body = { 0,0 };
+}
 Unit::~Unit()
 {
 	delete main_texture;
+}
+
+Unit& Unit::operator=(const Unit& unit)
+{
+	std::cout << "TODO";
+	return *this;
+}
+Unit& Unit::operator=(Unit&& unit)
+{
+	std::cout << "TODO";
+	return *this;
 }
 
 
@@ -94,7 +135,7 @@ const sf::Texture* Unit::getTexture() const
 
 
 
-void Unit::addStateAndRectOfTexture(std::string state, sf::FloatRect rect)
+void Unit::addStateAndRectOfTexture(std::string state, RectAndFrames rect)
 {
 	main_states_and_rects_of_texture
 		.emplace(state, rect);
@@ -108,9 +149,20 @@ const Unit::StatesAndRectsOfTexture& Unit::getStatesAndRectsOfTexture() const
 {
 	return main_states_and_rects_of_texture;
 }
-sf::FloatRect Unit::getRectOfTexture(std::string state)
+Unit::RectAndFrames Unit::getRectOfTexture(std::string state)
 {
 	return main_states_and_rects_of_texture.at(state);
+}
+
+
+
+void Unit::setStateOfTexture(std::string state)
+{
+	main_state_of_texture = std::move(state);
+}
+const std::string& Unit::getStateOfTexture() const
+{
+	return main_state_of_texture;
 }
 
 
@@ -196,11 +248,33 @@ void Unit::addForceToCenter(sf::Vector2f force)
 
 
 
+void Unit::setLinearSpeed(const sf::Vector2f& vec)
+{
+	main_body->SetLinearVelocity(b2Vec2(vec.x, vec.y));
+}
+sf::Vector2f Unit::getLinearSpeed() const
+{
+	return {
+		main_body->GetLinearVelocity().x,
+		main_body->GetLinearVelocity().y
+	};
+}
+void Unit::setAngularSpeed(float speed)
+{
+	main_body->SetAngularVelocity(speed);
+}
+float Unit::getAngularSpeed()
+{
+	return main_body->GetAngularVelocity();
+}
+
+
+
 void Unit::setMainSizeBody(const sf::Vector2f& size)
 {
 	main_size_body = size;
 }
-const sf::Vector2f& Unit::getMainSizeBody()
+const sf::Vector2f& Unit::getMainSizeBody() const
 {
 	return main_size_body;
 }
@@ -214,8 +288,16 @@ b2Body* Unit::getMainBody() const
 
 
 
+void Unit::updateEveryFrame(){}
+
+
+
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	const size_t TIME_OF_UPDATING_TEXTURE_RESTART = 100; // mc
+	
+	static size_t frame = 0;
+	static std::string previous_state = "";
 	if (!this->status.is_drawable)
 		return;
 	sf::RectangleShape draw_rect(main_size_body);
@@ -224,5 +306,42 @@ void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		main_body->GetPosition().x,
 		main_body->GetPosition().y
 	);
+	if (main_texture != nullptr)
+		draw_rect.setTexture(main_texture);
+	else
+		draw_rect.setFillColor(sf::Color::Green);
+	if(main_state_of_texture != "")
+	{
+		auto& msarof = main_states_and_rects_of_texture;
+		if (previous_state != main_state_of_texture)
+		{
+			previous_state = main_state_of_texture;
+			frame = 0;
+		}
+
+		if (frame >=
+			msarof
+			.at(main_state_of_texture).frames)
+			frame = 0;
+		
+		draw_rect.setTextureRect(
+			sf::IntRect(
+				msarof.at(main_state_of_texture).rect.left + 
+				(msarof.at(main_state_of_texture).rect.width * frame),
+				msarof.at(main_state_of_texture).rect.top,
+				msarof.at(main_state_of_texture).rect.width
+				* ((getLinearSpeed().x >= 0) ? 1 : -1),
+				msarof.at(main_state_of_texture).rect.height
+			)
+		);
+
+		static sf::Clock frame_clock;
+		if (frame_clock.getElapsedTime().asMilliseconds() > TIME_OF_UPDATING_TEXTURE_RESTART)
+		{
+			frame++;
+			frame_clock.restart();
+		}
+	}
+
 	target.draw(draw_rect, states);
 }

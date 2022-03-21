@@ -12,7 +12,7 @@ int main()
 	body_Constructor.position = b2Vec2(0, 400);
 	body_Constructor.type = b2_staticBody;
 	b2Body* body = world.CreateBody(&body_Constructor);
-
+	
 	b2PolygonShape shape;
 	shape.SetAsBox(500, 10);
 	b2FixtureDef fixture;
@@ -29,17 +29,22 @@ int main()
 
 	creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
 	creator.size_of_visible_texture = { 80,80 };
-	creator.addStateAndTextureRect(
-		"IDLE", Unit::RectAndFrames{
+	creator.addStatesAndTexturesRect({
+		MP("IDLE", Unit::RectAndFrames{
 			IR(0, 0, 48, 48),
 			4
-		}
-	);
-	creator.start_state = "IDLE";
+		}),MP("RUN", Unit::RectAndFrames{
+			IR(0,48,48,48),
+			6
+		})
+	});
+	creator.start_state = "RUN";
 	creator.addBoxCollision(VF(80.f * 0.69f, 80.f * 0.69f));
 	creator.is_fixed = true;
-	
+	creator.mass = 10.f;
+
 	auto unit = creator.create();
+
 	
 	bool isWorking = true;
 
@@ -76,9 +81,14 @@ int main()
 	while (isWorking)
 	{
 		world.Step(1 / 40000.f,8, 3);
-		unit->setLinearSpeed(VF(10, 
+
+		unit->setLinearSpeed(VF(
+			10.f,
 			unit->getLinearSpeed().y
 		));
+
+		if (unit->getLinearSpeed().y == 0) 
+			unit->addImpulseToCenter(VF(0, -200.f));
 	}
 	
 }

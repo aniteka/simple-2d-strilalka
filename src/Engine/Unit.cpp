@@ -215,6 +215,25 @@ MassData Unit::getMassData()
 
 
 
+void Unit::setLinearDamping(float damping)
+{
+	main_body->SetLinearDamping(damping);
+}
+float Unit::getLinearDamping() const
+{
+	return main_body->GetLinearDamping();
+}
+void Unit::setAngularDamping(float damping)
+{
+	main_body->SetAngularDamping(damping);
+}
+float Unit::getAngularDamping() const
+{
+	return main_body->GetAngularDamping();
+}
+
+
+
 void Unit::addImpulse(sf::Vector2f impulse, sf::Vector2f point)
 {
 	main_body->ApplyLinearImpulse(

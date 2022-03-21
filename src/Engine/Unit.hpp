@@ -84,6 +84,11 @@ public:
 	void addForce(sf::Vector2f force, sf::Vector2f point);
 	void addForceToCenter(sf::Vector2f force);
 
+	void setLinearDamping(float damping);
+	float getLinearDamping() const;
+	void setAngularDamping(float damping);
+	float getAngularDamping() const;
+	
 	void setLinearSpeed(const sf::Vector2f& vec);
 	sf::Vector2f getLinearSpeed() const;
 	void setAngularSpeed(float speed);
@@ -114,6 +119,8 @@ struct UnitCreator
 	bool is_fixed;
 	bool is_bullet;
 
+	float mass;
+
 	sf::Texture* texture;
 	Unit::StatesAndRectsOfTexture states_and_texture_rects;
 	std::string start_state;
@@ -137,8 +144,9 @@ public:
 		, start_linear_damping(0)
 		, start_angular_damping(0)
 		, start_angle(0)
-		, is_fixed(false)
+		, is_fixed(true)
 		, is_bullet(false)
+		, mass(100)
 		, texture(nullptr)
 		, size_of_visible_texture(0,0)
 	{}
@@ -167,7 +175,7 @@ public:
 		auto unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
 		unit->setInterruptStatus(status.is_interrupted);
 		unit->setDrawStatus(status.is_drawable);
-
+		
 		unit->setTexture( new sf::Texture(*texture) );
 		unit->setMainSizeBody(size_of_visible_texture);
 		for (auto& i : main_collisions)
@@ -176,6 +184,8 @@ public:
 			unit->addStateAndRectOfTexture(i.first, i.second);
 		unit->setStateOfTexture(start_state);
 		
+		unit->setMassToCenter(mass);
+
 		return unit;
 	}
 

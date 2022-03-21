@@ -4,8 +4,9 @@
 
 int main()
 {
-	b2Vec2 gravity(0.f, 9.8f);
+	b2Vec2 gravity(0, 9.8f);
 	b2World world(gravity);
+
 
 	b2BodyDef body_Constructor;
 	body_Constructor.position = b2Vec2(0, 400);
@@ -18,43 +19,35 @@ int main()
 	fixture.shape = &shape;
 	body->CreateFixture(&fixture);
 	
+	UnitCreator creator(&world);
+	creator.status = {
+		.is_physics = true,
+		.is_interrupted = true,
+		.is_drawable = true,
+		.is_static = false
+	};
 
-	body_Constructor.position = b2Vec2(10, 10);
-	body_Constructor.type = b2_dynamicBody;
-	b2Body* box = world.CreateBody(&body_Constructor);
-	Unit unit(box);
-	unit.setDrawStatus(true);
-	unit.setMainSizeBody(sf::Vector2f(80, 80));
-	auto texture = new sf::Texture;
-	texture->loadFromFile("ResFiles\\main_hero_tailmap.png");
-	unit.setTexture(texture);
-	unit.addStateAndRectOfTexture(
-		"IDLE", 
-		Unit::RectAndFrames{
-			sf::IntRect(0, 0, 48, 48),
-				4
+	creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
+	creator.size_of_visible_texture = { 80,80 };
+	creator.addStateAndTextureRect(
+		"IDLE", Unit::RectAndFrames{
+			IR(0, 0, 48, 48),
+			4
 		}
 	);
-	unit.setStateOfTexture("IDLE");
+	creator.start_state = "IDLE";
+	creator.addBoxCollision(VF(80.f * 0.69f, 80.f * 0.69f));
+	creator.is_fixed = true;
 	
-	b2PolygonShape shape2;
-	shape2.SetAsBox(80 * 0.69, 80 * 0.69);
-	fixture.density = 1;
-	fixture.friction = 0.5f;
-	fixture.shape = &shape2;
-	unit.addCollisionObject(&fixture);
+	auto unit = creator.create();
+	
+	bool isWorking = true;
 
-	
 	sf::RectangleShape rect_shape(VF(500, 10));
 	rect_shape.setPosition(0, 400);
 	rect_shape.setFillColor(sf::Color::Red);
 
-	sf::RectangleShape box_shape(VF(10 * 2, 10 * 2));
-	box_shape.setPosition(10, 10);
-	box_shape.setFillColor(sf::Color::Black);
-
-	bool isWorking = true;
-
+	
 	std::thread draw_thread(
 		[&]()
 		{
@@ -69,14 +62,9 @@ int main()
 						window.close();
 				}
 
-				box_shape.setPosition(
-					box->GetPosition().x,
-					box->GetPosition().y
-				);
 				window.clear(sf::Color::White);
 				window.draw(rect_shape);
-				// window.draw(box_shape);
-				window.draw(unit);
+				window.draw(*unit);
 				window.display();
 			}
 			isWorking = false;
@@ -88,11 +76,11 @@ int main()
 	while (isWorking)
 	{
 		world.Step(1 / 40000.f,8, 3);
-		unit.setLinearSpeed(VF(10, 
-			unit.getLinearSpeed().y
+		unit->setLinearSpeed(VF(10, 
+			unit->getLinearSpeed().y
 		));
 	}
 	
-	
-	return 0;
 }
+
+

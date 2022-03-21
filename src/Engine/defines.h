@@ -72,6 +72,7 @@ inline std::string DLOGFILENAME___;
 #endif
 
 
+
 // /\/\//\LOGGER/\/\/\)
 
 
@@ -85,8 +86,12 @@ namespace sf
 	};
 };
 
+
 using P = sf::Point;
 using VF = sf::Vector2f;
 using VI = sf::Vector2i;
+using IR = sf::IntRect;
+#define MP std::make_pair
+
 
 #endif

@@ -1,6 +1,6 @@
 #include "Unit.hpp"
 
-Unit::Unit(b2Body*& body)
+Unit::Unit(b2Body* body)
 	: status({
 		.is_physics = false,
 		.is_interrupted = false,
@@ -292,30 +292,37 @@ void Unit::updateEveryFrame(){}
 
 
 
+// TODO Angular change 
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	const size_t TIME_OF_UPDATING_TEXTURE_RESTART = 100; // mc
 	
 	static size_t frame = 0;
 	static std::string previous_state = "";
+	static sf::Clock frame_clock;
+
 	if (!this->status.is_drawable)
 		return;
+	
 	sf::RectangleShape draw_rect(main_size_body);
-	draw_rect.setPosition
-	(
+	draw_rect.setPosition(
 		main_body->GetPosition().x,
 		main_body->GetPosition().y
 	);
+	
 	if (main_texture != nullptr)
 		draw_rect.setTexture(main_texture);
 	else
 		draw_rect.setFillColor(sf::Color::Green);
+	
 	if(main_state_of_texture != "")
 	{
 		auto& msarof = main_states_and_rects_of_texture;
 		if (previous_state != main_state_of_texture)
 		{
 			previous_state = main_state_of_texture;
+			if (msarof.find(main_state_of_texture) == msarof.end())
+				throw main_state_of_texture + "is uncertain";
 			frame = 0;
 		}
 
@@ -335,7 +342,6 @@ void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 			)
 		);
 
-		static sf::Clock frame_clock;
 		if (frame_clock.getElapsedTime().asMilliseconds() > TIME_OF_UPDATING_TEXTURE_RESTART)
 		{
 			frame++;

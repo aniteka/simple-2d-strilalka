@@ -57,12 +57,10 @@ Unit::~Unit()
 
 Unit& Unit::operator=(const Unit& unit)
 {
-	std::cout << "TODO";
 	return *this;
 }
 Unit& Unit::operator=(Unit&& unit)
 {
-	std::cout << "TODO";
 	return *this;
 }
 

@@ -44,7 +44,6 @@ public:
 
 	// Do not use it
 	Unit& operator=(const Unit& unit);	
-
 	// Do not use it
 	Unit& operator=(Unit&& unit);
 	
@@ -107,6 +106,7 @@ public:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
+
 
 
 template<class _MainUnit = Unit>

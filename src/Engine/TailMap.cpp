@@ -134,6 +134,28 @@ TailMap::TailMap(std::string lua_file, b2Body* body)
 
 	initMainBody_after_mtx_init();
 }
+TailMap::TailMap(const TailMap& tailmap)
+	: Unit(tailmap)
+	, mtx(nullptr)
+{
+	if(tailmap.mtx != nullptr)
+		mtx = new Matrix_texture(tailmap.mtx[0]);
+}
+TailMap::TailMap(TailMap&& tailmap)
+	: Unit(std::move(tailmap))
+	, mtx(tailmap.mtx)
+{
+	tailmap.mtx = nullptr;
+}
+
+TailMap& TailMap::operator=(const TailMap&)
+{
+	return *this;
+}
+TailMap& TailMap::operator=(TailMap&&)
+{
+	return *this;
+}
 
 
 
@@ -149,7 +171,6 @@ void TailMap::setMainSizeBody(const sf::Vector2f& size)
 	main_size_body = size;
 	initMainBody_after_mtx_init();
 }
-
 
 
 

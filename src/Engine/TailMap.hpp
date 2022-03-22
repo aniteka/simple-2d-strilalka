@@ -15,6 +15,8 @@ private:
 
 public:
 	TailMap(std::string lua_file, b2Body* body);
+	TailMap(const TailMap& tailmap);
+	TailMap(TailMap&& tailmap);
 	~TailMap() override
 	{
 		for (auto i : *mtx)
@@ -23,6 +25,11 @@ public:
 		delete mtx;
 	}
 
+	// Do not use it
+	TailMap& operator=(const TailMap&);
+	// Do not use it
+	TailMap& operator=(TailMap&&);
+	
 	const Matrix_texture& getMatrix() const;
 
 	void setMainSizeBody(const sf::Vector2f& size) override;

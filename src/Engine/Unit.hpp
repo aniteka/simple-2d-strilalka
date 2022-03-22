@@ -42,62 +42,66 @@ public:
 	Unit(Unit&& unit);
 	virtual ~Unit() override;
 
-	Unit& operator=(const Unit& unit);
+	// Do not use it
+	Unit& operator=(const Unit& unit);	
+
+	// Do not use it
 	Unit& operator=(Unit&& unit);
 	
-	void setPhysicsStatus(bool stat);
-	void setInterruptStatus(bool stat);	// TODO
-	void setDrawStatus(bool stat);
-	void setStaticStatus(bool stat);
-	Status getStatus() const;
+	virtual void setPhysicsStatus(bool stat);
+	virtual void setInterruptStatus(bool stat);	// TODO
+	virtual void setDrawStatus(bool stat);
+	virtual void setStaticStatus(bool stat);
+	virtual Status getStatus() const;
 
-	// Don't working. WTFFFFFFFFFFFFF
-	void setPhysicsBodyUserData(const std::string& str);
-	const std::string& setPhysicsBodyUserData();
+	// Do not use it
+	virtual void setPhysicsBodyUserData(const std::string& str);
+	// Do not use it
+	virtual const std::string& setPhysicsBodyUserData();
 	
-	void addCollisionObject(const b2FixtureDef* b2fd);
-	const std::vector<b2Fixture*>& getCollisionObject() const;
+	virtual void addCollisionObject(const b2FixtureDef* b2fd);
+	virtual const std::vector<b2Fixture*>& getCollisionObject() const;
 
-	void setTexture( sf::Texture* texture );
-	const sf::Texture* getTexture() const;
+	virtual void setTexture( sf::Texture* texture );
+	virtual const sf::Texture* getTexture() const;
 
-	void addStateAndRectOfTexture(std::string state, RectAndFrames rect_and_frames);
-	void delStateAndRectOfTexture(std::string state);
-	const StatesAndRectsOfTexture&
+	virtual void addStateAndRectOfTexture(std::string state, RectAndFrames rect_and_frames);
+	virtual void delStateAndRectOfTexture(std::string state);
+	virtual const StatesAndRectsOfTexture&
 		getStatesAndRectsOfTexture() const;
-	RectAndFrames getRectOfTexture(std::string state);
+	virtual RectAndFrames getRectOfTexture(std::string state);
 
-	void setStateOfTexture(std::string state);
-	const std::string& getStateOfTexture() const;
+	virtual void setStateOfTexture(std::string state);
+	virtual const std::string& getStateOfTexture() const;
 	
-	sf::Vector2f getPosition();
+	virtual sf::Vector2f getPosition();
 
-	float getRotation();
+	virtual float getRotation();
 
-	void setMass(float mass, const sf::Vector2f& point);
-	void setMassToCenter(float mass);
-	float getMass();
-	MassData getMassData();
+	virtual void setMass(float mass, const sf::Vector2f& point);
+	virtual void setMassToCenter(float mass);
+	virtual float getMass();
+	virtual MassData getMassData();
 
-	void addImpulse(sf::Vector2f impulse, sf::Vector2f point);
-	void addImpulseToCenter(sf::Vector2f impulse);
-	void addForce(sf::Vector2f force, sf::Vector2f point);
-	void addForceToCenter(sf::Vector2f force);
+	virtual void addImpulse(sf::Vector2f impulse, sf::Vector2f point);
+	virtual void addImpulseToCenter(sf::Vector2f impulse);
+	virtual void addForce(sf::Vector2f force, sf::Vector2f point);
+	virtual void addForceToCenter(sf::Vector2f force);
 
-	void setLinearDamping(float damping);
-	float getLinearDamping() const;
-	void setAngularDamping(float damping);
-	float getAngularDamping() const;
+	virtual void setLinearDamping(float damping);
+	virtual float getLinearDamping() const;
+	virtual void setAngularDamping(float damping);
+	virtual float getAngularDamping() const;
 	
-	void setLinearSpeed(const sf::Vector2f& vec);
-	sf::Vector2f getLinearSpeed() const;
-	void setAngularSpeed(float speed);
-	float getAngularSpeed();
+	virtual void setLinearSpeed(const sf::Vector2f& vec);
+	virtual sf::Vector2f getLinearSpeed() const;
+	virtual void setAngularSpeed(float speed);
+	virtual float getAngularSpeed();
 	
-	void setMainSizeBody( const sf::Vector2f& size );
-	const sf::Vector2f& getMainSizeBody() const;
+	virtual void setMainSizeBody( const sf::Vector2f& size );
+	virtual const sf::Vector2f& getMainSizeBody() const;
 	
-	b2Body* getMainBody() const;
+	virtual b2Body* getMainBody() const;
 
 	virtual void updateEveryFrame();
 
@@ -156,11 +160,11 @@ public:
 	{
 		for (auto& i : main_collisions)
 			delete i.shape;
-		delete texture;
+		if(!texture)delete texture;
 	}
 
 	template<class... _Params>
-	_MainUnit* create(_Params... _Vals)
+	Unit* create(_Params... _Vals)
 	{
 		b2BodyDef bd;
 		bd.enabled = status.is_physics;
@@ -180,7 +184,7 @@ public:
 		bd.fixedRotation = is_fixed;
 		bd.bullet = is_fixed;
 
-		auto unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
+		Unit* unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
 		unit->setInterruptStatus(status.is_interrupted);
 		unit->setDrawStatus(status.is_drawable);
 
@@ -212,7 +216,7 @@ public:
 			size.y
 		);
 
-		fixture_def.density = 1;
+		fixture_def.density = 0.5f;
 		fixture_def.friction = friction;
 		fixture_def.shape = shape;
 		main_collisions.push_back(fixture_def);

@@ -11,48 +11,48 @@ public:
 	using Matrix_texture = Matrix<sf::Texture*>;
 
 private:
-	std::vector<sf::RectangleShape*> collision_vector;
 	Matrix_texture* mtx;
-	
-	sf::Vector2f rect;
-	sf::Point warp_point;
 
 public:
-	TailMap();
-	TailMap(Matrix_texture::init_list init_list, size_t h_size, size_t v_size);
-	TailMap(std::string lua_file);
-	TailMap(TailMap&&) = default;
-	TailMap(const TailMap&) = default;
-	TailMap& operator=(const TailMap&);
+	TailMap(std::string lua_file, b2Body* body);
 	~TailMap() override
 	{
-		for (auto i : collision_vector)
-			delete i;
+		for (auto i : *mtx)
+			for (auto j : i)
+				delete j;
 		delete mtx;
 	}
 
-	void setTail(sf::Texture* rect, size_t x, size_t y) const;
 	const Matrix_texture& getMatrix() const;
-	void setRectHW(float h, float w);
-	sf::Vector2f getRectHW() const;
 
-	// Override ZONE:
+	void setMainSizeBody(const sf::Vector2f& size) override;
 	
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	void addCollisionObject(sf::RectangleShape* sh) override;
-	void collisision(sf::RectangleShape* to, sf::RectangleShape* from) override;
-	void move(const sf::Point& p) override;
-	void setPoint(const sf::Point& p) override;
-	void setSize(const sf::Vector2f&) override;
-	void setTexture(sf::Texture* tx) override;
-	void setTextureRect(const sf::IntRect& ir) override;
-	void update() override;
-
-	const std::vector<sf::RectangleShape*>& getCollisionObject() const override;
-	sf::Point getPoint() const override;
-	sf::IntRect getTextureRect() const override;
 private:
-	void initCollisionVector();
+	void initMainBody_after_mtx_init();
+
+	// Do not use it
+	void setTexture(sf::Texture* texture) override { }
+	// Do not use it
+	const sf::Texture* getTexture() const override {  return nullptr; }
+
+	void addCollisionObject(const b2FixtureDef* b2fd) override {  }
+	// Do not use it
+
+	// Do not use it
+	void addStateAndRectOfTexture(std::string state, RectAndFrames rect_and_frames) override {  }
+	// Do not use it
+	void delStateAndRectOfTexture(std::string state) override {  }
+	// Do not use it
+	const StatesAndRectsOfTexture& getStatesAndRectsOfTexture() const override {  return {}; }
+	// Do not use it
+	RectAndFrames getRectOfTexture(std::string state) override {  return {}; }
+
+	// Do not use it
+	void setStateOfTexture(std::string state) override { }
+	// Do not use it
+	const std::string& getStateOfTexture() const override { return ""; }
 };
 
+using TailMapCreator = UnitCreator<TailMap>;

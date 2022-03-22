@@ -1,5 +1,6 @@
 ﻿#include "Engine/defines.h"
 #include "Engine/Unit.hpp"
+#include "Engine/TailMap.hpp"
 
 
 int main()
@@ -15,9 +16,9 @@ int main()
 		.is_drawable = true,
 		.is_static = false
 	};
-	creator.start_position = { 50, 0 };
+	creator.start_position = { 50, 100 };
 	
-	creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
+	//creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
 	creator.size_of_visible_texture = { 80,80 };
 	creator.addStatesAndTexturesRect({
 		MP("IDLE", Unit::RectAndFrames{
@@ -28,8 +29,16 @@ int main()
 			6
 		})
 	});
-	creator.start_state = "IDLE";
-	creator.addBoxCollision(VF(40.f, 40.f));
+	creator.start_state = "RUN";
+
+	b2FixtureDef fixture;
+	fixture.density = 0.5;
+	fixture.friction = 0.0;
+	auto circle = new b2CircleShape();
+	circle->m_radius = 40;
+	fixture.shape = circle;
+	creator.addCollision(fixture);
+	// creator.addBoxCollision(VF(10.f, 40.f), 0.0);
 	
 	creator.is_fixed = true;
 	creator.mass = 1.f;
@@ -45,6 +54,20 @@ int main()
 	creator_box.size_of_visible_texture = { 500, 20 };
 	creator_box.addBoxCollision(VF(250, 10));
 	auto box = creator_box.create();
+
+
+
+	TailMapCreator tailmap_creator(&world);
+	tailmap_creator.status = {
+		.is_physics = true,
+		.is_interrupted = true,
+		.is_drawable = true,
+		.is_static = true
+	};
+	tailmap_creator.size_of_visible_texture = { 50,50 };
+	auto tailmap = tailmap_creator.create("ResFiles\\REALTESTMAP2.lua");
+	
+	
 	
 	bool isWorking = true;
 
@@ -64,8 +87,13 @@ int main()
 						window.close();
 				}
 
+				unit->setLinearSpeed(VF(
+					10,unit->getLinearSpeed().y
+				));
+				
 				window.clear(sf::Color::White);
 				window.draw(*unit);
+				window.draw(*tailmap);
 				window.draw(*box);
 				window.display();
 			}

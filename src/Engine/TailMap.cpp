@@ -1,29 +1,6 @@
 #include "TailMap.hpp"
 #include <sol/sol.hpp>
 
-
-
-
-// Construct destruct zone:
-
-TailMap::TailMap(Matrix_texture::init_list init_list, size_t h_size, size_t v_size)
-	: mtx(new Matrix(init_list, h_size, v_size))
-	, rect(10,10)
-	, warp_point{ 0,0 }
-{
-	initCollisionVector();
-}
-
-
-TailMap::TailMap()
-	: mtx(nullptr)
-	, rect(10,10)
-	, warp_point{ 0,0 }
-{
-	initCollisionVector();
-}
-
-
 struct AllInfoAboutTailMap
 {
 	size_t width;
@@ -101,10 +78,9 @@ std::vector<AllInfoAboutTileSet> getAllTileSets(sol::table& main_table)
 	return aiatsv;
 }
 
-TailMap::TailMap(std::string lua_file)
-	: mtx(nullptr)
-	, rect(0,0)
-	, warp_point{ 0,0 }
+TailMap::TailMap(std::string lua_file, b2Body* body)
+	: Unit(body)
+	, mtx(nullptr)
 {
 	sol::state L;
 	sol::protected_function_result result = L.do_file(lua_file);
@@ -118,7 +94,7 @@ TailMap::TailMap(std::string lua_file)
 		map_info.width,
 		map_info.height
 	);
-	rect = sf::Vector2f(map_info.tilewidth, map_info.tileheight);
+	main_size_body = sf::Vector2f(map_info.tilewidth, map_info.tileheight);
 
 	for(size_t y = 0; y < map_info.height; ++y)
 	{
@@ -155,142 +131,36 @@ TailMap::TailMap(std::string lua_file)
 			EXIT:{}
 		}
 	}
-	initCollisionVector();
-}
 
-
-TailMap& TailMap::operator=(const TailMap& tm)
-{
-	delete mtx;
-	mtx = new Matrix_texture(tm.getMatrix());
-	rect = tm.rect;
-	warp_point = tm.warp_point;
-	initCollisionVector();
-	return *this;
+	initMainBody_after_mtx_init();
 }
 
 
 
-
-// Setters getters zone:
-
-void TailMap::setTail(sf::Texture* rect, size_t x, size_t y) const
-{
-	mtx[0][y][x] = rect;
-}
 const TailMap::Matrix_texture& TailMap::getMatrix() const
 {
 	return *mtx;
 }
 
 
-void TailMap::setSize(const sf::Vector2f& vec)
-{
-	setRectHW(vec.x, vec.y);
-}
-void TailMap::setRectHW(float h, float w)
-{
-	rect = { w,h };
-	for (auto i : collision_vector)
-		delete i;
-	collision_vector.clear();
-	initCollisionVector();
-}
-sf::Vector2f TailMap::getRectHW() const
-{
-	return rect;
-}
 
-
-void TailMap::setPoint(const sf::Point& p)
+void TailMap::setMainSizeBody(const sf::Vector2f& size)
 {
-
-}
-sf::Point TailMap::getPoint() const
-{
-	return warp_point;
-}
-
-const std::vector<sf::RectangleShape*>& TailMap::getCollisionObject() const
-{
-	return collision_vector;
-}
-
-void TailMap::move(const sf::Point& p)
-{
-
+	main_size_body = size;
+	initMainBody_after_mtx_init();
 }
 
 
 
-
-// Unused zone: 
-
-void TailMap::setTexture(sf::Texture* tx)
-{
-	// Unused
-	DLOG("Function setTexture is unused with TailMap object");
-}
-
-void TailMap::addCollisionObject(sf::RectangleShape* sh)
-{
-	// Unused
-	DLOG("Function addCollisionObject is unused with TailMap object");
-}
-
-void TailMap::setTextureRect(const sf::IntRect& ir)
-{
-	// Unused
-	DLOG("Function setTextureRect is unused with TailMap object");
-}
-
-void TailMap::collisision(sf::RectangleShape* to, sf::RectangleShape* from)
-{
-	// Unused	
-}
-
-sf::IntRect TailMap::getTextureRect() const
-{
-	// Unused
-	DLOG("Function getTextureRect is unused with TailMap object");
-	return sf::IntRect(0, 0, 0, 0);
-}
-
-
-
-
-// Init
-
-void TailMap::initCollisionVector()
-{
-	if (mtx == nullptr) return;
-	for(auto i = 0; i < mtx->getVerticalSize(); ++i)
-	{
-		for(auto j = 0; j < mtx->getHorizontalSize(); ++j)
-		{
-			if(mtx[0][i][j] == nullptr)
-				continue;
-			auto rect = new sf::RectangleShape();
-			rect->setSize(this->rect);
-			rect->setPosition(
-				j * rect->getSize().x,
-				i * rect->getSize().y
-			);
-			collision_vector.push_back(rect);
-		}
-	}
-}
-
-
-
-
-// Update zone:
 
 void TailMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::RectangleShape shape;
-	shape.setSize(rect);
-	shape.setPosition(warp_point.x, warp_point.y);
+	shape.setSize(main_size_body);
+	shape.setPosition(
+		main_body->GetPosition().x,
+		main_body->GetPosition().y
+	);
 	shape.setOutlineColor(sf::Color::Black);
 
 	for (size_t i = 0; i < mtx->getVerticalSize(); ++i)
@@ -299,18 +169,51 @@ void TailMap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		{
 			if (mtx[0][i][j] == nullptr)
 			{
-				shape.move(rect.x, 0);
+				shape.move(main_size_body.x, 0);
 				continue;
 			}
 			shape.setFillColor(sf::Color::White);
 			shape.setTexture(mtx[0][i][j]);
 			target.draw(shape, states);
-			shape.move(rect.x, 0);
+			shape.move(main_size_body.x, 0);
 		}
-		shape.move(0, rect.y);
-		shape.setPosition(warp_point.x, shape.getPosition().y);
+		shape.move(0, main_size_body.y);
+		shape.setPosition(
+			main_body->GetPosition().x,
+			shape.getPosition().y
+		);
 	}
 }
 
-void TailMap::update()
-{}
+
+
+void TailMap::initMainBody_after_mtx_init()
+{
+	for (auto i : main_collisions)
+		main_body->DestroyFixture(i);
+	main_collisions.clear();
+	
+	b2FixtureDef fixture_def;
+
+	b2PolygonShape polygon_shape;
+	fixture_def.shape = &polygon_shape;
+	fixture_def.density = 0.5f;
+	fixture_def.friction = 0.6f;
+
+for (size_t y = 0; y < mtx[0].getVerticalSize(); ++y)
+	for (size_t x = 0; x < mtx[0].getHorizontalSize(); ++x)
+	{
+		if(mtx[0][y][x] == nullptr)
+			continue;
+		polygon_shape.SetAsBox(
+			getMainSizeBody().x / 2,
+			getMainSizeBody().y / 2,
+			b2Vec2(
+				getPosition().x + getMainSizeBody().x / 2 + getMainSizeBody().x * x,
+				getPosition().y + getMainSizeBody().y / 2 + getMainSizeBody().y * y
+			),0
+		);
+		main_collisions.push_back(main_body->CreateFixture(&fixture_def));
+	}
+}
+

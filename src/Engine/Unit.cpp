@@ -309,24 +309,27 @@ b2Body* Unit::getMainBody() const
 
 void Unit::updateEveryFrame(){}
 
-
+std::map<void*, std::pair<size_t, std::string>> draw_map;
 
 // TODO Angular change 
 void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	const size_t TIME_OF_UPDATING_TEXTURE_RESTART = 100; // mc
+
+	if (draw_map.find((void*)this) == draw_map.end())
+		draw_map.emplace((void*)this, std::make_pair(0, ""));
 	
-	static size_t frame = 0;
-	static std::string previous_state = "";
+	size_t& frame = draw_map[(void*)this].first;
+	std::string& previous_state = draw_map[(void*)this].second;
 	static sf::Clock frame_clock;
 
 	if (!this->status.is_drawable)
 		return;
-	
+
 	sf::RectangleShape draw_rect(main_size_body);
 	draw_rect.setPosition(
-		main_body->GetPosition().x,
-		main_body->GetPosition().y
+		main_body->GetPosition().x - this->main_size_body.x / 2,
+		main_body->GetPosition().y - this->main_size_body.y / 2
 	);
 	
 	if (main_texture != nullptr)

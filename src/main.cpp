@@ -7,17 +7,6 @@ int main()
 	b2Vec2 gravity(0, 9.8f);
 	b2World world(gravity);
 
-
-	b2BodyDef body_Constructor;
-	body_Constructor.position = b2Vec2(0, 400);
-	body_Constructor.type = b2_staticBody;
-	b2Body* body = world.CreateBody(&body_Constructor);
-	
-	b2PolygonShape shape;
-	shape.SetAsBox(500, 10);
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	body->CreateFixture(&fixture);
 	
 	UnitCreator creator(&world);
 	creator.status = {
@@ -26,7 +15,8 @@ int main()
 		.is_drawable = true,
 		.is_static = false
 	};
-
+	creator.start_position = { 50, 0 };
+	
 	creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
 	creator.size_of_visible_texture = { 80,80 };
 	creator.addStatesAndTexturesRect({
@@ -38,25 +28,32 @@ int main()
 			6
 		})
 	});
-	creator.start_state = "RUN";
-	creator.addBoxCollision(VF(80.f * 0.69f, 80.f * 0.69f));
+	creator.start_state = "IDLE";
+	creator.addBoxCollision(VF(40.f, 40.f));
+	
 	creator.is_fixed = true;
-	creator.mass = 10.f;
+	creator.mass = 1.f;
 
 	auto unit = creator.create();
 
 	
+	UnitCreator creator_box(&world);
+	creator_box.status = {
+		1,1,1,1
+	};
+	creator_box.start_position = { 0, 700 };
+	creator_box.size_of_visible_texture = { 500, 20 };
+	creator_box.addBoxCollision(VF(250, 10));
+	auto box = creator_box.create();
+	
 	bool isWorking = true;
 
-	sf::RectangleShape rect_shape(VF(500, 10));
-	rect_shape.setPosition(0, 400);
-	rect_shape.setFillColor(sf::Color::Red);
 
 	
 	std::thread draw_thread(
 		[&]()
 		{
-			sf::RenderWindow window(sf::VideoMode(500, 500), "name");
+			sf::RenderWindow window(sf::VideoMode(1000, 1000), "name");
 			window.setFramerateLimit(60);
 			while (window.isOpen())
 			{
@@ -68,8 +65,8 @@ int main()
 				}
 
 				window.clear(sf::Color::White);
-				window.draw(rect_shape);
 				window.draw(*unit);
+				window.draw(*box);
 				window.display();
 			}
 			isWorking = false;
@@ -77,20 +74,12 @@ int main()
 	);
 
 	draw_thread.detach();
-	
+
 	while (isWorking)
 	{
-		world.Step(1 / 40000.f,8, 3);
-
-		unit->setLinearSpeed(VF(
-			10.f,
-			unit->getLinearSpeed().y
-		));
-
-		if (unit->getLinearSpeed().y == 0) 
-			unit->addImpulseToCenter(VF(0, -200.f));
+		world.Step(1 / 60.f,8, 3);
+		std::this_thread::sleep_for(1ms);
 	}
-	
+
+	return 0;
 }
-
-

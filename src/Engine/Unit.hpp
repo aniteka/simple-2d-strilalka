@@ -115,7 +115,8 @@ struct UnitCreator
 	float start_linear_damping;
 	float start_angular_damping;
 	float start_angle;
-
+	sf::Vector2f start_position;
+	
 	bool is_fixed;
 	bool is_bullet;
 
@@ -144,6 +145,7 @@ public:
 		, start_linear_damping(0)
 		, start_angular_damping(0)
 		, start_angle(0)
+		, start_position(0,0)
 		, is_fixed(true)
 		, is_bullet(false)
 		, mass(100)
@@ -152,6 +154,8 @@ public:
 	{}
 	~UnitCreator()
 	{
+		for (auto& i : main_collisions)
+			delete i.shape;
 		delete texture;
 	}
 
@@ -169,14 +173,19 @@ public:
 		bd.linearDamping = start_linear_damping;
 		bd.angularDamping = start_angular_damping;
 		bd.angle = start_angle;
+		bd.position.Set(
+			start_position.x,
+			start_position.y
+		);
 		bd.fixedRotation = is_fixed;
 		bd.bullet = is_fixed;
 
 		auto unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
 		unit->setInterruptStatus(status.is_interrupted);
 		unit->setDrawStatus(status.is_drawable);
-		
-		unit->setTexture( new sf::Texture(*texture) );
+
+		if(texture != nullptr)
+			unit->setTexture( new sf::Texture(*texture) );
 		unit->setMainSizeBody(size_of_visible_texture);
 		for (auto& i : main_collisions)
 			unit->addCollisionObject(&i);
@@ -193,7 +202,7 @@ public:
 	{
 		main_collisions.push_back(collision);
 	}
-	void addBoxCollision(sf::Vector2f size, float friction = 0.2f)
+	void addBoxCollision(sf::Vector2f size, float friction = 0.8f)
 	{
 		b2FixtureDef fixture_def;
 		

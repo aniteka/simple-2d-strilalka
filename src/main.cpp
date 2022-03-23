@@ -43,9 +43,9 @@ int main()
 
 	auto unit = creator.create();
 
-
+	creator.restart();
+	auto& creator_box = creator;
 	
-	UnitCreator creator_box(&world);
 	creator_box.status = {
 		1,1,1,1
 	};

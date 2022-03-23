@@ -149,6 +149,8 @@ struct UnitCreator
 	// Mass of body
 	float mass;
 
+	// Gravity scale
+	float gravity_scale;
 	
 	
 	// Main texture
@@ -190,6 +192,7 @@ public:
 		, is_fixed(true)
 		, is_bullet(false)
 		, mass(100)
+		, gravity_scale(1)
 		, texture(nullptr)
 		, size_of_visible_texture(0,0)
 	{}
@@ -232,6 +235,7 @@ public:
 		);
 		bd.fixedRotation = is_fixed;
 		bd.bullet = is_fixed;
+		bd.gravityScale = gravity_scale;
 		
 		Unit* unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
 		unit->setInterruptStatus(status.is_interrupted);
@@ -252,6 +256,41 @@ public:
 			static_cast<_MainUnit*>(unit));
 	}
 
+	/// <summary>
+	/// fully restart of creator
+	/// </summary>
+	/// <param name="new_world">
+	/// if == nullptr, use old world
+	/// </param>
+	void restart(b2World* new_world = nullptr)
+	{
+		if (new_world != nullptr)
+			main_world = new_world;
+		for (auto& i : main_collisions)
+			delete i.shape;
+		main_collisions.clear();
+		if (!texture) delete texture;
+
+		status = {
+			.is_physics = false,
+			.is_interrupted = false,
+			.is_drawable = false,
+			.is_static = false
+		};
+		start_linear_speed = { 0, 0 };
+		start_angular_speed = 0;
+		start_linear_damping = 0;
+		start_angular_damping = 0;
+		start_angle = 0;
+		start_position = { 0, 0 };
+		is_fixed = true;
+		is_bullet = false;
+		mass = 100;
+		gravity_scale = 1;
+		texture = nullptr;
+		size_of_visible_texture = { 0, 0 };
+	}
+	
 
 
 

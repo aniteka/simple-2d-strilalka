@@ -132,6 +132,9 @@ TailMap::TailMap(std::string lua_file, b2Body* body)
 		}
 	}
 
+	for (auto& i : map_sets_info)
+		delete i.image;
+
 	initMainBody_after_mtx_init();
 }
 TailMap::TailMap(const TailMap& tailmap)
@@ -147,6 +150,14 @@ TailMap::TailMap(TailMap&& tailmap)
 {
 	tailmap.mtx = nullptr;
 }
+TailMap::~TailMap()
+{
+	for (auto& i : *mtx)
+		for (auto& j : i)
+			delete j;
+	delete mtx;
+}
+
 
 TailMap& TailMap::operator=(const TailMap&)
 {

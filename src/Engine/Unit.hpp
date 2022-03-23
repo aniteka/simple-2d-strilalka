@@ -43,7 +43,7 @@ public:
 	virtual ~Unit() override;
 
 	// Do not use it
-	Unit& operator=(const Unit& unit);	
+	Unit& operator=(const Unit& unit);
 	// Do not use it
 	Unit& operator=(Unit&& unit);
 	
@@ -109,33 +109,70 @@ public:
 
 
 
+
+
+
 template<class _MainUnit = Unit>
 struct UnitCreator
 {
+	// Staus if physics, draw, static
 	Unit::Status status;
 
-	sf::Vector2f start_linear_speed;
-	float start_angular_speed;
-	float start_linear_damping;
-	float start_angular_damping;
-	float start_angle;
-	sf::Vector2f start_position;
-	
-	bool is_fixed;
-	bool is_bullet;
 
+	
+	// Start speed
+	sf::Vector2f start_linear_speed;
+	
+	// Start angular speed(speed of start angular rotation)
+	float start_angular_speed;
+
+	// Attenuation of speed 
+	float start_linear_damping;
+
+	// Attenuation of angular speed 
+	float start_angular_damping;
+
+	// Angle of body
+	float start_angle;
+
+	// Start position of body
+	sf::Vector2f start_position;
+
+
+	
+	// Bod will not change his angle
+	bool is_fixed;
+
+	// See in documentation
+	bool is_bullet;
+	
+	// Mass of body
 	float mass;
 
-	sf::Texture* texture;
-	Unit::StatesAndRectsOfTexture states_and_texture_rects;
-	std::string start_state;
 	
+	
+	// Main texture
+	sf::Texture* texture;
+
+	// State(std::string) and rect in texture 
+	Unit::StatesAndRectsOfTexture states_and_texture_rects;
+
+	// State from states_and_texture_rects
+	std::string start_state;
+
 	sf::Vector2f size_of_visible_texture;
+
 private:
+	// All constructors of collision there
 	std::vector<b2FixtureDef> main_collisions;
+
+	// Pointer to world, use only for create bodies
 	b2World* main_world;
 
 public:
+	/// <param name="world">
+	/// Pointer to world, use only for create bodies
+	/// </param>
 	UnitCreator(b2World* world)
 		: main_world(world)
 		, status{
@@ -160,11 +197,23 @@ public:
 	{
 		for (auto& i : main_collisions)
 			delete i.shape;
-		if(!texture)delete texture;
+		if(!texture) delete texture;
 	}
 
+	/// <summary>
+	/// Create unit var and add it to world
+	/// </summary>
+	/// <typeparam name="..._Params">
+	/// Parameters types for Unit's constructor
+	/// </typeparam>
+	/// <param name="..._Vals">
+	/// Vars for unit's constructor
+	/// </param>
+	/// <returns>
+	/// Smart pointer to unit
+	/// </returns>
 	template<class... _Params>
-	Unit* create(_Params... _Vals)
+	std::shared_ptr<_MainUnit> create(_Params... _Vals)
 	{
 		b2BodyDef bd;
 		bd.enabled = status.is_physics;
@@ -183,7 +232,7 @@ public:
 		);
 		bd.fixedRotation = is_fixed;
 		bd.bullet = is_fixed;
-
+		
 		Unit* unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
 		unit->setInterruptStatus(status.is_interrupted);
 		unit->setDrawStatus(status.is_drawable);
@@ -199,28 +248,124 @@ public:
 		
 		unit->setMassToCenter(mass);
 
-		return unit;
+		return std::shared_ptr<_MainUnit>(
+			static_cast<_MainUnit*>(unit));
 	}
 
+
+
+
+
+	
+	// /\/\/\ Create, Constructors | Collisions \/\/\/
+
+
+	
+
+
+	
 	void addCollision(b2FixtureDef collision)
 	{
 		main_collisions.push_back(collision);
 	}
-	void addBoxCollision(sf::Vector2f size, float friction = 0.8f)
+
+	/// <summary>
+	/// Add box collision to object
+	/// </summary>
+	/// <param name="size">
+	/// Size of collision(Розмір)
+	/// </param>
+	/// <param name="position">
+	/// Position of collision
+	/// (Default is center of body)
+	/// </param>
+	/// <param name="angle">
+	/// Angle of collision
+	/// </param>
+	/// <param name="density">
+	/// Density(Щільність) used to compute the
+	/// mass properties of the parent body
+	/// </param>
+	/// <param name="friction">
+	/// Friction(Тертя) of collision([0,1])
+	/// </param>
+	/// <param name="restitution">
+	///	Restitution(Пружність) of the body([0,1])
+	/// </param>
+	void addBoxCollision(sf::Vector2f size,
+						sf::Vector2f position = {0,0},
+						float angle = 0.f,
+						float density = 0.5f,
+						float friction = 0.2f,
+						float restitution = 0.f)
 	{
 		b2FixtureDef fixture_def;
 		
 		auto shape = new b2PolygonShape;
 		shape->SetAsBox(
 			size.x,
-			size.y
+			size.y,
+			b2Vec2(position.x, position.y),
+			angle
 		);
 
-		fixture_def.density = 0.5f;
+		fixture_def.restitution = restitution;
+		fixture_def.density = density;
 		fixture_def.friction = friction;
 		fixture_def.shape = shape;
 		main_collisions.push_back(fixture_def);
 	}
+
+	/// <summary>
+	/// Add box collision to object
+	/// </summary>
+	/// <param name="radius">
+	/// Size of collision(Розмір)
+	/// </param>
+	/// <param name="position">
+	/// Position of collision
+	/// (Default is center of body)
+	/// </param>
+	/// <param name="density">
+	/// Density(Щільність) used to compute the
+	/// mass properties of the parent body
+	/// </param>
+	/// <param name="friction">
+	/// Friction(Тертя) of collision([0,1])
+	/// </param>
+	/// <param name="restitution">
+	///	Restitution(Пружність) of the body([0,1])
+	/// </param>
+	void addCircleCollision(float radius,
+							sf::Vector2f position = {0,0},
+							float density = 0.5f,
+							float friction = 0.2f,
+							float restitution = 0.f)
+	{
+		b2FixtureDef fixture_def;
+
+		auto shape = new b2CircleShape;
+		shape->m_radius = radius;
+		shape->m_p.Set(position.x,position.y);
+
+		fixture_def.restitution = restitution;
+		fixture_def.density = density;
+		fixture_def.friction = friction;
+		fixture_def.shape = shape;
+		main_collisions.push_back(fixture_def);
+	}
+
+
+
+
+
+	
+	// /\/\/\ Collision | States and textures \/\/\/
+
+
+
+
+
 	
 	void addStateAndTextureRect(std::string state, Unit::RectAndFrames raf)
 	{

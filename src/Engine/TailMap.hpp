@@ -17,13 +17,7 @@ public:
 	TailMap(std::string lua_file, b2Body* body);
 	TailMap(const TailMap& tailmap);
 	TailMap(TailMap&& tailmap);
-	~TailMap() override
-	{
-		for (auto i : *mtx)
-			for (auto j : i)
-				delete j;
-		delete mtx;
-	}
+	~TailMap() override;
 
 	// Do not use it
 	TailMap& operator=(const TailMap&);

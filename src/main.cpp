@@ -31,19 +31,18 @@ int main()
 	});
 	creator.start_state = "RUN";
 
-	b2FixtureDef fixture;
-	fixture.density = 0.5;
-	fixture.friction = 0.0;
-	auto circle = new b2CircleShape();
-	circle->m_radius = 40;
-	fixture.shape = circle;
-	creator.addCollision(fixture);
+	creator.addCircleCollision(40,
+		{ 0,0 },
+		.5f,
+		.0f
+	);
 	// creator.addBoxCollision(VF(10.f, 40.f), 0.0);
-	
+
 	creator.is_fixed = true;
 	creator.mass = 1.f;
 
 	auto unit = creator.create();
+
 
 	
 	UnitCreator creator_box(&world);
@@ -87,9 +86,9 @@ int main()
 						window.close();
 				}
 
-				unit->setLinearSpeed(VF(
+				/*unit->setLinearSpeed(VF(
 					10,unit->getLinearSpeed().y
-				));
+				));*/
 				
 				window.clear(sf::Color::White);
 				window.draw(*unit);

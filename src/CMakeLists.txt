@@ -17,6 +17,7 @@ add_executable (${PROJECT_NAME}
 	"Engine/TailMap.cpp"
 	"Engine/Components/mass_data.hpp"
 	"Engine/Components/matrix.hpp"
+	"Engine/Components/file_manager.hpp"
 )	
 
 target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})

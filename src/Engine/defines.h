@@ -1,6 +1,7 @@
 ﻿#ifndef DEFINES_H
 #define DEFINES_H
 
+
 #define DEBUG
 #define TESTING
 #include <iostream>
@@ -13,15 +14,17 @@
 #include <atomic>
 #include <functional>
 #include <map>
+#include <memory>
+#include <filesystem>
 
 #include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>
 #include <box2d/box2d.h>
 
 
-
-using namespace std::string_literals;
+using namespace std::string_literals; 
 using namespace std::chrono_literals;
+namespace fs = std::filesystem;
 
 
 static bool program_running = true;
@@ -87,11 +90,14 @@ namespace sf
 };
 
 
+class FileManager;
+
 using P = sf::Point;
 using VF = sf::Vector2f;
 using VI = sf::Vector2i;
 using IR = sf::IntRect;
 #define MP std::make_pair
+using FM = FileManager;
 
 
 #endif

@@ -1,4 +1,6 @@
 ﻿#include "Engine/defines.h"
+#include "Engine/Components/file_manager.hpp"
+
 #include "Engine/Unit.hpp"
 #include "Engine/TailMap.hpp"
 
@@ -64,7 +66,9 @@ int main()
 		.is_static = true
 	};
 	tailmap_creator.size_of_visible_texture = { 50,50 };
-	auto tailmap = tailmap_creator.create("ResFiles\\REALTESTMAP2.lua");
+	auto tailmap = tailmap_creator.create(
+		FM::getResFile("REALTESTMAP2.lua")
+	);
 	
 	
 	

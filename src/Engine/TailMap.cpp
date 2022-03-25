@@ -1,4 +1,6 @@
 #include "TailMap.hpp"
+#include "Engine/Components/file_manager.hpp"
+
 #include <sol/sol.hpp>
 
 struct AllInfoAboutTailMap
@@ -59,7 +61,9 @@ std::vector<AllInfoAboutTileSet> getAllTileSets(sol::table& main_table)
 		// Load from another file
 		std::string file_name = ts.get<std::string>("exportfilename");
 		sol::state SOL_STATE;
-		sol::protected_function_result pfr = SOL_STATE.do_file("ResFiles\\" + file_name);
+		sol::protected_function_result pfr = SOL_STATE.do_file(
+			FileManager::getResFile(file_name)
+		);
 		sol::table set_tbl = pfr.get<sol::table>();
 		
 		info.tilewidth		= set_tbl.get<LUA_NUMBER>("tilewidth");
@@ -69,7 +73,9 @@ std::vector<AllInfoAboutTileSet> getAllTileSets(sol::table& main_table)
 		info.tilecount		= set_tbl.get<LUA_NUMBER>("tilecount");
 		info.image_name		= set_tbl.get<std::string>("image");
 		sf::Texture* tx = new sf::Texture;
-		tx->loadFromFile("ResFiles\\" + info.image_name);
+		tx->loadFromFile(
+			FileManager::getResFile(info.image_name)
+		);
 		info.image = tx;
 		
 		aiatsv.push_back(info);

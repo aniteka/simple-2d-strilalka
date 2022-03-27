@@ -1,44 +1,45 @@
 #pragma once
 #include "defines.h"
-
+#include "Unit.hpp"
 
 class Scene
 {
-	std::vector<class Unit*> units;
-	sf::RenderWindow& main_window;
-	std::function<sf::View()> view_control_callback;
+	bool is_running;
+	b2World scene_world;
+	sf::RenderWindow& scene_window;
+	std::list<std::shared_ptr<Unit>> scene_objects;
+	
 public:
-	Scene(sf::RenderWindow&);
-	~Scene();
-	Scene(const Scene&) = delete;
-	Scene(Scene&&) = delete;
-	
-	template<class..._Units>
-	void addUnit(_Units... _refs_to_static_members)
-	{
-		(units.push_back(_refs_to_static_members), ...);
-		std::sort(units.begin(), units.end(),
-			[](Unit* a, Unit* b)
-			{
-				return
-					a->getStatus().is_nstatic >
-					b->getStatus().is_nstatic;
-			}
-		);
-	}
+	Scene(sf::RenderWindow& render_window, sf::Vector2f gravitation);
+	Scene(sf::RenderWindow& render_window, b2World native_world);
 
-	void setViewCallback(const decltype(view_control_callback)&);
-	const decltype(view_control_callback)& getViewCallback() const;
-	
-	sf::View getView();
-	void setView(sf::View);
-	void setView(sf::FloatRect);
-	
-	void run();
 
-private:
-	void events();
-	void draw();
-	void update();
-	void collisionUpdate();
+	// Create unit and push it to list
+	template<class _Unit = Unit, class ..._Params>
+	std::weak_ptr<Unit>
+	addUnit(UnitCreator<_Unit> unit, _Params... params);
+
+	
+	decltype(scene_objects)& getListOfUnits();
+	b2World& getNativeWorld();
+
+	
+	// Start all threads
+	void enterToScene();
+	// Exit from all threads
+	// Delete all units
+	void exitFromScene();
+	// Should be called every frame
+	void renderNext();
 };
+
+
+template <class _Unit, class ... _Params>
+std::weak_ptr<Unit>
+Scene::addUnit(UnitCreator<_Unit> unit, _Params ... params)
+{
+	scene_objects.push_back(
+		unit.create(params...));
+	return scene_objects.back();
+}
+

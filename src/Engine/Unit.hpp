@@ -216,7 +216,7 @@ public:
 	/// Smart pointer to unit
 	/// </returns>
 	template<class... _Params>
-	std::shared_ptr<_MainUnit> create(_Params... _Vals)
+	std::shared_ptr<_MainUnit> create(_Params... _Vals) const
 	{
 		b2BodyDef bd;
 		bd.enabled = status.is_physics;

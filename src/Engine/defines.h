@@ -16,6 +16,7 @@
 #include <map>
 #include <memory>
 #include <filesystem>
+#include <list>
 
 #include <gtest/gtest.h>
 #include <SFML/Graphics.hpp>

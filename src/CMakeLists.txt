@@ -15,6 +15,8 @@ add_executable (${PROJECT_NAME}
 	"Engine/Hero.hpp"
 	"Engine/TailMap.hpp"
 	"Engine/TailMap.cpp"
+	"Engine/Scene.hpp"
+	"Engine/Scene.cpp"
 	"Engine/Components/mass_data.hpp"
 	"Engine/Components/matrix.hpp"
 	"Engine/Components/file_manager.hpp"

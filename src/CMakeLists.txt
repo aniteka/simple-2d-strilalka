@@ -6,18 +6,21 @@ include(conanbuildinfo.cmake)
 conan_basic_setup()
 
 # Add source to this project's executable.
-add_executable (Strelalka 
-	main.cpp 
-	Unit.cpp
-	Hero.cpp
-	Scene.cpp
-	"defines.h" 
-	"Unit.hpp"
-	"Hero.hpp"
-	"Scene.hpp"
-	"Tests/Hero.test.hpp" 
-	"Tests/main.test.hpp" 
-	
- "TailMap.hpp" "TailMap.cpp")
+add_executable (${PROJECT_NAME} 
+	main.cpp
+	"Engine/defines.h"
+	"Engine/Unit.cpp"
+	"Engine/Unit.hpp"
+	"Engine/Hero.cpp"
+	"Engine/Hero.hpp"
+	"Engine/TailMap.hpp"
+	"Engine/TailMap.cpp"
+	"Engine/Scene.hpp"
+	"Engine/Scene.cpp"
+	"Engine/Components/mass_data.hpp"
+	"Engine/Components/matrix.hpp"
+	"Engine/Components/file_manager.hpp"
+)	
 
-target_link_libraries(Strelalka ${CONAN_LIBS})
+target_link_libraries(${PROJECT_NAME} ${CONAN_LIBS})
+target_include_directories(${PROJECT_NAME} PRIVATE .)

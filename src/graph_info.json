@@ -1,6 +1,10 @@
 {
  "options": [
   [
+   "box2d:shared",
+   "False"
+  ],
+  [
    "brotli:shared",
    "False"
   ],

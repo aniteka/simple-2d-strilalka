@@ -1,146 +1,196 @@
-﻿#include "defines.h"
-#include "Unit.hpp"
-#include "Hero.hpp"
-#include "Scene.hpp"
-#include "TailMap.hpp"
+﻿#include "Engine/defines.h"
+#include "Engine/Components/file_manager.hpp"
 
-#include "Tests/main.test.hpp"
-
+#include "Engine/Unit.hpp"
+#include "Engine/TailMap.hpp"
+#include "Engine/Scene.hpp"
 
 
 
-class MainProgram
+int main()
 {
-private: /*Constants*/
-	const unsigned WINDOW_WIDTH = 600;
-	const unsigned WINDOW_HEIGHT = 600;
-	const unsigned FRAME_LIMIT = 560;
-
-	const std::string TEST_PNG_FILENAME
-		= "ResFiles\\COLOR_TEST_PNG.png";
-	const std::string WINDOW_TITLE
-		= "Strilalka";
-
-	const sf::Vector2f SIZE_OF_ONE_TILE_SET
-		{ 50.f, 50.f };
-
-	const std::string LUA_FILE
-		= "ResFiles\\REALTESTMAP2.lua";
+	sf::RenderWindow main_program_render_window(sf::VideoMode(500, 500), "");
+	main_program_render_window.setFramerateLimit(60);
 	
-	const sf::Color BACKGROUND_COLOR
-		= sf::Color::White;
+	Scene s(main_program_render_window, VF{ 0, 9.8f });
+		
+	UnitCreator creator;
+	creator.status = {
+		.is_physics = true,
+		.is_interrupted = true,
+		.is_drawable = true,
+		.is_static = false
+	};
+	creator.start_position = { 50, 100 };
+	
+	//creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
+	creator.size_of_visible_texture = { 80,80 };
+	creator.addStatesAndTexturesRect({
+		MP("IDLE", Unit::RectAndFrames{
+			IR(0, 0, 48, 48),
+			4
+		}),MP("RUN", Unit::RectAndFrames{
+			IR(0,48,48,48),
+			6
+		})
+	});
+	creator.start_state = "RUN";
 
-
-private: /*Vars*/
-	sf::RenderWindow window;
-	Hero main_hero;
-	TailMap main_tail_map;
-	Scene main_scene;
-
-public: /*To use*/
-	MainProgram();
-	MainProgram(const MainProgram&) = delete;
-	MainProgram(MainProgram&&) = delete;
-	~MainProgram() = default;
-
-	int run();
-
-
-private /*Functions*/:
-	void loadTextures();
-	void initTailMap();
-	sf::View viewUpdate();
-};
-
-
-
-
-#ifndef TESTING
-int main(int a, char** b)
-{
-	#ifdef DEBUG
-	main_test(a, b);
-	DLOG("TESTING END\n");
-	#endif
-
-	MainProgram main;
-	return main.run();
-}
-#else
-int main(int argc, char** argv)
-{
-	return main_test(argc, argv);
-}
-#endif
-
-
-
-
-
-
-
-
-MainProgram::MainProgram()
-	: window
-		(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT),
-		WINDOW_TITLE)
-	, main_hero()
-	, main_scene(window)
-	, main_tail_map()
-{
-	window.setFramerateLimit(FRAME_LIMIT);
-
-	// Main hero init
-	main_hero.setSize(VF(30, 90));
-	main_hero.addCollisionObject(
-		new sf::RectangleShape(sf::Vector2f(30, 90))
+	creator.addCircleCollision(40,
+		{ 0,0 },
+		1.f,
+		.0f
 	);
-	main_hero.setPoint(P(50, 60));
+	// creator.addBoxCollision(VF(10.f, 40.f), 0.0);
+	creator.start_linear_speed = { 5,0 };
+	creator.is_fixed = true;
+	creator.mass = 1.f;
+
+	auto unit = s.addUnit(creator);
+	creator.restart();
+
+
+	auto& creator_box = creator;
 	
-	main_scene.addUnit(
-		&main_tail_map,
-		&main_hero
+	creator_box.status = {
+		1,1,1,1
+	};
+	creator_box.start_position = { 0, 700 };
+	creator_box.size_of_visible_texture = { 500, 20 };
+	creator_box.addBoxCollision(VF(250, 10));
+	auto box = s.addUnit(creator_box);
+
+	TailMapCreator tailmap_creator;
+	tailmap_creator.status = {
+		.is_physics = true,
+		.is_interrupted = true,
+		.is_drawable = true,
+		.is_static = true
+	};
+	tailmap_creator.size_of_visible_texture = { 50,50 };
+	auto tailmap = s.addUnit(
+		tailmap_creator,
+		FM::getResFile("REALTESTMAP2.lua")
 	);
-	main_scene.setViewCallback([this](){return viewUpdate();});
+		
+	s.enterToScene();
+
+	while(s.isEntering())
+		s.renderNext();
+		
 	
-	loadTextures();
-	initTailMap();
-}
 
-
-
-int MainProgram::run()
-{
-	main_scene.run();
 	return 0;
 }
 
 
-
-
-void MainProgram::loadTextures()
-{
-	auto texture_hero = new sf::Texture;
-	if (!texture_hero->loadFromFile(TEST_PNG_FILENAME))
-		DLOG("ERROR TO LOAD TEXTURE");
-	main_hero.setTexture(texture_hero);
-}
-
-void MainProgram::initTailMap()
-{
-	main_tail_map = TailMap(
-		LUA_FILE
-	);
-	main_tail_map.setRectHW(
-		SIZE_OF_ONE_TILE_SET.x,
-		SIZE_OF_ONE_TILE_SET.y
-	);
-	main_tail_map.setPhysicsStatus(true);
-}
-
-sf::View MainProgram::viewUpdate()
-{
-	return window.getView();
-}
-
-
+//
+//int main()
+//{
+//	b2Vec2 gravity(0, 9.8f);
+//	b2World world(gravity);
+//
+//	
+//	UnitCreator creator(&world);
+//	creator.status = {
+//		.is_physics = true,
+//		.is_interrupted = true,
+//		.is_drawable = true,
+//		.is_static = false
+//	};
+//	creator.start_position = { 50, 100 };
+//	
+//	//creator.loadTextureFromFile("ResFiles\\main_hero_tailmap.png");
+//	creator.size_of_visible_texture = { 80,80 };
+//	creator.addStatesAndTexturesRect({
+//		MP("IDLE", Unit::RectAndFrames{
+//			IR(0, 0, 48, 48),
+//			4
+//		}),MP("RUN", Unit::RectAndFrames{
+//			IR(0,48,48,48),
+//			6
+//		})
+//	});
+//	creator.start_state = "RUN";
+//
+//	creator.addCircleCollision(40,
+//		{ 0,0 },
+//		.5f,
+//		.0f
+//	);
+//	// creator.addBoxCollision(VF(10.f, 40.f), 0.0);
+//
+//	creator.is_fixed = true;
+//	creator.mass = 1.f;
+//
+//	auto unit = creator.create();
+//
+//	creator.restart();
+//	auto& creator_box = creator;
+//	
+//	creator_box.status = {
+//		1,1,1,1
+//	};
+//	creator_box.start_position = { 0, 700 };
+//	creator_box.size_of_visible_texture = { 500, 20 };
+//	creator_box.addBoxCollision(VF(250, 10));
+//	auto box = creator_box.create();
+//
+//
+//
+//	TailMapCreator tailmap_creator(&world);
+//	tailmap_creator.status = {
+//		.is_physics = true,
+//		.is_interrupted = true,
+//		.is_drawable = true,
+//		.is_static = true
+//	};
+//	tailmap_creator.size_of_visible_texture = { 50,50 };
+//	auto tailmap = tailmap_creator.create(
+//		FM::getResFile("REALTESTMAP2.lua")
+//	);
+//	
+//	
+//	
+//	bool isWorking = true;
+//
+//
+//	
+//	std::thread draw_thread(
+//		[&]()
+//		{
+//			sf::RenderWindow window(sf::VideoMode(1000, 1000), "name");
+//			window.setFramerateLimit(60);
+//			while (window.isOpen())
+//			{
+//				sf::Event e;
+//				while (window.pollEvent(e))
+//				{
+//					if (e.type == sf::Event::Closed)
+//						window.close();
+//				}
+//
+//				/*unit->setLinearSpeed(VF(
+//					10,unit->getLinearSpeed().y
+//				));*/
+//				
+//				window.clear(sf::Color::White);
+//				window.draw(*unit);
+//				window.draw(*tailmap);
+//				window.draw(*box);
+//				window.display();
+//			}
+//			isWorking = false;
+//		}
+//	);
+//
+//	draw_thread.detach();
+//
+//	while (isWorking)
+//	{
+//		world.Step(1 / 60.f,8, 3);
+//		std::this_thread::sleep_for(1ms);
+//	}
+//
+//	return 0;
+//}

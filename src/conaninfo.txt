@@ -7,6 +7,7 @@
     os=Windows
 
 [requires]
+    box2d/2.Y.Z
     gtest/cci.20210126
     sfml/2.Y.Z
     sol2/3.Y.Z
@@ -25,6 +26,7 @@
     os_build=Windows
 
 [full_requires]
+    box2d/2.4.1:d057732059ea44a47760900cb5e4855d2bea8714
     brotli/1.0.9:d057732059ea44a47760900cb5e4855d2bea8714
     bzip2/1.0.8:589a23dff5fdb23a7fb851223eb766480ead0a9a
     flac/1.3.3:b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47
@@ -41,6 +43,7 @@
     zlib/1.2.11:d057732059ea44a47760900cb5e4855d2bea8714
 
 [full_options]
+    box2d:shared=False
     brotli:shared=False
     bzip2:build_executable=True
     bzip2:shared=False

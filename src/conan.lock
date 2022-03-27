@@ -2,11 +2,12 @@
  "graph_lock": {
   "nodes": {
    "0": {
-    "options": "brotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\ngtest:build_gmock=True\ngtest:debug_postfix=d\ngtest:hide_symbols=False\ngtest:no_main=False\ngtest:shared=False\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nsfml:audio=True\nsfml:graphics=True\nsfml:network=True\nsfml:shared=False\nsfml:window=True\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:minizip=deprecated\nzlib:shared=False",
+    "options": "box2d:shared=False\nbrotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\ngtest:build_gmock=True\ngtest:debug_postfix=d\ngtest:hide_symbols=False\ngtest:no_main=False\ngtest:shared=False\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nsfml:audio=True\nsfml:graphics=True\nsfml:network=True\nsfml:shared=False\nsfml:window=True\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:minizip=deprecated\nzlib:shared=False",
     "requires": [
      "1",
      "13",
-     "14"
+     "14",
+     "16"
     ],
     "path": "..\\conanfile.txt",
     "context": "host"
@@ -140,6 +141,13 @@
     "options": "compile_as_cpp=False\nshared=False",
     "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
     "prev": "2047db650a049a104538497c8071974d",
+    "context": "host"
+   },
+   "16": {
+    "ref": "box2d/2.4.1#47a07047fbbab7179ffaa8a1de265d4f",
+    "options": "shared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "afdedde237dcb4ff5aaefeaac7d55fcf",
     "context": "host"
    }
   },

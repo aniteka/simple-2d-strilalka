@@ -14,7 +14,7 @@ private:
 	Matrix_texture* mtx;
 
 public:
-	TailMap(std::string lua_file, b2Body* body);
+	TailMap(b2Body* body, std::string lua_file);
 	TailMap(const TailMap& tailmap);
 	TailMap(TailMap&& tailmap);
 	~TailMap() override;

@@ -118,7 +118,6 @@ struct UnitCreator
 	// Staus if physics, draw, static
 	Unit::Status status;
 
-
 	
 	// Start speed
 	sf::Vector2f start_linear_speed;
@@ -168,16 +167,9 @@ private:
 	// All constructors of collision there
 	std::vector<b2FixtureDef> main_collisions;
 
-	// Pointer to world, use only for create bodies
-	b2World* main_world;
-
 public:
-	/// <param name="world">
-	/// Pointer to world, use only for create bodies
-	/// </param>
-	UnitCreator(b2World* world)
-		: main_world(world)
-		, status{
+	UnitCreator()
+		: status{
 			.is_physics = false,
 			.is_interrupted = false,
 			.is_drawable = false,
@@ -204,19 +196,21 @@ public:
 	}
 
 	/// <summary>
-	/// Create unit var and add it to world
+	/// Create unit based on UnitCreator info in world
 	/// </summary>
 	/// <typeparam name="..._Params">
-	/// Parameters types for Unit's constructor
+	/// Types of params for unit
 	/// </typeparam>
+	/// <param name="world"></param>
 	/// <param name="..._Vals">
-	/// Vars for unit's constructor
+	/// Values of params for unit
 	/// </param>
 	/// <returns>
 	/// Smart pointer to unit
 	/// </returns>
 	template<class... _Params>
-	std::shared_ptr<_MainUnit> create(_Params... _Vals) const
+	std::shared_ptr<_MainUnit>
+	create(b2World& world, _Params... _Vals) const
 	{
 		b2BodyDef bd;
 		bd.enabled = status.is_physics;
@@ -237,7 +231,7 @@ public:
 		bd.bullet = is_fixed;
 		bd.gravityScale = gravity_scale;
 		
-		Unit* unit = new _MainUnit(_Vals..., main_world->CreateBody(&bd));
+		Unit* unit = new _MainUnit(world.CreateBody(&bd), _Vals...);
 		unit->setInterruptStatus(status.is_interrupted);
 		unit->setDrawStatus(status.is_drawable);
 
@@ -259,13 +253,8 @@ public:
 	/// <summary>
 	/// fully restart of creator
 	/// </summary>
-	/// <param name="new_world">
-	/// if == nullptr, use old world
-	/// </param>
-	void restart(b2World* new_world = nullptr)
+	void restart()
 	{
-		if (new_world != nullptr)
-			main_world = new_world;
 		for (auto& i : main_collisions)
 			delete i.shape;
 		main_collisions.clear();

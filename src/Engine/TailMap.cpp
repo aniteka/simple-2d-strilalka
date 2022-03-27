@@ -84,7 +84,7 @@ std::vector<AllInfoAboutTileSet> getAllTileSets(sol::table& main_table)
 	return aiatsv;
 }
 
-TailMap::TailMap(std::string lua_file, b2Body* body)
+TailMap::TailMap(b2Body* body, std::string lua_file)
 	: Unit(body)
 	, mtx(nullptr)
 {

@@ -53,6 +53,10 @@ Unit::Unit(Unit&& unit)
 Unit::~Unit()
 {
 	delete main_texture;
+	main_body
+	->GetWorld()
+	->DestroyBody(
+		main_body);
 }
 
 Unit& Unit::operator=(const Unit& unit)

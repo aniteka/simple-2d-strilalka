@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/defines.h"
+#include "../Engine/defines.h"
 
 template<class _Type>
 class Matrix
@@ -29,7 +29,7 @@ public:
 		this->resize(v_size);
 		for (size_t i = 0; i < v_size; ++i)
 			this->at(i).resize(h_size);
-		
+
 		for (size_t y = 0; y < v_size; ++y)
 			for (size_t x = 0; x < h_size; ++x)
 			{
@@ -39,17 +39,17 @@ public:
 	Matrix(Matrix&& mtx)
 		: h_size(mtx.h_size)
 		, v_size(mtx.v_size)
-	{	
+	{
 		this->resize(v_size);
 		for (size_t i = 0; i < v_size; ++i)
 			this->at(i).resize(h_size);
-		
-		for(size_t y = 0; y < v_size; ++y)
-			for(size_t x = 0; x < h_size; ++ x)
+
+		for (size_t y = 0; y < v_size; ++y)
+			for (size_t x = 0; x < h_size; ++x)
 			{
 				this->at(y).at(x) = std::move(mtx[y][x]);
 			}
-		
+
 		mtx.h_size = 0;
 		mtx.v_size = 0;
 		mtx.clear();
@@ -64,7 +64,7 @@ public:
 		this->resize(v_size);
 		for (size_t i = 0; i < v_size; ++i)
 			this->at(i).resize(h_size);
-		
+
 		for (size_t y = 0; y < v_size; ++y)
 			for (size_t x = 0; x < h_size; ++x)
 			{
@@ -82,7 +82,7 @@ public:
 		this->resize(v_size);
 		for (size_t i = 0; i < v_size; ++i)
 			this->at(i).resize(h_size);
-		
+
 		for (size_t y = 0; y < v_size; ++y)
 			for (size_t x = 0; x < h_size; ++x)
 			{
@@ -92,10 +92,10 @@ public:
 		mtx.h_size = 0;
 		mtx.v_size = 0;
 		mtx.clear();
-		
+
 		return *this;
 	}
-	
+
 	size_t getHorizontalSize() const noexcept
 	{
 		return h_size;

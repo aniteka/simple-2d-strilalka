@@ -1,4 +1,6 @@
-#include "../defines.h"
+#pragma once
+#include "../Engine/defines.h"
+
 
 class FileManager
 {
@@ -19,13 +21,13 @@ class FileManager
 		const std::string FOLDER_WITH_SOURCE = "Simple2dStrilalka";
 		///////////////////////////////////////////////////////////////
 
-		
+
 		FileManager_singleton()
 		{
 			fs::path path_to_bin = fs::current_path();
 			fs::path path_to_resources;
 
-			
+
 			// Init the res path
 			auto path_to_res_in_bin_dir = fs::current_path();
 			path_to_res_in_bin_dir.append(FOLDER_WITH_RESOURCES);
@@ -43,9 +45,9 @@ class FileManager
 					if_in_build_dir = true;
 					break;
 				}
-			} if(!if_in_build_dir) goto IF_NOT_IN_BUILD_DIR;
+			} if (!if_in_build_dir) goto IF_NOT_IN_BUILD_DIR;
 
-			
+
 			// Copy files from src folder to bin folder
 			path_to_resources.append(FOLDER_WITH_RESOURCES);
 			path_to_resources.append(".");
@@ -55,7 +57,7 @@ class FileManager
 			);
 
 
-			IF_NOT_IN_BUILD_DIR: {}	
+		IF_NOT_IN_BUILD_DIR: {}
 		}
 		~FileManager_singleton() = default;
 	};

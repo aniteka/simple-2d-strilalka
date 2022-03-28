@@ -1,4 +1,4 @@
-﻿#ifndef DEFINES_H
+#ifndef DEFINES_H
 #define DEFINES_H
 
 
@@ -23,7 +23,7 @@
 #include <box2d/box2d.h>
 
 
-using namespace std::string_literals; 
+using namespace std::string_literals;
 using namespace std::chrono_literals;
 namespace fs = std::filesystem;
 

@@ -1,4 +1,6 @@
 #pragma once
+
+#pragma once
 #include "defines.h"
 
 #include "Components/mass_data.hpp"
@@ -23,7 +25,7 @@ public:
 		bool is_static;
 	};
 protected:
-	
+
 	Status status;
 
 	b2Body* main_body;
@@ -31,7 +33,7 @@ protected:
 	sf::Texture* main_texture;
 	StatesAndRectsOfTexture main_states_and_rects_of_texture;
 	std::string main_state_of_texture;
-	
+
 	std::vector<b2Fixture*> main_collisions;
 
 	sf::Vector2f main_size_body;
@@ -46,7 +48,7 @@ public:
 	Unit& operator=(const Unit& unit);
 	// Do not use it
 	Unit& operator=(Unit&& unit);
-	
+
 	virtual void setPhysicsStatus(bool stat);
 	virtual void setInterruptStatus(bool stat);	// TODO
 	virtual void setDrawStatus(bool stat);
@@ -54,13 +56,13 @@ public:
 	virtual Status getStatus() const;
 
 	// Do not use it
-	[[deprecated]]virtual void setPhysicsBodyUserData(const char* str);
+	[[deprecated]] virtual void setPhysicsBodyUserData(const char* str);
 	virtual const char* getPhysicsBodyUserData();
-	
+
 	virtual void addCollisionObject(const b2FixtureDef* b2fd);
 	virtual const std::vector<b2Fixture*>& getCollisionObject() const;
 
-	virtual void setTexture( sf::Texture* texture );
+	virtual void setTexture(sf::Texture* texture);
 	virtual const sf::Texture* getTexture() const;
 
 	virtual void addStateAndRectOfTexture(std::string state, RectAndFrames rect_and_frames);
@@ -71,7 +73,7 @@ public:
 
 	virtual void setStateOfTexture(std::string state);
 	virtual const std::string& getStateOfTexture() const;
-	
+
 	virtual sf::Vector2f getPosition();
 
 	virtual float getRotation();
@@ -90,15 +92,15 @@ public:
 	virtual float getLinearDamping() const;
 	virtual void setAngularDamping(float damping);
 	virtual float getAngularDamping() const;
-	
+
 	virtual void setLinearSpeed(const sf::Vector2f& vec);
 	virtual sf::Vector2f getLinearSpeed() const;
 	virtual void setAngularSpeed(float speed);
 	virtual float getAngularSpeed();
-	
-	virtual void setMainSizeBody( const sf::Vector2f& size );
+
+	virtual void setMainSizeBody(const sf::Vector2f& size);
 	virtual const sf::Vector2f& getMainSizeBody() const;
-	
+
 	virtual b2Body* getMainBody() const;
 
 	virtual void updateEveryFrame(
@@ -120,10 +122,10 @@ struct UnitCreator
 	// Staus if physics, draw, static
 	Unit::Status status;
 
-	
+
 	// Start speed
 	sf::Vector2f start_linear_speed;
-	
+
 	// Start angular speed(speed of start angular rotation)
 	float start_angular_speed;
 
@@ -140,20 +142,20 @@ struct UnitCreator
 	sf::Vector2f start_position;
 
 
-	
+
 	// Bod will not change his angle
 	bool is_fixed;
 
 	// See in documentation
 	bool is_bullet;
-	
+
 	// Mass of body
 	float mass;
 
 	// Gravity scale
 	float gravity_scale;
-	
-	
+
+
 	// Main texture
 	sf::Texture* texture;
 
@@ -165,7 +167,7 @@ struct UnitCreator
 
 	// User identificator
 	const char* user_data;
-	
+
 	sf::Vector2f size_of_visible_texture;
 
 private:
@@ -179,26 +181,26 @@ public:
 			.is_interrupted = false,
 			.is_drawable = false,
 			.is_static = false
-		}
-		, start_linear_speed(0,0)
+	}
+		, start_linear_speed(0, 0)
 		, start_angular_speed(0)
 		, start_linear_damping(0)
 		, start_angular_damping(0)
 		, start_angle(0)
-		, start_position(0,0)
+		, start_position(0, 0)
 		, is_fixed(true)
 		, is_bullet(false)
 		, mass(100)
 		, gravity_scale(1)
 		, texture(nullptr)
 		, user_data(nullptr)
-		, size_of_visible_texture(0,0)
+		, size_of_visible_texture(0, 0)
 	{}
 	~UnitCreator()
 	{
 		for (auto& i : main_collisions)
 			delete i.shape;
-		if(!texture) delete texture;
+		if (!texture) delete texture;
 	}
 
 	/// <summary>
@@ -216,7 +218,7 @@ public:
 	/// </returns>
 	template<class... _Params>
 	std::shared_ptr<_MainUnit>
-	create(b2World& world, _Params... _Vals) const
+		create(b2World& world, _Params... _Vals) const
 	{
 		b2BodyDef bd;
 		bd.enabled = status.is_physics;
@@ -237,20 +239,20 @@ public:
 		bd.bullet = is_fixed;
 		bd.gravityScale = gravity_scale;
 		bd.userData.pointer = (uintptr_t)user_data;
-		
+
 		Unit* unit = new _MainUnit(world.CreateBody(&bd), _Vals...);
 		unit->setInterruptStatus(status.is_interrupted);
 		unit->setDrawStatus(status.is_drawable);
 
-		if(texture != nullptr)
-			unit->setTexture( new sf::Texture(*texture) );
+		if (texture != nullptr)
+			unit->setTexture(new sf::Texture(*texture));
 		unit->setMainSizeBody(size_of_visible_texture);
 		for (auto& i : main_collisions)
 			unit->addCollisionObject(&i);
 		for (auto& i : states_and_texture_rects)
 			unit->addStateAndRectOfTexture(i.first, i.second);
 		unit->setStateOfTexture(start_state);
-		
+
 		unit->setMassToCenter(mass);
 
 		return std::shared_ptr<_MainUnit>(
@@ -287,19 +289,19 @@ public:
 		user_data = nullptr;
 		size_of_visible_texture = { 0, 0 };
 	}
-	
 
 
 
 
-	
+
+
 	// /\/\/\ Create, Constructors | Collisions \/\/\/
 
 
-	
 
 
-	
+
+
 	void addCollision(b2FixtureDef collision)
 	{
 		main_collisions.push_back(collision);
@@ -329,14 +331,14 @@ public:
 	///	Restitution(Пружність) of the body([0,1])
 	/// </param>
 	void addBoxCollision(sf::Vector2f size,
-						sf::Vector2f position = {0,0},
-						float angle = 0.f,
-						float density = 0.5f,
-						float friction = 0.2f,
-						float restitution = 0.f)
+		sf::Vector2f position = { 0,0 },
+		float angle = 0.f,
+		float density = 0.5f,
+		float friction = 0.2f,
+		float restitution = 0.f)
 	{
 		b2FixtureDef fixture_def;
-		
+
 		auto shape = new b2PolygonShape;
 		shape->SetAsBox(
 			size.x,
@@ -373,16 +375,16 @@ public:
 	///	Restitution(Пружність) of the body([0,1])
 	/// </param>
 	void addCircleCollision(float radius,
-							sf::Vector2f position = {0,0},
-							float density = 0.5f,
-							float friction = 0.2f,
-							float restitution = 0.f)
+		sf::Vector2f position = { 0,0 },
+		float density = 0.5f,
+		float friction = 0.2f,
+		float restitution = 0.f)
 	{
 		b2FixtureDef fixture_def;
 
 		auto shape = new b2CircleShape;
 		shape->m_radius = radius;
-		shape->m_p.Set(position.x,position.y);
+		shape->m_p.Set(position.x, position.y);
 
 		fixture_def.restitution = restitution;
 		fixture_def.density = density;
@@ -395,25 +397,25 @@ public:
 
 
 
-	
+
 	// /\/\/\ Collision | States and textures \/\/\/
 
 
 
 
 
-	
+
 	void addStateAndTextureRect(std::string state, Unit::RectAndFrames raf)
 	{
 		states_and_texture_rects.emplace(state, raf);
 	}
 	void addStatesAndTexturesRect
-		(std::initializer_list < std::pair < std::string, Unit::RectAndFrames> > init)
+	(std::initializer_list < std::pair < std::string, Unit::RectAndFrames> > init)
 	{
 		for (auto& i : init)
 			states_and_texture_rects.insert(i);
 	}
-	
+
 	void loadTextureFromFile(std::string file_name)
 	{
 		delete texture;
@@ -421,4 +423,8 @@ public:
 		texture->loadFromFile(file_name);
 	}
 };
+
+
+
+
 

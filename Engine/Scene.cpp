@@ -7,7 +7,7 @@ Scene* Scene::global_scene = nullptr;
 
 Scene::Scene(sf::RenderWindow& render_window, sf::Vector2f gravitation)
 	: is_entering(false)
-	, scene_world( b2Vec2(gravitation.x, gravitation.y) )
+	, scene_world(b2Vec2(gravitation.x, gravitation.y))
 	, scene_window(render_window)
 {}
 
@@ -50,13 +50,13 @@ void Scene::enterToScene()
 		return;
 	is_entering = true;
 	std::thread world_update([this]()
-	{
-		this->__world_update();
-	});
+		{
+			this->__world_update();
+		});
 	std::thread unit_update([this]()
-	{
-		this->__world_update();
-	});
+		{
+			this->__world_update();
+		});
 
 	world_update.detach();
 	unit_update.detach();
@@ -65,7 +65,7 @@ void Scene::enterToScene()
 void Scene::exitFromScene()
 {
 	is_entering = false;
-	while(!exit_mutex.try_lock())
+	while (!exit_mutex.try_lock())
 		synk_var.notify_all();
 	exit_mutex.unlock();
 	scene_units.clear();
@@ -82,9 +82,9 @@ void Scene::renderNext()
 	std::unique_lock ulock(units_mutex, std::defer_lock);
 	if (is_entering == false) goto EXIT;
 	sf::Event e;
-	while(scene_window.pollEvent(e))
+	while (scene_window.pollEvent(e))
 	{
-		if(e.type == sf::Event::Closed)
+		if (e.type == sf::Event::Closed)
 		{
 			exitFromScene();
 			goto EXIT;
@@ -98,10 +98,10 @@ void Scene::renderNext()
 		scene_window.draw(*i);
 	ulock.unlock();
 	synk_var.notify_all();
-	
+
 	scene_window.display();
 
-	EXIT:{}
+EXIT: {}
 }
 
 void Scene::__world_update()
@@ -113,7 +113,7 @@ void Scene::__world_update()
 		synk_var.wait(ulock);
 		scene_world.Step(1.f / 20.f, 8, 3);
 		ulock.unlock();
-		
+
 	}
 	exit_mutex.unlock_shared();
 }
@@ -130,7 +130,7 @@ void Scene::__unit_update()
 				scene_world
 			);
 		units_mutex.unlock();
-		
+
 		std::this_thread::sleep_for(20ms);
 	}
 	exit_mutex.unlock_shared();

@@ -1,5 +1,5 @@
 #include "TailMap.hpp"
-#include "Engine/Components/file_manager.hpp"
+#include "Components/file_manager.hpp"
 
 #include <sol/sol.hpp>
 
@@ -19,15 +19,15 @@ AllInfoAboutTailMap getAllTileMaps(sol::table& main_table)
 	aiatm.tilewidth = main_table.get<LUA_NUMBER>("tilewidth");
 	aiatm.tileheight = main_table.get<LUA_NUMBER>("tileheight");
 	sol::table layers = main_table.get<sol::table>("layers");
-	for(auto i:layers)
+	for (auto i : layers)
 	{
 		sol::table data = i
 			.second
 			.as<sol::table>()
 			.get<sol::table>("data");
-		Matrix<size_t> mtx({},aiatm.width, aiatm.height);
-		for(size_t y = 0; y < aiatm.height; ++y)
-			for(size_t x = 0; x < aiatm.width; ++x)
+		Matrix<size_t> mtx({}, aiatm.width, aiatm.height);
+		for (size_t y = 0; y < aiatm.height; ++y)
+			for (size_t x = 0; x < aiatm.width; ++x)
 				mtx[y][x] = data.get<LUA_NUMBER>(x + 1 + y * aiatm.width);
 		aiatm.layers.push_back(mtx);
 	}
@@ -51,7 +51,7 @@ std::vector<AllInfoAboutTileSet> getAllTileSets(sol::table& main_table)
 
 	sol::table tile_sets = main_table.get<sol::table>("tilesets");
 
-	for(auto i : tile_sets)
+	for (auto i : tile_sets)
 	{
 		AllInfoAboutTileSet info;
 		sol::table ts = i.second.as<sol::table>();
@@ -65,22 +65,22 @@ std::vector<AllInfoAboutTileSet> getAllTileSets(sol::table& main_table)
 			FileManager::getResFile(file_name)
 		);
 		sol::table set_tbl = pfr.get<sol::table>();
-		
-		info.tilewidth		= set_tbl.get<LUA_NUMBER>("tilewidth");
-		info.tileheight		= set_tbl.get<LUA_NUMBER>("tileheight");
-		info.imageheight	= set_tbl.get<LUA_NUMBER>("imageheight");
-		info.imagewidth		= set_tbl.get<LUA_NUMBER>("imagewidth");
-		info.tilecount		= set_tbl.get<LUA_NUMBER>("tilecount");
-		info.image_name		= set_tbl.get<std::string>("image");
+
+		info.tilewidth = set_tbl.get<LUA_NUMBER>("tilewidth");
+		info.tileheight = set_tbl.get<LUA_NUMBER>("tileheight");
+		info.imageheight = set_tbl.get<LUA_NUMBER>("imageheight");
+		info.imagewidth = set_tbl.get<LUA_NUMBER>("imagewidth");
+		info.tilecount = set_tbl.get<LUA_NUMBER>("tilecount");
+		info.image_name = set_tbl.get<std::string>("image");
 		sf::Texture* tx = new sf::Texture;
 		tx->loadFromFile(
 			FileManager::getResFile(info.image_name)
 		);
 		info.image = tx;
-		
+
 		aiatsv.push_back(info);
 	}
-	
+
 	return aiatsv;
 }
 
@@ -91,7 +91,7 @@ TailMap::TailMap(b2Body* body, std::string lua_file)
 	sol::state L;
 	sol::protected_function_result result = L.do_file(lua_file);
 	sol::table tbl = result.get<sol::table>();
-	
+
 	auto map_info = getAllTileMaps(tbl);
 	auto map_sets_info = getAllTileSets(tbl);
 
@@ -102,9 +102,9 @@ TailMap::TailMap(b2Body* body, std::string lua_file)
 	);
 	main_size_body = sf::Vector2f(map_info.tilewidth, map_info.tileheight);
 
-	for(size_t y = 0; y < map_info.height; ++y)
+	for (size_t y = 0; y < map_info.height; ++y)
 	{
-		for(size_t x = 0; x < map_info.width; ++x)
+		for (size_t x = 0; x < map_info.width; ++x)
 		{
 			auto id = map_info.layers[0][y][x];
 			for (auto q : map_sets_info)
@@ -112,9 +112,9 @@ TailMap::TailMap(b2Body* body, std::string lua_file)
 				{
 					sf::Image img = q.image->copyToImage();
 					auto rid = id - q.firstid;
-					
 
-					auto real_height=
+
+					auto real_height =
 						q.imageheight - (q.imageheight % q.tileheight);
 					auto real_width =
 						q.imagewidth - (q.imagewidth % q.tilewidth);
@@ -124,17 +124,17 @@ TailMap::TailMap(b2Body* body, std::string lua_file)
 						(((q.tilewidth * rid) - x_i) / real_width)
 						* q.tileheight;
 
-					
+
 					mtx[0][y][x] = new sf::Texture();
 					mtx[0][y][x]->loadFromImage(img, sf::IntRect(
-						x_i, 
-						y_i, 
+						x_i,
+						y_i,
 						q.tilewidth,
 						q.tileheight
 					));
 					goto EXIT;
 				}
-			EXIT:{}
+		EXIT: {}
 		}
 	}
 
@@ -147,7 +147,7 @@ TailMap::TailMap(const TailMap& tailmap)
 	: Unit(tailmap)
 	, mtx(nullptr)
 {
-	if(tailmap.mtx != nullptr)
+	if (tailmap.mtx != nullptr)
 		mtx = new Matrix_texture(tailmap.mtx[0]);
 }
 TailMap::TailMap(TailMap&& tailmap)
@@ -230,7 +230,7 @@ void TailMap::initMainBody_after_mtx_init()
 	for (auto i : main_collisions)
 		main_body->DestroyFixture(i);
 	main_collisions.clear();
-	
+
 	b2FixtureDef fixture_def;
 
 	b2PolygonShape polygon_shape;
@@ -238,20 +238,20 @@ void TailMap::initMainBody_after_mtx_init()
 	fixture_def.density = 0.5f;
 	fixture_def.friction = 0.6f;
 
-for (size_t y = 0; y < mtx[0].getVerticalSize(); ++y)
-	for (size_t x = 0; x < mtx[0].getHorizontalSize(); ++x)
-	{
-		if(mtx[0][y][x] == nullptr)
-			continue;
-		polygon_shape.SetAsBox(
-			getMainSizeBody().x / 2,
-			getMainSizeBody().y / 2,
-			b2Vec2(
-				getPosition().x + getMainSizeBody().x / 2 + getMainSizeBody().x * x,
-				getPosition().y + getMainSizeBody().y / 2 + getMainSizeBody().y * y
-			),0
-		);
-		main_collisions.push_back(main_body->CreateFixture(&fixture_def));
-	}
+	for (size_t y = 0; y < mtx[0].getVerticalSize(); ++y)
+		for (size_t x = 0; x < mtx[0].getHorizontalSize(); ++x)
+		{
+			if (mtx[0][y][x] == nullptr)
+				continue;
+			polygon_shape.SetAsBox(
+				getMainSizeBody().x / 2,
+				getMainSizeBody().y / 2,
+				b2Vec2(
+					getPosition().x + getMainSizeBody().x / 2 + getMainSizeBody().x * x,
+					getPosition().y + getMainSizeBody().y / 2 + getMainSizeBody().y * y
+				), 0
+			);
+			main_collisions.push_back(main_body->CreateFixture(&fixture_def));
+		}
 }
 

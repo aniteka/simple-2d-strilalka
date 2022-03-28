@@ -1,5 +1,7 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-project (Strelalka)
+project (Simple2dStrilalka)
 
-add_subdirectory ("src")
+add_subdirectory ("Game")
+
+add_subdirectory("Engine")

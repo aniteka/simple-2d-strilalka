@@ -1,0 +1,158 @@
+{
+ "graph_lock": {
+  "nodes": {
+   "0": {
+    "options": "box2d:shared=False\nbrotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:subpixel=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\ngtest:build_gmock=True\ngtest:debug_postfix=d\ngtest:hide_symbols=False\ngtest:no_main=False\ngtest:shared=False\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nsfml:audio=True\nsfml:graphics=True\nsfml:network=True\nsfml:shared=False\nsfml:window=True\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:shared=False",
+    "requires": [
+     "1",
+     "13",
+     "14",
+     "16"
+    ],
+    "path": "..\\conanfile.txt",
+    "context": "host"
+   },
+   "1": {
+    "ref": "sfml/2.5.1#b64b87d9397ccd069e92ffc5c2b012e1",
+    "options": "audio=True\ngraphics=True\nnetwork=True\nshared=False\nwindow=True\nbrotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nflac:shared=False\nfreetype:shared=False\nfreetype:subpixel=False\nfreetype:with_brotli=True\nfreetype:with_bzip2=True\nfreetype:with_png=True\nfreetype:with_zlib=True\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nogg:shared=False\nopenal:shared=False\nstb:with_deprecated=True\nvorbis:shared=False\nzlib:shared=False",
+    "package_id": "d02765dd8ac3899f2886509787e30924520dd723",
+    "prev": "05ee1bf666e696042811a0be825013c0",
+    "requires": [
+     "2",
+     "3",
+     "8",
+     "9",
+     "11",
+     "12"
+    ],
+    "context": "host"
+   },
+   "2": {
+    "ref": "opengl/system#3582b5d3184289461f73339622c71d31",
+    "options": "",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "e0c823b9bed28348dd7f3bcedf045c58",
+    "context": "host"
+   },
+   "3": {
+    "ref": "freetype/2.11.1#afcd77d93fd5821dcc07701de608621c",
+    "options": "shared=False\nsubpixel=False\nwith_brotli=True\nwith_bzip2=True\nwith_png=True\nwith_zlib=True\nbrotli:shared=False\nbzip2:build_executable=True\nbzip2:shared=False\nlibpng:api_prefix=\nlibpng:shared=False\nlibpng:sse=True\nzlib:shared=False",
+    "package_id": "c69bad48274e7fc45c887cddc32aa0459f0a81e0",
+    "prev": "9cb9e4fb45db894165161156b5f13065",
+    "requires": [
+     "4",
+     "5",
+     "6",
+     "7"
+    ],
+    "context": "host"
+   },
+   "4": {
+    "ref": "libpng/1.6.37#fb3adfc5b56c0b1c26781cbc438aa78a",
+    "options": "api_prefix=\nshared=False\nsse=True\nzlib:shared=False",
+    "package_id": "8b1ef0ec9599374db4689199730c00a0d5f4de36",
+    "prev": "d780a55dd58265c855fec184c76af566",
+    "requires": [
+     "5"
+    ],
+    "context": "host"
+   },
+   "5": {
+    "ref": "zlib/1.2.11#4b38406da00104befece594b529fd155",
+    "options": "shared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "555da97cea22e20308427a5d08fe8785",
+    "context": "host"
+   },
+   "6": {
+    "ref": "bzip2/1.0.8#b056f852bd2d5af96fc7171aadfd6c0b",
+    "options": "build_executable=True\nshared=False",
+    "package_id": "589a23dff5fdb23a7fb851223eb766480ead0a9a",
+    "prev": "1f5771c5477f2d9428c3e9b50cf8d058",
+    "context": "host"
+   },
+   "7": {
+    "ref": "brotli/1.0.9#6fc2cda04f57470ce73d72d7f694507a",
+    "options": "shared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "48b556a882098f4717b7c5d1317c3808",
+    "context": "host"
+   },
+   "8": {
+    "ref": "stb/cci.20210713#b3854a7d188228a45413baa61c54d4a8",
+    "options": "with_deprecated=True",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "1c3855b2bee5b1bc4cf3bfeba47856ab",
+    "context": "host"
+   },
+   "9": {
+    "ref": "flac/1.3.3#55ea06dbdeb05801553ccdfd62bfe622",
+    "options": "shared=False\nogg:shared=False",
+    "package_id": "b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47",
+    "prev": "f9fcb513c2b5c67c5dbb31a30b430b70",
+    "requires": [
+     "10"
+    ],
+    "context": "host"
+   },
+   "10": {
+    "ref": "ogg/1.3.5#2d74b1245c197b4aa3faae33ea762534",
+    "options": "shared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "40a94a73c4a17e0f0b7ce70527e13e22",
+    "context": "host"
+   },
+   "11": {
+    "ref": "openal/1.21.1#329e0813f2c64ee8bdef17595ab4ae4a",
+    "options": "shared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "7d590eff5b73f1f9f4cb3cfe3898d317",
+    "context": "host"
+   },
+   "12": {
+    "ref": "vorbis/1.3.7#7cd28758afeca6149b759f2032d63603",
+    "options": "shared=False\nogg:shared=False",
+    "package_id": "b8a7c0e3d5f7f2dd0a4cf862cb60ff9f1b73be47",
+    "prev": "a0662b83ccfeb9a6bf1be32778d6c7d6",
+    "requires": [
+     "10"
+    ],
+    "context": "host"
+   },
+   "13": {
+    "ref": "gtest/cci.20210126#544d5f889a7b0c7b733e3b85d114f4ef",
+    "options": "build_gmock=True\ndebug_postfix=d\nhide_symbols=False\nno_main=False\nshared=False",
+    "package_id": "875c67f4d8a79bdd002908b75efce119eb82836d",
+    "prev": "26aee87c20a397b7af8b3d26110d7786",
+    "context": "host"
+   },
+   "14": {
+    "ref": "sol2/3.2.3#2be40fc472f1a973dae729f23099ce3b",
+    "options": "lua:compile_as_cpp=False\nlua:shared=False",
+    "package_id": "5ab84d6acfe1f23c4fae0ab88f26e3a396351ac9",
+    "prev": "39ebc0efd74f1b113f518e5370b011fc",
+    "requires": [
+     "15"
+    ],
+    "context": "host"
+   },
+   "15": {
+    "ref": "lua/5.3.5#0c942f2706bbf039c8fa9ec811bbbaca",
+    "options": "compile_as_cpp=False\nshared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "2047db650a049a104538497c8071974d",
+    "context": "host"
+   },
+   "16": {
+    "ref": "box2d/2.4.1#47a07047fbbab7179ffaa8a1de265d4f",
+    "options": "shared=False",
+    "package_id": "d057732059ea44a47760900cb5e4855d2bea8714",
+    "prev": "afdedde237dcb4ff5aaefeaac7d55fcf",
+    "context": "host"
+   }
+  },
+  "revisions_enabled": true
+ },
+ "version": "0.4",
+ "profile_host": "[settings]\narch=x86_64\narch_build=x86_64\nbuild_type=Debug\ncompiler=Visual Studio\ncompiler.runtime=MDd\ncompiler.version=16\nos=Windows\nos_build=Windows\n[options]\n[build_requires]\n[env]\n"
+}

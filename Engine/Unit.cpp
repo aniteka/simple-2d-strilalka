@@ -6,37 +6,37 @@ Unit::Unit(b2Body* body)
 		.is_interrupted = false,
 		.is_drawable = false,
 		.is_static = false
-	})
+		})
 	, main_body(body)
 	, main_texture(nullptr)
 	, main_state_of_texture("")
-	, main_size_body(10,10)
+	, main_size_body(10, 10)
 {
 	if (main_body->IsEnabled())
 		status.is_physics = true;
-	
+
 	if (main_body->GetType() == b2_staticBody)
 		status.is_static = true;
-	else 
+	else
 
-	for (auto i = main_body->GetFixtureList(); i != NULL; i = i->GetNext())
-		main_collisions.push_back(i);
+		for (auto i = main_body->GetFixtureList(); i != NULL; i = i->GetNext())
+			main_collisions.push_back(i);
 }
 Unit::Unit(const Unit& unit)
 	: status(unit.status)
-	, main_body( new b2Body(*unit.getMainBody()) )
-	, main_texture( new sf::Texture( *unit.getTexture() ) )
+	, main_body(new b2Body(*unit.getMainBody()))
+	, main_texture(new sf::Texture(*unit.getTexture()))
 	, main_states_and_rects_of_texture(unit.getStatesAndRectsOfTexture())
 	, main_state_of_texture(unit.getStateOfTexture())
 	, main_size_body(unit.getMainSizeBody())
 {}
 Unit::Unit(Unit&& unit)
-	: status( std::move(unit.status) )
-	, main_body( unit.main_body )
-	, main_texture( unit.main_texture )
-	, main_states_and_rects_of_texture( std::move(unit.main_states_and_rects_of_texture) )
-	, main_state_of_texture( std::move(unit.main_state_of_texture))
-	, main_size_body( std::move(unit.main_size_body) )
+	: status(std::move(unit.status))
+	, main_body(unit.main_body)
+	, main_texture(unit.main_texture)
+	, main_states_and_rects_of_texture(std::move(unit.main_states_and_rects_of_texture))
+	, main_state_of_texture(std::move(unit.main_state_of_texture))
+	, main_size_body(std::move(unit.main_size_body))
 {
 	unit.status = {
 		.is_physics = false,
@@ -54,9 +54,9 @@ Unit::~Unit()
 {
 	delete main_texture;
 	main_body
-	->GetWorld()
-	->DestroyBody(
-		main_body);
+		->GetWorld()
+		->DestroyBody(
+			main_body);
 }
 
 Unit& Unit::operator=(const Unit& unit)
@@ -91,7 +91,7 @@ void Unit::setStaticStatus(bool stat)
 	status.is_static = stat;
 	if (stat == true)
 		main_body->SetType(b2_staticBody);
-	else 
+	else
 		main_body->SetType(b2_dynamicBody);
 }
 Unit::Status Unit::getStatus() const
@@ -313,7 +313,7 @@ void Unit::updateEveryFrame(
 	sf::RenderWindow& main_window,
 	b2World& main_world)
 {
-		
+
 }
 
 std::map<void*, std::pair<size_t, std::string>> draw_map;
@@ -325,7 +325,7 @@ void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 	if (draw_map.find((void*)this) == draw_map.end())
 		draw_map.emplace((void*)this, std::make_pair(0, ""));
-	
+
 	size_t& frame = draw_map[(void*)this].first;
 	std::string& previous_state = draw_map[(void*)this].second;
 	static sf::Clock frame_clock;
@@ -338,13 +338,13 @@ void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		main_body->GetPosition().x - this->main_size_body.x / 2,
 		main_body->GetPosition().y - this->main_size_body.y / 2
 	);
-	
+
 	if (main_texture != nullptr)
 		draw_rect.setTexture(main_texture);
 	else
 		draw_rect.setFillColor(sf::Color::Green);
-	
-	if(main_state_of_texture != "")
+
+	if (main_state_of_texture != "")
 	{
 		auto& msarof = main_states_and_rects_of_texture;
 		if (previous_state != main_state_of_texture)
@@ -359,10 +359,10 @@ void Unit::draw(sf::RenderTarget& target, sf::RenderStates states) const
 			msarof
 			.at(main_state_of_texture).frames)
 			frame = 0;
-		
+
 		draw_rect.setTextureRect(
 			sf::IntRect(
-				msarof.at(main_state_of_texture).rect.left + 
+				msarof.at(main_state_of_texture).rect.left +
 				(msarof.at(main_state_of_texture).rect.width * frame),
 				msarof.at(main_state_of_texture).rect.top,
 				msarof.at(main_state_of_texture).rect.width

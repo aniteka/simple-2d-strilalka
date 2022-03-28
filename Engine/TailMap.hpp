@@ -23,11 +23,11 @@ public:
 	TailMap& operator=(const TailMap&);
 	// Do not use it
 	TailMap& operator=(TailMap&&);
-	
+
 	const Matrix_texture& getMatrix() const;
 
 	void setMainSizeBody(const sf::Vector2f& size) override;
-	
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 private:
@@ -36,7 +36,7 @@ private:
 	// Do not use it
 	void setTexture(sf::Texture* texture) override { }
 	// Do not use it
-	const sf::Texture* getTexture() const override {  return nullptr; }
+	const sf::Texture* getTexture() const override { return nullptr; }
 
 	void addCollisionObject(const b2FixtureDef* b2fd) override {  }
 	// Do not use it
@@ -46,9 +46,9 @@ private:
 	// Do not use it
 	void delStateAndRectOfTexture(std::string state) override {  }
 	// Do not use it
-	const StatesAndRectsOfTexture& getStatesAndRectsOfTexture() const override {  return {}; }
+	const StatesAndRectsOfTexture& getStatesAndRectsOfTexture() const override { return {}; }
 	// Do not use it
-	RectAndFrames getRectOfTexture(std::string state) override {  return {}; }
+	RectAndFrames getRectOfTexture(std::string state) override { return {}; }
 
 	// Do not use it
 	void setStateOfTexture(std::string state) override { }

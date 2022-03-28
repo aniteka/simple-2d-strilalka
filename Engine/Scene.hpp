@@ -19,7 +19,7 @@ public:
 	// Create unit and push it to list
 	template<class _Unit = Unit, class ..._Params>
 	std::weak_ptr<Unit>
-	addUnit(UnitCreator<_Unit>& unit, _Params... params);
+		addUnit(UnitCreator<_Unit>& unit, _Params... params);
 	decltype(scene_units)& getListOfUnits();
 
 
@@ -31,7 +31,7 @@ public:
 
 	bool isEntering() const;
 
-	
+
 	// Start all threads
 	void enterToScene();
 	// Exit from all threads

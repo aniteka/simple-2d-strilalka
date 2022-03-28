@@ -3,6 +3,7 @@
 
 std::shared_mutex exit_mutex;
 std::condition_variable synk_var;
+Scene* Scene::global_scene = nullptr;
 
 Scene::Scene(sf::RenderWindow& render_window, sf::Vector2f gravitation)
 	: is_entering(false)
@@ -45,6 +46,8 @@ bool Scene::isEntering()
 
 void Scene::enterToScene()
 {
+	if (&getGlobalScene() != this)
+		return;
 	is_entering = true;
 	std::thread world_update([this]()
 	{
@@ -121,7 +124,11 @@ void Scene::__unit_update()
 	{
 		units_mutex.lock();
 		for (auto& i : scene_units)
-			i->updateEveryFrame();
+			i->updateEveryFrame(
+				*this,
+				scene_window,
+				scene_world
+			);
 		units_mutex.unlock();
 		
 		std::this_thread::sleep_for(20ms);
@@ -130,3 +137,12 @@ void Scene::__unit_update()
 }
 
 
+void Scene::setGlobalScene(Scene& scene)
+{
+	global_scene = &scene;
+}
+
+Scene& Scene::getGlobalScene()
+{
+	return *global_scene;
+}

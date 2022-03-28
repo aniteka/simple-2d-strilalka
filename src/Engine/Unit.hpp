@@ -101,7 +101,10 @@ public:
 	
 	virtual b2Body* getMainBody() const;
 
-	virtual void updateEveryFrame();
+	virtual void updateEveryFrame(
+		class Scene& main_scene,
+		sf::RenderWindow& main_window,
+		b2World& main_world);
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

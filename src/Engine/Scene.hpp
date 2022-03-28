@@ -10,6 +10,7 @@ class Scene
 	std::list<std::shared_ptr<Unit>> scene_units;
 	std::mutex units_mutex;
 
+	static Scene* global_scene;
 public:
 	Scene(sf::RenderWindow& render_window, sf::Vector2f gravitation);
 	Scene(sf::RenderWindow& render_window, b2World native_world);
@@ -40,6 +41,8 @@ public:
 	void renderNext();
 
 
+	static void setGlobalScene(Scene& scene);
+	static Scene& getGlobalScene();
 private:
 	void __world_update();
 	void __unit_update();

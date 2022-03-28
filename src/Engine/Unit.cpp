@@ -308,7 +308,13 @@ b2Body* Unit::getMainBody() const
 
 
 
-void Unit::updateEveryFrame(){}
+void Unit::updateEveryFrame(
+	class Scene& main_scene,
+	sf::RenderWindow& main_window,
+	b2World& main_world)
+{
+		
+}
 
 std::map<void*, std::pair<size_t, std::string>> draw_map;
 

@@ -13,7 +13,8 @@ int main()
 	main_program_render_window.setFramerateLimit(60);
 	
 	Scene s(main_program_render_window, VF{ 0, 9.8f });
-		
+	Scene::setGlobalScene(s);
+	
 	UnitCreator creator;
 	creator.status = {
 		.is_physics = true,

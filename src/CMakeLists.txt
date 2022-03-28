@@ -11,8 +11,6 @@ add_executable (${PROJECT_NAME}
 	"Engine/defines.h"
 	"Engine/Unit.cpp"
 	"Engine/Unit.hpp"
-	"Engine/Hero.cpp"
-	"Engine/Hero.hpp"
 	"Engine/TailMap.hpp"
 	"Engine/TailMap.cpp"
 	"Engine/Scene.hpp"

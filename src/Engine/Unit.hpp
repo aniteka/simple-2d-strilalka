@@ -54,9 +54,8 @@ public:
 	virtual Status getStatus() const;
 
 	// Do not use it
-	virtual void setPhysicsBodyUserData(const std::string& str);
-	// Do not use it
-	virtual const std::string& setPhysicsBodyUserData();
+	[[deprecated]]virtual void setPhysicsBodyUserData(const char* str);
+	virtual const char* getPhysicsBodyUserData();
 	
 	virtual void addCollisionObject(const b2FixtureDef* b2fd);
 	virtual const std::vector<b2Fixture*>& getCollisionObject() const;
@@ -161,6 +160,9 @@ struct UnitCreator
 	// State from states_and_texture_rects
 	std::string start_state;
 
+	// User identificator
+	const char* user_data;
+	
 	sf::Vector2f size_of_visible_texture;
 
 private:
@@ -186,6 +188,7 @@ public:
 		, mass(100)
 		, gravity_scale(1)
 		, texture(nullptr)
+		, user_data(nullptr)
 		, size_of_visible_texture(0,0)
 	{}
 	~UnitCreator()
@@ -230,6 +233,7 @@ public:
 		bd.fixedRotation = is_fixed;
 		bd.bullet = is_fixed;
 		bd.gravityScale = gravity_scale;
+		bd.userData.pointer = (uintptr_t)user_data;
 		
 		Unit* unit = new _MainUnit(world.CreateBody(&bd), _Vals...);
 		unit->setInterruptStatus(status.is_interrupted);
@@ -277,6 +281,7 @@ public:
 		mass = 100;
 		gravity_scale = 1;
 		texture = nullptr;
+		user_data = nullptr;
 		size_of_visible_texture = { 0, 0 };
 	}
 	

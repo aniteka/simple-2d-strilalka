@@ -16,6 +16,11 @@ Scene::Scene(sf::RenderWindow& render_window, b2World native_world)
 	, scene_window(render_window)
 {}
 
+Scene::~Scene()
+{
+	exitFromScene();
+}
+
 decltype(Scene::scene_units)& Scene::getListOfUnits()
 {
 	return scene_units;

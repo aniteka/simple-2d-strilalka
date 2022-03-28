@@ -101,14 +101,13 @@ Unit::Status Unit::getStatus() const
 
 
 
-void Unit::setPhysicsBodyUserData(const std::string& str)
+void Unit::setPhysicsBodyUserData(const char* str)
 {
-	//main_body->SetUserData((void*)str.c_str());
+	// main_body->SetUserData((void*)str);
 }
-const std::string& Unit::setPhysicsBodyUserData()
+const char* Unit::getPhysicsBodyUserData()
 {
-	//return std::string((char*)main_body->GetUserData().pointer);
-	return "";
+	return (char*)main_body->GetUserData().pointer;
 }
 
 

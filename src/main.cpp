@@ -45,7 +45,8 @@ int main()
 	creator.start_linear_speed = { 5,0 };
 	creator.is_fixed = true;
 	creator.mass = 1.f;
-
+	creator.user_data = "Hello World";
+	
 	auto unit = s.addUnit(creator);
 	creator.restart();
 
@@ -75,6 +76,7 @@ int main()
 		
 	s.enterToScene();
 
+	
 	while(s.isEntering())
 		s.renderNext();
 		

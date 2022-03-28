@@ -13,7 +13,7 @@ class Scene
 public:
 	Scene(sf::RenderWindow& render_window, sf::Vector2f gravitation);
 	Scene(sf::RenderWindow& render_window, b2World native_world);
-
+	~Scene();
 
 	// Create unit and push it to list
 	template<class _Unit = Unit, class ..._Params>

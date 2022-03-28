@@ -27,17 +27,17 @@ decltype(Scene::scene_units)& Scene::getListOfUnits()
 	return scene_units;
 }
 
-b2World& Scene::getNativeWorld()
+const b2World& Scene::getNativeWorld() const
 {
 	return scene_world;
 }
 
-sf::RenderWindow& Scene::getWindow()
+const sf::RenderWindow& Scene::getWindow() const
 {
 	return scene_window;
 }
 
-bool Scene::isEntering()
+bool Scene::isEntering() const
 {
 	return is_entering;
 }
@@ -142,7 +142,7 @@ void Scene::setGlobalScene(Scene& scene)
 	global_scene = &scene;
 }
 
-Scene& Scene::getGlobalScene()
+const Scene& Scene::getGlobalScene()
 {
 	return *global_scene;
 }

@@ -22,14 +22,14 @@ public:
 	addUnit(UnitCreator<_Unit>& unit, _Params... params);
 	decltype(scene_units)& getListOfUnits();
 
-	
-	b2World& getNativeWorld();
+
+	const b2World& getNativeWorld() const;
 
 
-	sf::RenderWindow& getWindow();
+	const sf::RenderWindow& getWindow() const;
 
 
-	bool isEntering();
+	bool isEntering() const;
 
 	
 	// Start all threads
@@ -42,7 +42,7 @@ public:
 
 
 	static void setGlobalScene(Scene& scene);
-	static Scene& getGlobalScene();
+	static const Scene& getGlobalScene();
 private:
 	void __world_update();
 	void __unit_update();

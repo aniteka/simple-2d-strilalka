@@ -5,6 +5,7 @@ template<class _Type>
 class Matrix
 	: public std::vector< std::vector< _Type > >
 {
+protected:
 	size_t h_size;
 	size_t v_size;
 public:

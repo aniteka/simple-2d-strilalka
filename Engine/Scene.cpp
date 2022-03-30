@@ -1,9 +1,15 @@
 #include "Scene.hpp"
 #include <shared_mutex>
 
+const float world_step = 1.f / 20.f;
+const auto update_sleeping_time = 20ms;
+
 std::shared_mutex exit_mutex;
 std::condition_variable synk_var;
 Scene* Scene::global_scene = nullptr;
+
+
+
 
 Scene::Scene(sf::RenderWindow& render_window, sf::Vector2f gravitation)
 	: is_entering(false)
@@ -126,7 +132,7 @@ void Scene::__world_update()
 	{
 		std::unique_lock ulock(units_mutex);
 		synk_var.wait(ulock);
-		scene_world.Step(1.f / 20.f, 8, 3);
+		scene_world.Step(world_step, 8, 3);
 		ulock.unlock();
 
 	}
@@ -146,7 +152,7 @@ void Scene::__unit_update()
 			);
 		units_mutex.unlock();
 
-		std::this_thread::sleep_for(20ms);
+		std::this_thread::sleep_for(update_sleeping_time);
 	}
 	exit_mutex.unlock_shared();
 }

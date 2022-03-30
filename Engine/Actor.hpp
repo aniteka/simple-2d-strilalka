@@ -31,7 +31,6 @@ public:
 
 	void updateEveryFrame(Scene& main_scene, sf::RenderWindow& main_window, b2World& main_world) override;
 
-	void destroy();
 protected:
 	void eventUpdate();
 

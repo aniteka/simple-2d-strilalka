@@ -3,17 +3,27 @@
 
 Actor::Actor(b2Body* body)
 	: Unit(body)
-{
-}
+{}
 
 Actor::Actor(const Actor& actor)
 	: Unit(actor)
 {
+	for (auto& i : actor.actor_key_callback_map)
+		actor_key_callback_map.emplace(i);
+	for (auto& i : actor.actor_userdata_of_interrupt_callback_map)
+		actor_userdata_of_interrupt_callback_map.emplace(i);
 }
 
 Actor::Actor(Actor&& actor)
 	: Unit(actor)
 {
+	for (auto& i : actor.actor_key_callback_map)
+		actor_key_callback_map.emplace(i);
+	for (auto& i : actor.actor_userdata_of_interrupt_callback_map)
+		actor_userdata_of_interrupt_callback_map.emplace(i);
+
+	actor.actor_key_callback_map.clear();
+	actor.actor_userdata_of_interrupt_callback_map.clear();
 }
 
 auto Actor::addKeyAndCallback(sf::Keyboard::Key key, std::function<void(Actor&)> callback) -> void
@@ -74,7 +84,8 @@ void Actor::__actorInterruptUpdate()
 				auto& lst = Scene::getGlobalScene().getListOfUnits();
 				for(auto& i : lst)
 					if (i->getMainBody() == other_body)
-						to_use.emplace(&callback, std::make_pair(this, i.get()));
+						if(i->getStatus().is_interrupted)
+							to_use.emplace(&callback, std::make_pair(this, i.get()));
 			}
 		}	
 	}

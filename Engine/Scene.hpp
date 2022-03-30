@@ -4,6 +4,7 @@
 
 class Scene
 {
+protected:
 	bool is_entering;
 	b2World scene_world;
 	sf::RenderWindow& scene_window;
@@ -18,10 +19,12 @@ public:
 
 	// Create unit and push it to list
 	template<class _Unit = Unit, class ..._Params>
-	std::weak_ptr<Unit>
+	std::weak_ptr<_Unit>
 		addUnit(UnitCreator<_Unit>& unit, _Params... params);
+	const decltype(scene_units)& getListOfUnits() const;
 	decltype(scene_units)& getListOfUnits();
 
+	void destroyUnit(Unit* address);
 
 	const b2World& getNativeWorld() const;
 
@@ -50,11 +53,11 @@ private:
 
 
 template <class _Unit, class ... _Params>
-std::weak_ptr<Unit>
+std::weak_ptr<_Unit>
 Scene::addUnit(UnitCreator<_Unit>& unit, _Params ... params)
 {
 	scene_units.push_back(
 		unit.create(scene_world, params...));
-	return scene_units.back();
+	return *(std::shared_ptr<_Unit>*)&scene_units.back();
 }
 

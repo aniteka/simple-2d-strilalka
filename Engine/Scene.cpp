@@ -26,6 +26,21 @@ decltype(Scene::scene_units)& Scene::getListOfUnits()
 {
 	return scene_units;
 }
+const decltype(Scene::scene_units)& Scene::getListOfUnits() const
+{
+	return scene_units;
+}
+
+void Scene::destroyUnit(Unit* address)
+{
+	for(auto i = scene_units.begin(); i != scene_units.end(); ++i)
+		if (i->get() == address)
+		{
+			i->reset();
+			scene_units.erase(i);
+			break;
+		}
+}
 
 const b2World& Scene::getNativeWorld() const
 {
@@ -55,7 +70,7 @@ void Scene::enterToScene()
 		});
 	std::thread unit_update([this]()
 		{
-			this->__world_update();
+			this->__unit_update();
 		});
 
 	world_update.detach();

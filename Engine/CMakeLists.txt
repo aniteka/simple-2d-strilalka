@@ -11,10 +11,12 @@ add_library(Engine STATIC
 	"Scene.cpp"
 	"TailMap.hpp"
 	"TailMap.cpp"
+	"Character.hpp" 
+	"Character.cpp"
 	"Components/matrix.hpp"
 	"Components/mass_data.hpp"
 	"Components/file_manager.hpp"
- )
+ "Actor.hpp" "Actor.cpp")
 
 target_link_libraries(Engine ${CONAN_LIBS})
 

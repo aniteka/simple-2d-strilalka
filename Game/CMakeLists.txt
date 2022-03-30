@@ -8,6 +8,8 @@ conan_basic_setup()
 # Add source to this project's executable.
 add_executable (Game
 	main.cpp
+	"MainHero.h" 
+	"MainHero.cpp"
 )	
 
 

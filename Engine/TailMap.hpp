@@ -10,7 +10,7 @@ class TailMap
 public:
 	using Matrix_texture = Matrix<sf::Texture*>;
 
-private:
+protected:
 	Matrix_texture* mtx;
 
 public:

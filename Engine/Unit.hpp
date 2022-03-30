@@ -330,12 +330,16 @@ public:
 	/// <param name="restitution">
 	///	Restitution(Пружність) of the body([0,1])
 	/// </param>
+	/// <param name="is_interrupt_only">
+	/// If shape will be interrupt only(don't generate collisions)
+	/// </param>
 	void addBoxCollision(sf::Vector2f size,
 		sf::Vector2f position = { 0,0 },
 		float angle = 0.f,
 		float density = 0.5f,
 		float friction = 0.2f,
-		float restitution = 0.f)
+		float restitution = 0.f,
+		bool is_interrupt_only = false)
 	{
 		b2FixtureDef fixture_def;
 
@@ -347,6 +351,7 @@ public:
 			angle
 		);
 
+		fixture_def.isSensor = is_interrupt_only;
 		fixture_def.restitution = restitution;
 		fixture_def.density = density;
 		fixture_def.friction = friction;
@@ -374,11 +379,15 @@ public:
 	/// <param name="restitution">
 	///	Restitution(Пружність) of the body([0,1])
 	/// </param>
+	/// <param name="is_interrupt_only">
+	/// If shape will be interrupt only(don't generate collisions)
+	/// </param>
 	void addCircleCollision(float radius,
 		sf::Vector2f position = { 0,0 },
 		float density = 0.5f,
 		float friction = 0.2f,
-		float restitution = 0.f)
+		float restitution = 0.f,
+		bool is_interrupt_only = false)
 	{
 		b2FixtureDef fixture_def;
 
@@ -386,6 +395,7 @@ public:
 		shape->m_radius = radius;
 		shape->m_p.Set(position.x, position.y);
 
+		fixture_def.isSensor = is_interrupt_only;
 		fixture_def.restitution = restitution;
 		fixture_def.density = density;
 		fixture_def.friction = friction;

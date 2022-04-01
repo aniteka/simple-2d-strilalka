@@ -1,5 +1,5 @@
 ﻿project(Game)
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.8)
 set (CMAKE_CXX_STANDARD 20)
 
 include(conanbuildinfo.cmake)
@@ -16,5 +16,9 @@ add_executable (Game
 target_link_libraries(Game 
 	${CONAN_LIBS}
 	Engine
+	SFGUI
 )
-target_include_directories(Game PRIVATE ..)
+target_include_directories(Game PRIVATE  
+	"../SFGUI/include/"
+	..
+)

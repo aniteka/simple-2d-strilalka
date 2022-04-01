@@ -5,7 +5,7 @@
 #include "Engine/Actor.hpp"
 #include "Engine/TailMap.hpp"
 #include "Engine/Scene.hpp"
-
+#include "SFGUI/SFGUI.hpp"
 
 
 int main()

@@ -2,6 +2,8 @@
 
 project (Simple2dStrilalka)
 
+add_subdirectory ("SFGUI")
+
 add_subdirectory ("Game")
 
 add_subdirectory("Engine")
